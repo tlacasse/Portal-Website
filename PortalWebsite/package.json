@@ -1,5 +1,4 @@
 {
-  "devDependencies": {},
   "dependencies": {
     "gulp": "^3.9.1",
     "gulp-clean-css": "^3.10.0",
@@ -9,6 +8,7 @@
     "gulp-noop": "^1.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.1",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.0",
+    "mithril": "^1.1.6"
   }
 }

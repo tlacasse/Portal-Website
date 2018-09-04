@@ -31,6 +31,21 @@ var build = '_Build';
 ///////////////////////////////////////////////////////////////
 // Tasks
 
-//gulp.task('default', gulp.series('index', 'views', 'css', 'app', 'angular', 'inject', 'bin', 'asp'));
+gulp.task('mithril', function () {
+    return gulp.src(isProduction() ? 'content/js/mithril.min.js' : 'content/js/mithril.js')
+        .pipe(gulp.dest(build + '/mithril'));
+});
 
-gulp.task('default', function () { });
+gulp.task('inject', function () {
+    return gulp.src(build + '/index.html')
+        .pipe(inject(
+            gulp.src(build + '/mithril/*.js'),
+            { relative: true, name: 'framework' }
+        ))
+        .pipe(gulp.dest(build));
+});
+
+gulp.task('default', function () {
+    gulp.start('mithril');
+    gulp.start('inject');
+});
