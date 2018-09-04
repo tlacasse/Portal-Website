@@ -1,0 +1,14 @@
+{
+  "devDependencies": {},
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.10.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-inject": "^4.3.2",
+    "gulp-minify": "^3.1.0",
+    "gulp-noop": "^1.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.1",
+    "minimist": "^1.2.0"
+  }
+}

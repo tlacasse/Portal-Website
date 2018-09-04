@@ -328,3 +328,9 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+
+# Portal Specific
+
+package-lock.json
+_Build

@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalWebsite", "PortalWebsite\PortalWebsite.csproj", "{1E461197-3EC5-4445-A3EF-53F1CC02F963}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal", "Portal\Portal.csproj", "{039723AB-0BE4-4BCA-B324-72CA19AB7862}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalTest", "PortalTest\PortalTest.csproj", "{A74ADB65-0B33-44D4-BAD7-46A514D840FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E461197-3EC5-4445-A3EF-53F1CC02F963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E461197-3EC5-4445-A3EF-53F1CC02F963}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E461197-3EC5-4445-A3EF-53F1CC02F963}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E461197-3EC5-4445-A3EF-53F1CC02F963}.Release|Any CPU.Build.0 = Release|Any CPU
+		{039723AB-0BE4-4BCA-B324-72CA19AB7862}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{039723AB-0BE4-4BCA-B324-72CA19AB7862}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{039723AB-0BE4-4BCA-B324-72CA19AB7862}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{039723AB-0BE4-4BCA-B324-72CA19AB7862}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A74ADB65-0B33-44D4-BAD7-46A514D840FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A74ADB65-0B33-44D4-BAD7-46A514D840FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A74ADB65-0B33-44D4-BAD7-46A514D840FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A74ADB65-0B33-44D4-BAD7-46A514D840FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {78DBA9C8-AF06-40C2-B272-8F9CEAB220C1}
+	EndGlobalSection
+EndGlobal
