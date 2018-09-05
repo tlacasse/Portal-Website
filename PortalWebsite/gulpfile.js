@@ -31,16 +31,20 @@ var dateAppend = "_" + String(d.getFullYear()) + "-" + String(d.getMonth() + 1) 
 
 var build = '_Build';
 
+function getDiff(file1, file2, extension) {
+    return file2.path.indexOf('.' + extension) - file1.path.indexOf('.' + extension);
+}
+
 function sortComparator(file1, file2) {
     var diff;
 
-    diff = file2.path.indexOf('.template') - file1.path.indexOf('.template');
+    diff = getDiff(file1, file2, 'utility');
     if (diff !== 0) return diff;
 
-    diff = file2.path.indexOf('view.') - file1.path.indexOf('view.');
+    diff = getDiff(file1, file2, 'view');
     if (diff !== 0) return diff;
 
-    diff = file2.path.indexOf('app.') - file1.path.indexOf('app.');
+    diff = getDiff(file1, file2, 'app');
     if (diff !== 0) return diff;
 
     return 0;

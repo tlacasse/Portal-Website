@@ -153,6 +153,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\Portal\home.view.js" />
+    <Content Include="App\Portal\templates.utility.js" />
+    <Content Include="App\Portal\portal.app.js" />
+    <Content Include="Content\js\mithril.js" />
+    <Content Include="Content\js\mithril.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
@@ -177,8 +182,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="package.json" />
+    <Content Include="Content\sass\Portal\main.scss" />
+    <Content Include="Content\sass\Portal\vars.scss" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

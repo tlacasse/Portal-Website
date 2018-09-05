@@ -16,18 +16,20 @@ body {
     height: 100%;
 }
 
-$ratio: .3;
+// Split Content
 
-$width-left: $usable-width * $ratio;
-$width-right: $usable-width * (1 - $ratio);
+$split-ratio: .3;
+
+$width-left: $usable-width * $split-ratio;
+$width-right: $usable-width * (1 - $split-ratio);
 
 #content-left, #content-right {
     position: absolute;
     box-sizing: border-box;
     top: $outside-padding-h;
     height: $usable-height;
-    padding: $fs;
     background-color: $c-content-bg;
+    border: $border-width ridge $c-bodycontent-merge;
 }
 
 #content-left {
@@ -38,4 +40,34 @@ $width-right: $usable-width * (1 - $ratio);
 #content-right {
     left: $outside-padding-w + $width-left + $inside-padding;
     width: $width-right;
+}
+
+// Three Pane
+
+.pane-top, .pane-mid, .pane-bot {
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.pane-top, .pane-bot {
+    height: $header-height;
+    padding: $fs * 0.1;
+    background-color: $c-header-bg;
+    text-align: center;
+}
+
+.pane-top {
+    border-bottom: $border-width ridge $c-contentheader-merge;
+}
+
+.pane-mid {
+    top: $header-height;
+    height: $usable-height - ($header-height * 2);
+    padding: $fs;
+}
+
+.pane-bot {
+    top: $usable-height - $header-height;
+    border-top: $border-width ridge $c-contentheader-merge;
 }
