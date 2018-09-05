@@ -1,0 +1,12 @@
+﻿// Colors
+
+$c-body-bg: #000066;
+$c-content-bg: #0079ff;
+
+// Page Sizing
+$fs: 19px;
+$outside-padding-w: 5vw;
+$outside-padding-h: 4vh;
+$inside-padding: 2vw;
+$usable-height: 100vh - (2 * $outside-padding-h);
+$usable-width: 100vw - (2 * $outside-padding-w) - $inside-padding;

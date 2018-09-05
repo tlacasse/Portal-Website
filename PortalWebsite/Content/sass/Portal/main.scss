@@ -1,0 +1,41 @@
+﻿@import "vars";
+
+body {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: $fs;
+    margin: 0px;
+    padding: 0px;
+    background-color: $c-body-bg;
+    color: #ffffff;
+}
+
+#page {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+$ratio: .3;
+
+$width-left: $usable-width * $ratio;
+$width-right: $usable-width * (1 - $ratio);
+
+#content-left, #content-right {
+    position: absolute;
+    box-sizing: border-box;
+    top: $outside-padding-h;
+    height: $usable-height;
+    padding: $fs;
+    background-color: $c-content-bg;
+}
+
+#content-left {
+    left: $outside-padding-w;
+    width: $width-left;
+}
+
+#content-right {
+    left: $outside-padding-w + $width-left + $inside-padding;
+    width: $width-right;
+}
