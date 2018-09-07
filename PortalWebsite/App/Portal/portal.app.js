@@ -1,5 +1,6 @@
 ﻿var root = document.getElementById('page');
 
 m.route(root, '/', {
-    "/": Home,
+    '/': Home,
+    '/list': IconList,
 });

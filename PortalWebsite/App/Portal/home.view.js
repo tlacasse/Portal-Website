@@ -1,8 +1,15 @@
 ﻿﻿var Home = {};
 
+Home.oninit = function () {
+    IconList.oninit();
+};
+
 Home.view = function () {
-    return Templates.SplitContent(
-        Templates.ThreePane('a1', 'a2', 'a3'),
-        Templates.ThreePane('b1', 'b2', 'b3'),
+    return Templates.splitContent(
+        IconList.view(),
+        Templates.threePane(
+            m('div', { class: 'section-title'}, 'Portal Configuration'),
+            '', ''
+        ),
     );
 };

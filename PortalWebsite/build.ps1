@@ -28,7 +28,7 @@ if (-not $ui){
 	if (Path-NotExists $portalPath){
 		New-Item -Path $portalPath -ItemType directory -Verbose
 	}
-	robocopy $PSScriptRoot $buildPath 'favicon.ico' 'Web.config' 'index.html' /COPY:DATS
+	robocopy $PSScriptRoot $buildPath 'favicon.ico' 'Web.config' 'index.html' 'Global.asax' /COPY:DATS
 
 	Write-Host '-----------------------------' -ForegroundColor Green
 	Write-Host 'Building CSproject.' -ForegroundColor Green
@@ -44,7 +44,7 @@ if (-not $ui){
 
 	$sourceBin = Join-Path $PSScriptRoot 'bin'
 	$destBin = Join-Path $buildPath 'bin'
-	robocopy $sourceBin $destBin /COPY:DATS
+	robocopy $sourceBin $destBin /COPY:DATS /S
 }
 
 if (-not $server){
