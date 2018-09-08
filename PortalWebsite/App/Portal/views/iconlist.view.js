@@ -1,19 +1,17 @@
 ﻿var IconList = {};
 
+// Functions
+
+IconList.gotoIcon = function (icon) {
+    console.log(formatURL(icon.Name));
+    m.route.set('/'); //need to leave 'edit' to refresh route parameter
+    m.route.set('/edit/' + formatURL(icon.Name));
+    m.redraw();
+}
+
 IconList.iconPath = function (icon) {
     return 'Portal/Icons/' + icon.Id + '.' + icon.Image;
 }
-
-IconList.iconToRow = function (icon) {
-    return (
-        m('tr', { class: 'icon-list-element' }, [
-            m('td', m('div', { class: 'icon-list-image' },
-                m('img', { src: IconList.iconPath(icon) })
-            )),
-            m('td', icon.Name),
-        ])
-    );
-};
 
 IconList.getIconList = function () {
     m.request({
@@ -26,6 +24,19 @@ IconList.getIconList = function () {
     });
 };
 
+// View Functions
+
+IconList.iconToRow = function (icon) {
+    return (
+        m('tr', { class: 'icon-list-element', onclick: function () { IconList.gotoIcon(icon); } }, [
+            m('td', m('div', { class: 'icon-list-image' },
+                m('img', { src: IconList.iconPath(icon) })
+            )),
+            m('td', icon.Name),
+        ])
+    );
+};
+
 IconList.emptyRow = function () {
     return (
         m('tr', [
@@ -34,6 +45,8 @@ IconList.emptyRow = function () {
         ])
     );
 }
+
+// View
 
 IconList.oninit = IconList.getIconList;
 

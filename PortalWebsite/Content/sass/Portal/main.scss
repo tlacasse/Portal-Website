@@ -81,3 +81,18 @@ $width-right: $usable-width * (1 - $split-ratio);
     padding-top: 0.2em;
     padding-left: 1em;
 }
+
+// Links
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a, a:link, a:visited {
+    color: $c-link;
+}
+
+a:hover, a:active {
+    color: $c-link-active;
+}

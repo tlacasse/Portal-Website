@@ -2,5 +2,6 @@
 
 m.route(root, '/', {
     '/': Home,
-    '/list': IconList,
+    '/edit/:name': Edit,
+    '/new': Edit,
 });
