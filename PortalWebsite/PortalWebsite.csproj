@@ -168,8 +168,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\Portal\home.view.js" />
-    <Content Include="App\Portal\iconlist.view.js" />
+    <Content Include="App\Portal\functions.utility.js" />
+    <Content Include="App\Portal\views\edit.view.js" />
+    <Content Include="App\Portal\views\home.view.js" />
+    <Content Include="App\Portal\views\iconlist.view.js" />
     <Content Include="App\Portal\templates.utility.js" />
     <Content Include="App\Portal\portal.app.js" />
     <Content Include="Content\js\mithril.js" />

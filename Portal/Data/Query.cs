@@ -16,11 +16,19 @@ namespace Portal.Data {
         /// Returns a list of all Icons.
         /// </summary>
         public static IList<Icon> GetIconList() {
-            IList<Icon> results;
             using (Connection connection = new Connection()) {
-                results = connection.Execute<Icon>("SELECT * FROM PortalIcon");
+                return connection.Execute<Icon>("SELECT * FROM vwPortalIcon");
             }
-            return results;
+        }
+
+        /// <summary>
+        /// Returns a single Icon, specified by name.
+        /// </summary>
+        public static Icon GetIconByName(string name) {
+            string query = string.Format("SELECT * FROM vwPortalIcon WHERE Name='{0}'", name);
+            using (Connection connection = new Connection()) {
+                return connection.Execute<Icon>(query).Single();
+            }
         }
 
     }

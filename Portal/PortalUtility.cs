@@ -29,6 +29,24 @@ namespace Portal {
             return (T)(constructor.Invoke(null));
         }
 
+        /// <summary>
+        /// Converts a name (spaces allowed) into a form safe for URLs.
+        /// </summary>
+        public static string UrlFormat(string name) {
+            if (string.IsNullOrWhiteSpace(name)) return string.Empty;
+            return string.Join("_", name.ToLower().Split(' '));
+        }
+
+        /// <summary>
+        /// Converts a formatted name back into its capitalized and spaced name.
+        /// </summary>
+        public static string UnUrlFormat(string name) {
+            return string.Join(" ", name
+                .Split('_')
+                .Select(w => w.Substring(0, 1).ToUpper() + w.Substring(1))
+           );
+        }
+
     }
 
 }

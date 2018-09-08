@@ -1,4 +1,5 @@
-﻿using Portal.Data;
+﻿using Portal;
+using Portal.Data;
 using Portal.Models.Portal;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,11 @@ namespace PortalWebsite.Portal.Controllers {
             return Query.GetIconList();
         }
 
+        [HttpGet]
+        [Route("get/{urlName}")]
+        public Icon GetIconByName(string urlName) {
+            return Query.GetIconByName(PortalUtility.UnUrlFormat(urlName));
+        }
     }
 
 }

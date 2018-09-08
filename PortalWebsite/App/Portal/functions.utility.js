@@ -2,6 +2,13 @@
     return value === null || value === undefined;
 }
 
+function coalesce(value, defaultIfNull) {
+    if (nonexistant(value)) {
+        return defaultIfNull;
+    }
+    return value;
+}
+
 function formatURL(value) {
     if (nonexistant(value)) {
         return "";

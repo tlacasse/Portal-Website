@@ -3,10 +3,7 @@
 // Functions
 
 IconList.gotoIcon = function (icon) {
-    console.log(formatURL(icon.Name));
-    m.route.set('/'); //need to leave 'edit' to refresh route parameter
     m.route.set('/edit/' + formatURL(icon.Name));
-    m.redraw();
 }
 
 IconList.iconPath = function (icon) {
@@ -30,7 +27,7 @@ IconList.iconToRow = function (icon) {
     return (
         m('tr', { class: 'icon-list-element', onclick: function () { IconList.gotoIcon(icon); } }, [
             m('td', m('div', { class: 'icon-list-image' },
-                m('img', { src: IconList.iconPath(icon) })
+                m('img', { src: IconList.iconPath(icon) + '?d=' + icon.DateChanged })
             )),
             m('td', icon.Name),
         ])
