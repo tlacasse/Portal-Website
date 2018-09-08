@@ -19,7 +19,7 @@ IconList.getIconList = function () {
     }).catch(function (e) {
         console.log(e);
     });
-};
+}
 
 // View Functions
 
@@ -32,7 +32,7 @@ IconList.iconToRow = function (icon) {
             m('td', icon.Name),
         ])
     );
-};
+}
 
 IconList.emptyRow = function () {
     return (
@@ -59,4 +59,4 @@ IconList.view = function () {
             ''
         )
     );
-};
+}

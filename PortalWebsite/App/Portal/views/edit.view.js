@@ -9,7 +9,7 @@ Edit.icon = {
     Image: 'png',
     Link: '',
     DateChanged: '',
-};
+}
 
 // Functions
 
@@ -23,7 +23,7 @@ Edit.getSource = function () {
             Image: 'png',
             Link: '',
             DateChanged: '',
-        };
+        }
     } else {
         m.request({
             method: 'GET',
@@ -34,20 +34,20 @@ Edit.getSource = function () {
             console.log(e);
         });
     }
-};
+}
 
 // View
 
 Edit.oninit = function () {
     IconList.oninit();
     Edit.getSource();
-};
+}
 
 Edit.onupdate = function () {
     if (m.route.get() !== Edit.pathSave) {
         Edit.getSource();
     }
-};
+}
 
 Edit.view = function () {
     return Templates.splitContent(
@@ -63,4 +63,4 @@ Edit.view = function () {
             ''
         ),
     );
-};
+}

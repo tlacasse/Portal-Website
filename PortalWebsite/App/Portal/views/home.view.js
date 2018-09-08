@@ -2,7 +2,7 @@
 
 Home.oninit = function () {
     IconList.oninit();
-};
+}
 
 Home.view = function () {
     return Templates.splitContent(
@@ -15,4 +15,4 @@ Home.view = function () {
             ''
         ),
     );
-};
+}

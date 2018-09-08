@@ -5,7 +5,7 @@ Templates.splitContent = function (left, right) {
         m('div', { id: 'content-left' }, left),
         m('div', { id: 'content-right' }, right),
     ];
-};
+}
 
 Templates.threePane = function (top, mid, bot) {
     return [
@@ -13,4 +13,4 @@ Templates.threePane = function (top, mid, bot) {
         m('div', { class: 'pane-mid' }, mid),
         m('div', { class: 'pane-bot' }, bot),
     ];
-};
+}
