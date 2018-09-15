@@ -1,10 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Portal;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace PortalTest {
+namespace PortalTesting {
 
     [TestClass]
     public class TestPortalUtility {

@@ -69,15 +69,10 @@ namespace Portal.Models.Portal {
             Icon other = obj as Icon;
             if (other == null)
                 return false;
-            if (this.Name == null ? other.Name == null : (this.Name.Equals(other.Name) == false))
-                return false;
-            if (this.Link == null ? other.Link == null : (this.Link.Equals(other.Link) == false))
-                return false;
-            if (this.Image == null ? other.Image == null : (this.Image.Equals(other.Image) == false))
-                return false;
-            if (this.Id != other.Id)
-                return false;
-            return true;
+            return object.Equals(this.Name, other.Name)
+                && object.Equals(this.Link, other.Link)
+                && object.Equals(this.Image, other.Image)
+                && this.Id == other.Id;
         }
 
         /// <summary>

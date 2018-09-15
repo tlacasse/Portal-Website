@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalWebsite", "PortalWebs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal", "Portal\Portal.csproj", "{039723AB-0BE4-4BCA-B324-72CA19AB7862}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalTest", "PortalTest\PortalTest.csproj", "{A74ADB65-0B33-44D4-BAD7-46A514D840FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalTesting", "PortalTesting\PortalTesting.csproj", "{1372534B-4ACF-4C52-9750-DDDA3445BA7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{039723AB-0BE4-4BCA-B324-72CA19AB7862}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{039723AB-0BE4-4BCA-B324-72CA19AB7862}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{039723AB-0BE4-4BCA-B324-72CA19AB7862}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A74ADB65-0B33-44D4-BAD7-46A514D840FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A74ADB65-0B33-44D4-BAD7-46A514D840FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A74ADB65-0B33-44D4-BAD7-46A514D840FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A74ADB65-0B33-44D4-BAD7-46A514D840FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1372534B-4ACF-4C52-9750-DDDA3445BA7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1372534B-4ACF-4C52-9750-DDDA3445BA7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1372534B-4ACF-4C52-9750-DDDA3445BA7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1372534B-4ACF-4C52-9750-DDDA3445BA7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
