@@ -5,3 +5,5 @@ m.route(root, '/', {
     '/edit/:name': Edit,
     '/new': Edit,
 });
+
+m.mount(document.getElementById('message-box'), ErrorMessage);

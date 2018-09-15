@@ -47,6 +47,18 @@ namespace Portal {
            );
         }
 
+        /// <summary>
+        /// Returns the image file extension, while ensuring the image is in an allowed set.
+        /// </summary>
+        public static string GetImageExtension(string contentType) {
+            switch (contentType) {
+                case "image/jpeg": return "jpg";
+                case "image/png": return "png";
+                default:
+                    throw new ArgumentOutOfRangeException("Content Type");
+            }
+        }
+
     }
 
 }

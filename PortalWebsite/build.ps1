@@ -12,24 +12,28 @@ function Path-NotExists(){
 	return -not (Test-Path($pathToTest))
 } 
 
-if (-not $ui){
-	Write-Host '-----------------------------' -ForegroundColor Green
-	Write-Host 'Checking File Existence.' -ForegroundColor Green
-	Write-Host '-----------------------------' -ForegroundColor Green
+Write-Host '-----------------------------' -ForegroundColor Green
+Write-Host 'Checking File Existence.' -ForegroundColor Green
+Write-Host '-----------------------------' -ForegroundColor Green
 
-	if (Path-NotExists $buildPath){
-		New-Item -Path $buildPath -ItemType directory -Verbose
-	}
-	$scriptsPath = Join-Path $buildPath 'Scripts'
-	if (Path-NotExists $scriptsPath){
-		New-Item -Path $scriptsPath -ItemType directory -Verbose
-	}
-	$portalPath = Join-Path $buildPath 'Portal'
-	if (Path-NotExists $portalPath){
-		New-Item -Path $portalPath -ItemType directory -Verbose
-	}
+if (Path-NotExists $buildPath){
+	New-Item -Path $buildPath -ItemType directory -Verbose
+}
+$scriptsPath = Join-Path $buildPath 'Scripts'
+if (Path-NotExists $scriptsPath){
+	New-Item -Path $scriptsPath -ItemType directory -Verbose
+}
+$portalPath = Join-Path $buildPath 'Portal'
+if (Path-NotExists $portalPath){
+	New-Item -Path $portalPath -ItemType directory -Verbose
+}
+
+if (-not $server){
 	robocopy $PSScriptRoot $buildPath 'favicon.ico' 'Web.config' 'index.html' 'Global.asax' /COPY:DATS
+}
 
+if (-not $ui){
+	
 	Write-Host '-----------------------------' -ForegroundColor Green
 	Write-Host 'Building CSproject.' -ForegroundColor Green
 	Write-Host '-----------------------------' -ForegroundColor Green

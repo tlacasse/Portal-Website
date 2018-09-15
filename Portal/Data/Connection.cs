@@ -14,7 +14,7 @@ namespace Portal.Data {
     /// <summary>
     /// Wrapper for a SQLite Connection for the Website Database specifically.
     /// </summary>
-    public class Connection : IDisposable {
+    public class Connection : IConnection {
 
         private static readonly string CONNECTION_STRING =
             "Data Source=" + Path.Combine(PortalUtility.SitePath, "Portal\\PortalWebsite.db") + ";Version=3;Password=portal;";
@@ -60,6 +60,18 @@ namespace Portal.Data {
                 }
             }
             return results;
+        }
+
+        /// <summary>
+        /// Executes a SQL statement, such as an UPDATE or INSERT INTO. Throws an exception if no rows were affected.
+        /// </summary>
+        public int ExecuteNonQuery(string query) {
+            using (SQLiteCommand command = new SQLiteCommand(query, SQLite)) {
+                int affected = command.ExecuteNonQuery();
+                if (affected == 0)
+                    throw new PortalException("No rows were affected", query);
+                return affected;
+            }
         }
 
     }

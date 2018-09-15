@@ -24,10 +24,31 @@ namespace Portal.Data {
         /// <summary>
         /// Returns a single Icon, specified by name.
         /// </summary>
-        public static Icon GetIconByName(string name) {
-            string query = string.Format("SELECT * FROM vwPortalIcon WHERE Name='{0}'", name);
-            using (Connection connection = new Connection()) {
-                return connection.Execute<Icon>(query).Single();
+        public static Icon GetIconByName(string name, IConnection fromConnection = null) {
+            return GetIconByQuery(
+                string.Format("SELECT * FROM vwPortalIcon WHERE Name='{0}'", name),
+                fromConnection
+            );
+        }
+
+        /// <summary>
+        /// Returns a single Icon, specified by id.
+        /// </summary>
+        public static Icon GetIconById(int id, IConnection fromConnection = null) {
+            return GetIconByQuery(
+                string.Format("SELECT * FROM vwPortalIcon WHERE Id={0}", id),
+                fromConnection
+            );
+        }
+
+        private static Icon GetIconByQuery(string query, IConnection fromConnection) {
+            IConnection connection = fromConnection ?? new Connection();
+            try {
+                return connection.Execute<Icon>(query).FirstOrDefault();
+            } finally {
+                if (fromConnection == null && connection != null) {
+                    connection.Dispose();
+                }
             }
         }
 

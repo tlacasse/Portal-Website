@@ -1,0 +1,87 @@
+﻿@import "vars";
+
+.icon-form-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1em;
+}
+
+$form-ratio: 15%;
+
+.icon-form-col1 {
+    width: $form-ratio;
+}
+
+.icon-form-col2 {
+    width: 100% - $form-ratio;
+}
+
+.icon-form-img {
+    width: 5em;
+    height: 5em;
+
+    img {
+        width: 100%;
+        height: 100%;
+        border: 0.1em solid #000000;
+    }
+}
+
+// Inputs
+
+.icon-form-prompt {
+    padding: 2em 0em 2em 1em;
+}
+
+input.icon-form-input, input.icon-form-input:focus {
+    width: 85%;
+}
+
+input.icon-form-input, input.icon-form-input:focus, .icon-form-file, button.icon-form-input {
+    font-size: $fs;
+    padding: 0.3em;
+    border: 0.2em ridge $c-contentheader-merge;
+    background-color: $c-input;
+    color: #000000;
+    outline: none;
+}
+
+input.icon-form-input:focus, .icon-form-file:hover {
+    background-color: $c-input-light;
+}
+
+.icon-form-file {
+    text-align: center;
+
+    label {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+
+        input[type=file] {
+            width: 0.01px;
+            height: 0.01px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+    }
+}
+
+.icon-form-button {
+    width: initial;
+    cursor: pointer;
+}
+
+
+.icon-form-button-left {
+    float: left;
+}
+
+.icon-form-button-right {
+    float: right;
+    margin-right: 5em;
+}

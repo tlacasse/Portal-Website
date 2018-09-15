@@ -10,14 +10,20 @@ IconList.iconPath = function (icon) {
     return 'Portal/Icons/' + icon.Id + '.' + icon.Image;
 }
 
+IconList.iconNameCompare = function (a, b) {
+    return a.Name.localeCompare(b.Name);
+}
+
 IconList.getIconList = function () {
     m.request({
         method: 'GET',
         url: 'api/portal/icon/list',
     }).then(function (data) {
-        IconList.iconNodes = data.map(x => IconList.iconToRow(x));
+        IconList.iconNodes = data
+            .sort(IconList.iconNameCompare)
+            .map(x => IconList.iconToRow(x));
     }).catch(function (e) {
-        console.log(e);
+        ErrorMessage.show(e);
     });
 }
 
@@ -50,7 +56,7 @@ IconList.oninit = IconList.getIconList;
 IconList.view = function () {
     return (
         Templates.threePane(
-            m('div', { class: 'section-title'}, 'Icons'),
+            m('div', { class: 'section-title' }, 'Icons'),
             m('table', { class: 'icon-list-table' }, [
                 IconList.emptyRow(),
                 IconList.iconNodes,

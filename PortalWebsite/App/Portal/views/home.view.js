@@ -1,5 +1,9 @@
 ﻿﻿var Home = {};
 
+Home.goto = function () {
+    m.route.set('/');
+}
+
 Home.oninit = function () {
     IconList.oninit();
 }
