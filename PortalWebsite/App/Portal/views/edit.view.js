@@ -1,10 +1,31 @@
-﻿var Edit = {};
+﻿/**
+ * View for updating an Icon, or adding a new one.
+ */
+var Edit = {};
 
+/**
+ * Whether or not this is an entirely new icon.
+ */
 Edit.isNewIcon = true;
+
+/**
+ * String storing the route path to diff and signal a refresh of the page.
+ */
 Edit.pathSave = '';
+
+/**
+ * String storing the name of the attached Image file.
+ */
 Edit.fileName = '';
+
+/**
+ * Unique string to prevent Input caching.
+ */
 Edit.unique = String(new Date()) + String(Math.random());
 
+/**
+ * Client side Icon Model storage.
+ */
 Edit.icon = {
     Id: -1,
     Name: '',
@@ -15,6 +36,9 @@ Edit.icon = {
 
 // Functions
 
+/**
+ * Based on the route parameter or not, fetches the existing Icon from the server, or use a empty new one.
+ */
 Edit.getSource = function () {
     Edit.isNewIcon = nonexistant(m.route.param('name'));
     Edit.pathSave = m.route.get();
@@ -38,11 +62,26 @@ Edit.getSource = function () {
     }
 }
 
+/**
+ * Gets the attached Image files.
+ */
 Edit.getFileInput = function () {
     var iconfileinput = document.getElementById('iconFile');
     return iconfileinput == null ? null : iconfileinput.files[0];
 }
 
+/**
+ * Updates the visual file name.
+ */
+Edit.updateFileName = function () {
+    var file = Edit.getFileInput();
+    if (nonexistant(file) === false) {
+        Edit.fileName = file.name;
+    }
+}
+/**
+ * Sends the updated Icon info to the server.
+ */
 Edit.formSubmit = function () {
     var data = new FormData();
     data.append('File', Edit.getFileInput());
@@ -63,6 +102,9 @@ Edit.formSubmit = function () {
 
 // View Functions
 
+/**
+ * Empty row in the form, specifies formatting.
+ */
 Edit.emptyRow = function () {
     return (
         m('tr', [
@@ -72,6 +114,11 @@ Edit.emptyRow = function () {
     );
 }
 
+/**
+ * A label-input row of the form.
+ * @param {Component} prompt
+ * @param {Component} field 
+ */
 Edit.formRow = function (prompt, field) {
     return (
         m('tr', [
@@ -81,6 +128,13 @@ Edit.formRow = function (prompt, field) {
     );
 }
 
+/**
+ * A label-input row of the form specifically for a text field.
+ * @param {any} prompt
+ * @param {any} id
+ * @param {any} value
+ * @param {any} updateFunction
+ */
 Edit.textField = function (prompt, id, value, updateFunction) {
     return Edit.formRow(prompt,
         m('input', {
@@ -94,26 +148,28 @@ Edit.textField = function (prompt, id, value, updateFunction) {
     );
 }
 
-Edit.updateFileName = function () {
-    var file = Edit.getFileInput();
-    if (nonexistant(file) === false) {
-        Edit.fileName = file.name;
-    }
-}
-
 // View
 
+/**
+ * Mithril oninit.
+ */
 Edit.oninit = function () {
     IconList.oninit();
     Edit.getSource();
 }
 
+/**
+ * Mithril onupdate.
+ */
 Edit.onupdate = function () {
     if (m.route.get() !== Edit.pathSave) {
         Edit.getSource();
     }
 }
 
+/**
+ * Mithril view.
+ */
 Edit.view = function () {
     return Templates.splitContent(
         IconList.view(),

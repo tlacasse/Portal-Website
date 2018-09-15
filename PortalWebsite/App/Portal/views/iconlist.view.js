@@ -1,19 +1,43 @@
-﻿var IconList = {};
+﻿/**
+ * Navigation Icon List populating the left content of most pages.
+ */
+var IconList = {};
+
+/**
+ * Table rows of the Icon List.
+ */
+IconList.iconNodes = [];
 
 // Functions
 
+/**
+ * Go to the Edit view of an Icon.
+ * @param {String} icon
+ */
 IconList.gotoIcon = function (icon) {
     m.route.set('/edit/' + formatURL(icon.Name));
 }
 
+/**
+ * Path to the Icon Image.
+ * @param {String} icon
+ */
 IconList.iconPath = function (icon) {
     return 'Portal/Icons/' + icon.Id + '.' + icon.Image;
 }
 
+/**
+ * Icon sorting comparison function.
+ * @param {Icon} a
+ * @param {Icon} b
+ */
 IconList.iconNameCompare = function (a, b) {
     return a.Name.localeCompare(b.Name);
 }
 
+/**
+ * Retrieves the Icon List from the server.
+ */
 IconList.getIconList = function () {
     m.request({
         method: 'GET',
@@ -29,6 +53,10 @@ IconList.getIconList = function () {
 
 // View Functions
 
+/**
+ * Formats an Icon into a row on the list.
+ * @param {Icon} icon
+ */
 IconList.iconToRow = function (icon) {
     return (
         m('tr', { class: 'icon-list-element', onclick: function () { IconList.gotoIcon(icon); } }, [
@@ -40,6 +68,9 @@ IconList.iconToRow = function (icon) {
     );
 }
 
+/**
+ * A empty row on the Icon List, defines formatting.
+ */
 IconList.emptyRow = function () {
     return (
         m('tr', [
@@ -51,8 +82,14 @@ IconList.emptyRow = function () {
 
 // View
 
+/**
+ * Mithril oninit.
+ */
 IconList.oninit = IconList.getIconList;
 
+/**
+ * Mithril view.
+ */
 IconList.view = function () {
     return (
         Templates.threePane(
