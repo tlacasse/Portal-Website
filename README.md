@@ -2,7 +2,7 @@
 Personal Homepage
 
 Windows-Desktop-like main page with visual Icons with bookmark-worthy links.
-+ Future Utilities.
+And other various Utilities.
 
 Mithril.js client-side, C# Web API server-side, Sqlite database.
 
@@ -13,7 +13,7 @@ Match this directory structure:
 	- `/_Build/` - Runnable Build Output
 		- `/Portal/` - Non-Build Managed Items
 			- `PortalWebsite.db` - Sqlite Database
-			- `/Icons/-1.png` - Default "New Icon" image.
+			- `/Icons/-1.png` - Default "New Icon" image
 
 Run `~/PortalWebsite/build.ps1` to build and copy into the Build Output.
 Include the `-ui` flag or the `-server` flag for only client/server side building.			
@@ -22,6 +22,7 @@ Include the `-ui` flag or the `-server` flag for only client/server side buildin
 
 ### Future Plans
 
+* Security & navigation for on-the-go phone viewing
 * Database front-ends
 	* Classes
 	* Dinners
