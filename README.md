@@ -16,7 +16,9 @@ Match this directory structure:
 			- `/Icons/-1.png` - Default "New Icon" image
 
 Run `~/PortalWebsite/build.ps1` to build and copy into the Build Output.
-Include the `-ui` flag or the `-server` flag for only client/server side building.			
+Include the `-ui` flag or the `-server` flag for only client/server side building.
+
+Database is set up with [these tables and views](https://github.com/tlacasse/Portal-Website/tree/master/Portal/sqlite).
 			
 *I use a plain white image for the "New Icon".*
 
