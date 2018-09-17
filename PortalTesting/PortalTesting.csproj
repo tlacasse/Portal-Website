@@ -54,6 +54,7 @@
     <Compile Include="Portal\Fakes\FakeIconPostedFile.cs" />
     <Compile Include="Portal\TestIconModel.cs" />
     <Compile Include="Portal\TestIconUpload.cs" />
+    <Compile Include="Portal\TestGridSizeModel.cs" />
     <Compile Include="TestPortalUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

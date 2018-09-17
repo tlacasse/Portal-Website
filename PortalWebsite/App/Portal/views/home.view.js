@@ -26,7 +26,8 @@ Home.view = function () {
         Templates.threePane(
             m('div', { class: 'section-title' }, 'Portal Configuration'),
             m('ul', [
-                m('li', m("a[href=/new]", { oncreate: m.route.link }, 'New Icon'))
+                m('li', m("a[href=/new]", { oncreate: m.route.link }, 'New Icon')),
+                m('li', m("a[href=/grid]", { oncreate: m.route.link }, 'Grid Configuration')),
             ]),
             ''
         ),

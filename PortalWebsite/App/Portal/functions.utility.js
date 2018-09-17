@@ -72,3 +72,24 @@ function objectToArray(value) {
     }
     return array;
 }
+
+/**
+ * Returns default new Icon.
+ */
+function emptyIcon() {
+    return {
+        Id: -1,
+        Name: '',
+        Image: 'png',
+        Link: '',
+        DateChanged: '',
+    }
+}
+
+/**
+ * Returns the file path of an image for an Icon.
+ * @param {Icon} icon
+ */
+function iconImagePath(icon) {
+    return 'Portal/Icons/' + icon.Id + '.' + icon.Image + '?d=' + icon.DateChanged;
+}

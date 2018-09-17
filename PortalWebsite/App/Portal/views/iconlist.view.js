@@ -19,14 +19,6 @@ IconList.gotoIcon = function (icon) {
 }
 
 /**
- * Path to the Icon Image.
- * @param {String} icon
- */
-IconList.iconPath = function (icon) {
-    return 'Portal/Icons/' + icon.Id + '.' + icon.Image;
-}
-
-/**
  * Icon sorting comparison function.
  * @param {Icon} a
  * @param {Icon} b
@@ -61,7 +53,7 @@ IconList.iconToRow = function (icon) {
     return (
         m('tr', { class: 'icon-list-element', onclick: function () { IconList.gotoIcon(icon); } }, [
             m('td', m('div', { class: 'icon-list-image' },
-                m('img', { src: IconList.iconPath(icon) + '?d=' + icon.DateChanged })
+                m('img', { src: iconImagePath(icon) })
             )),
             m('td', icon.Name),
         ])

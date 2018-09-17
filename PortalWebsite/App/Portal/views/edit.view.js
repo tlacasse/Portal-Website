@@ -26,13 +26,7 @@ Edit.unique = String(new Date()) + String(Math.random());
 /**
  * Client side Icon Model storage.
  */
-Edit.icon = {
-    Id: -1,
-    Name: '',
-    Image: 'png',
-    Link: '',
-    DateChanged: '',
-}
+Edit.icon = emptyIcon();
 
 // Functions
 
@@ -52,13 +46,7 @@ Edit.getSource = function () {
             ErrorMessage.show(e);
         });
     } else {
-        Edit.icon = {
-            Id: -1,
-            Name: '',
-            Image: 'png',
-            Link: '',
-            DateChanged: '',
-        }
+        Edit.icon = emptyIcon();
     }
 }
 
@@ -195,7 +183,7 @@ Edit.view = function () {
                 ]),
                 Edit.formRow(nbsp(),
                     m('div', { class: 'icon-form-img' },
-                        m('img', { src: IconList.iconPath(Edit.icon) + '?d=' + Edit.icon.DateChanged })
+                        m('img', { src: iconImagePath(Edit.icon) })
                     )
                 ),
                 Edit.emptyRow(),

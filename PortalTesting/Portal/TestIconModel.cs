@@ -64,6 +64,10 @@ namespace PortalTesting.Portal {
 
             a.DateChanged = new DateTime();
             Assert.IsTrue(a.Equals(b));
+
+            Assert.IsTrue(b.Equals(a));
+            Assert.IsTrue(a.Equals(a));
+            Assert.IsTrue(b.Equals(b));
         }
 
     }
