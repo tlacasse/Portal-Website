@@ -93,3 +93,23 @@ function emptyIcon() {
 function iconImagePath(icon) {
     return 'Portal/Icons/' + icon.Id + '.' + icon.Image + '?d=' + icon.DateChanged;
 }
+
+/**
+ * Returns the DOM element with the specified id.
+ * @param {String} id
+ */
+function get(id) {
+    return document.getElementById(id);
+}
+
+/**
+ * Force a value to be in a certain range.
+ * @param {Number} value
+ * @param {Number} min
+ * @param {Number} max
+ */
+function clamp(value, min, max) {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+}

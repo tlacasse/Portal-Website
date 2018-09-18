@@ -28,9 +28,14 @@ namespace PortalWebsite.Controllers.Portal {
         internal static GridSize CurrentGridSize { get; set; }
 
         [HttpGet]
-        [Route("size")]
-        public GridSize GetDimensions() {
-            return CurrentGridSize;
+        [Route("size/get")]
+        public dynamic GetDimensions() {
+            return new { //anonymous type to include Max/Min
+                CurrentGridSize.Width,
+                CurrentGridSize.Height,
+                CurrentGridSize.Max,
+                CurrentGridSize.Min
+            };
         }
 
     }

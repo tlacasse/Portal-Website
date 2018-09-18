@@ -46,6 +46,9 @@ namespace PortalWebsite.Data.Logic.Portal {
             Icon icon = form.GetIcon();
             icon.ValidateData();
 
+            // Force DB name to be correctly formatted
+            icon.Name = PortalUtility.UnUrlFormat(PortalUtility.UrlFormat(icon.Name));
+
             IPostedFile file = form.GetPostedFile();
             if (icon.IsNew && file == null) {
                 throw new ArgumentNullException("Icon Image File");

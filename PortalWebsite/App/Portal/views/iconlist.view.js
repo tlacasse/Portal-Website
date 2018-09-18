@@ -4,9 +4,14 @@
 var IconList = {};
 
 /**
- * Table rows of the Icon List.
+ * Source list of Icon models.
  */
-IconList.iconNodes = [];
+IconList.source = [];
+
+/**
+ * If the IconList is on the Grid Configuration page.
+ */
+IconList.isGridList = false;
 
 // Functions
 
@@ -35,12 +40,26 @@ IconList.getIconList = function () {
         method: 'GET',
         url: 'api/portal/icon/list',
     }).then(function (data) {
-        IconList.iconNodes = data
-            .sort(IconList.iconNameCompare)
-            .map(x => IconList.iconToRow(x));
+        IconList.source = data;
+        if (IconList.isGridList) {
+            IconList.source.push({ Name: '' });
+        }
     }).catch(function (e) {
         ErrorMessage.show(e);
     });
+}
+
+/**
+ * Does an action, based on page context, when clicking an Icon.
+ * @param {Icon} icon
+ */
+IconList.iconOnClick = function (icon) {
+    if (IconList.isGridList) {
+        Grid.activeIcon = icon;
+        m.redraw();
+    } else {
+        IconList.gotoIcon(icon);
+    }
 }
 
 // View Functions
@@ -50,13 +69,35 @@ IconList.getIconList = function () {
  * @param {Icon} icon
  */
 IconList.iconToRow = function (icon) {
+    var onclick, src, name, classes;
+    classes = 'icon-list-element';
+    if (icon.Name === '') {
+        // eraser icon
+        onclick = function () { IconList.iconOnClick(null); };
+        src = iconImagePath(emptyIcon());
+        name = '(Erase)';
+        if (IconList.isGridList && Grid.activeIcon == null) {
+            classes += ' icon-list-grid-selected'
+        }
+    } else {
+        // normal icon
+        onclick = function () { IconList.iconOnClick(icon); };
+        src = iconImagePath(icon);
+        name = icon.Name;
+        if (IconList.isGridList && Grid.activeIcon != null && Grid.activeIcon.Id == icon.Id) {
+            classes += ' icon-list-grid-selected'
+        }
+    }
     return (
-        m('tr', { class: 'icon-list-element', onclick: function () { IconList.gotoIcon(icon); } }, [
-            m('td', m('div', { class: 'icon-list-image' },
-                m('img', { src: iconImagePath(icon) })
-            )),
-            m('td', icon.Name),
-        ])
+        m('tr', {
+            class: classes,
+            onclick: onclick,
+        }, [
+                m('td', m('div', { class: 'icon-list-image' },
+                    m('img', { src: src })
+                )),
+                m('td', name),
+            ])
     );
 }
 
@@ -77,7 +118,10 @@ IconList.emptyRow = function () {
 /**
  * Mithril oninit.
  */
-IconList.oninit = IconList.getIconList;
+IconList.oninit = function () {
+    IconList.isGridList = (m.route.get().indexOf('grid') >= 0);
+    IconList.getIconList();
+}
 
 /**
  * Mithril view.
@@ -88,7 +132,9 @@ IconList.view = function () {
             m('div', { class: 'section-title' }, 'Icons'),
             m('table', { class: 'icon-list-table' }, [
                 IconList.emptyRow(),
-                IconList.iconNodes,
+                IconList.source
+                    .sort(IconList.iconNameCompare)
+                    .map(x => IconList.iconToRow(x)),
                 IconList.emptyRow(),
             ]),
             ''

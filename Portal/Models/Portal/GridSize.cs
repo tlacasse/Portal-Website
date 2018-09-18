@@ -9,7 +9,7 @@ namespace Portal.Models.Portal {
 
     public class GridSize {
 
-        private static readonly int MIN = 5;
+        private static readonly int MIN = 4;
         private static readonly int MAX = 30;
 
         /// <summary>
