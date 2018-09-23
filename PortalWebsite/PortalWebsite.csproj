@@ -177,6 +177,7 @@
     <Compile Include="Data\IPostedFile.cs" />
     <Compile Include="Data\Logic\Portal\GridSizeExtensions.cs" />
     <Compile Include="Data\Logic\Portal\IconFormPostExtensions.cs" />
+    <Compile Include="Data\Logic\Portal\PortalConnectionExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

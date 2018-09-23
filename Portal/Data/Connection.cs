@@ -16,9 +16,15 @@ namespace Portal.Data {
     /// </summary>
     public class Connection : IConnection {
 
+        /// <summary>
+        /// SQLite connection string.
+        /// </summary>
         private static readonly string CONNECTION_STRING =
             "Data Source=" + Path.Combine(PortalUtility.SitePath, "Portal\\PortalWebsite.db") + ";Version=3;Password=portal;";
 
+        /// <summary>
+        /// SQLite connection.
+        /// </summary>
         private SQLiteConnection SQLite { get; }
 
         /// <summary>
@@ -39,7 +45,10 @@ namespace Portal.Data {
         /// <summary>
         /// Executes a query and returns the results converted to the type specified by the generic type parameter.
         /// </summary>
-        public IList<Model> Execute<Model>(string query) {
+        public IList<Model> Execute<Model>(string query, QueryOptions options = QueryOptions.None) {
+            if (options.Includes(QueryOptions.Log)) {
+                Log("Query", query);
+            }
             PropertyInfo[] properties = typeof(Model).GetProperties();
             List<Model> results = new List<Model>();
             using (SQLiteCommand command = new SQLiteCommand(query, SQLite)) {
@@ -65,12 +74,29 @@ namespace Portal.Data {
         /// <summary>
         /// Executes a SQL statement, such as an UPDATE or INSERT INTO. Throws an exception if no rows were affected.
         /// </summary>
-        public int ExecuteNonQuery(string query) {
+        public int ExecuteNonQuery(string query, QueryOptions options = QueryOptions.None) {
+            if (options.Includes(QueryOptions.Log) ){
+                Log("Query", query);
+            }
             using (SQLiteCommand command = new SQLiteCommand(query, SQLite)) {
                 int affected = command.ExecuteNonQuery();
                 if (affected == 0)
                     throw new PortalException("No rows were affected", query);
                 return affected;
+            }
+        }
+
+        /// <summary>
+        /// Logs a message with a certain context.
+        /// </summary>
+        public void Log(string context, string message) {
+            StringBuilder query = new StringBuilder();
+            query.Append("INSERT INTO Log (Date, Context, Message) VALUES ");
+            query.Append(string.Format("({0}, '{1}', '{2}')",
+                PortalUtility.SqlTimestamp, context.Replace("'", "''"), message.Replace("'", "''")
+            ));
+            using (SQLiteCommand command = new SQLiteCommand(query.ToString(), SQLite)) {
+                command.ExecuteNonQuery();
             }
         }
 

@@ -104,14 +104,6 @@ namespace PortalTesting.Portal {
 
         [TestMethod]
         public void IconUpload_NewIcon() {
-            // new icon without file
-            /*Form = new FakeIconFormPost("One", "two.com", null, null);
-            Assert.ThrowsException<ArgumentNullException>(() => UploadIcon());
-
-            // file too big
-            Form = new FakeIconFormPost("One", "two.com", null, BigFile);
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => UploadIcon());*/
-
             // name already exists
             Form = new FakeIconFormPost("Existing Icon", "test.com", null, SmallFile);
             Assert.ThrowsException<PortalException>(() => UploadIcon());

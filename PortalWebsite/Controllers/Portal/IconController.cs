@@ -22,14 +22,19 @@ namespace PortalWebsite.Portal.Controllers {
         [HttpGet]
         [Route("list")]
         public IList<Icon> GetIconList() {
-            return Query.GetIconList();
+            using (Connection connection = new Connection()) {
+                return connection.GetIconList();
+            }
         }
 
         [HttpGet]
         [Route("get/{urlName}")]
         public Icon GetIconByName(string urlName) {
             string name = PortalUtility.UnUrlFormat(urlName);
-            Icon icon = Query.GetIconByName(name);
+            Icon icon;
+            using (Connection connection = new Connection()) {
+                icon = connection.GetIconByName(name);
+            }
             if (icon == null) {
                 throw new PortalException(string.Format("Icon '{0}' not found", name));
             }

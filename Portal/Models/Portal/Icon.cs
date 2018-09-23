@@ -114,12 +114,12 @@ namespace Portal.Models.Portal {
 
             query.AddField("Name", Name);
             query.AddField("Link", Link);
-            query.AddField("DateChanged", "CURRENT_TIMESTAMP", false);
+            query.AddField("DateChanged", PortalUtility.SqlTimestamp, false);
             if (Image != null) {
                 query.AddField("Image", Image);
             }
             if (IsNew) {
-                query.AddField("DateCreated", "CURRENT_TIMESTAMP", false);
+                query.AddField("DateCreated", PortalUtility.SqlTimestamp, false);
             } else {
                 query.WhereClause = "WHERE Id=" + Id;
             }

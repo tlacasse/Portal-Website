@@ -13,7 +13,7 @@ namespace PortalTesting.Portal.Fakes {
         public void Dispose() {
         }
 
-        public IList<Model> Execute<Model>(string query) {
+        public IList<Model> Execute<Model>(string query, QueryOptions options = QueryOptions.None) {
             if (query.IndexOf("Existing Icon") == -1) {
                 return new List<Model>();
             }
@@ -27,7 +27,7 @@ namespace PortalTesting.Portal.Fakes {
             };
         }
 
-        public int ExecuteNonQuery(string query) {
+        public int ExecuteNonQuery(string query, QueryOptions options = QueryOptions.None) {
             return 1;
         }
 

@@ -66,7 +66,7 @@
     <Compile Include="Data\Connection.cs" />
     <Compile Include="Data\DatabaseUpdateQuery.cs" />
     <Compile Include="Data\IConnection.cs" />
-    <Compile Include="Data\Query.cs" />
+    <Compile Include="Data\QueryOptions.cs" />
     <Compile Include="Models\Portal\GridSize.cs" />
     <Compile Include="Models\Portal\Icon.cs" />
     <Compile Include="PortalException.cs" />
@@ -78,6 +78,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="sqlite\Tables\Log.sql" />
     <Content Include="sqlite\Tables\PortalGrid.sql" />
     <Content Include="sqlite\Tables\PortalIcon.sql" />
     <Content Include="sqlite\Views\vwPortalGrid.sql" />

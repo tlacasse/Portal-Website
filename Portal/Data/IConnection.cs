@@ -14,12 +14,12 @@ namespace Portal.Data {
         /// <summary>
         /// Execute a query and return a converted list.
         /// </summary>
-        IList<Model> Execute<Model>(string query);
+        IList<Model> Execute<Model>(string query, QueryOptions options = QueryOptions.None);
 
         /// <summary>
         /// Execute a non-query statement and return the number of affected rows.
         /// </summary>
-        int ExecuteNonQuery(string query);
+        int ExecuteNonQuery(string query, QueryOptions options = QueryOptions.None);
 
     }
 

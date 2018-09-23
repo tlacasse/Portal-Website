@@ -59,21 +59,21 @@ namespace PortalWebsite.Data.Logic.Portal {
             }
 
             using (IConnection connection = connectionFactory.Invoke()) {
-                Icon findExisting = Query.GetIconByName(icon.Name, connection);
+                Icon findExisting = connection.GetIconByName(icon.Name);
                 if (findExisting != null && findExisting.Id != icon.Id) {
                     throw new PortalException(string.Format("Icon Name '{0}' already exists.", icon.Name));
                 }
                 if (icon.IsNew == false) {
-                    findExisting = Query.GetIconById(icon.Id, connection);
+                    findExisting = connection.GetIconById(icon.Id);
                     if (findExisting == null) {
                         throw new PortalException(string.Format("Icon with Id {0} does not exist.", icon.Id));
                     }
                 }
 
-                connection.ExecuteNonQuery(icon.BuildUpdateQuery());
+                connection.ExecuteNonQuery(icon.BuildUpdateQuery(), QueryOptions.Log);
 
                 if (file != null) {
-                    Icon newIcon = Query.GetIconByName(icon.Name, connection);
+                    Icon newIcon = connection.GetIconByName(icon.Name);
                     if (newIcon == null)
                         throw new PortalException(string.Format("Icon '{0}' not found.", icon.Name));
                     file.SaveAs(Path.Combine(basePath,

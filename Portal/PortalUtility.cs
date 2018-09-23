@@ -21,6 +21,13 @@ namespace Portal {
         }
 
         /// <summary>
+        /// The database value for the current datetime.
+        /// </summary>
+        public static string SqlTimestamp {
+            get { return "datetime(CURRENT_TIMESTAMP, 'localtime')"; }
+        }
+
+        /// <summary>
         /// Instantiates a new object of the specified type from the default constructor.
         /// </summary>
         public static T ConstructEmpty<T>() {
