@@ -88,13 +88,6 @@ namespace Portal.Models.Portal {
                 throw new ArgumentOutOfRangeException("YCoord");
         }
 
-        /// <summary>
-        /// Not allowed on IconPosition.
-        /// </summary>
-        public override string BuildUpdateQuery() {
-            throw new InvalidOperationException();
-        }
-
     }
 
 }

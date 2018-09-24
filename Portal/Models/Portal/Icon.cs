@@ -103,30 +103,6 @@ namespace Portal.Models.Portal {
                 throw new ArgumentException("Icon Name", "Must only have letters, numbers, and spaces.");
         }
 
-        /// <summary>
-        /// Build an INSERT INTO or UPDATE statement for the current state of this Icon.
-        /// </summary>
-        public virtual string BuildUpdateQuery() {
-            DatabaseUpdateQuery query = new DatabaseUpdateQuery(IsNew
-                    ? DatabaseUpdateQuery.QueryType.INSERT
-                    : DatabaseUpdateQuery.QueryType.UPDATE
-                , "PortalIcon");
-
-            query.AddField("Name", Name);
-            query.AddField("Link", Link);
-            query.AddField("DateChanged", PortalUtility.SqlTimestamp, false);
-            if (Image != null) {
-                query.AddField("Image", Image);
-            }
-            if (IsNew) {
-                query.AddField("DateCreated", PortalUtility.SqlTimestamp, false);
-            } else {
-                query.WhereClause = "WHERE Id=" + Id;
-            }
-
-            return query.Build();
-        }
-
     }
 
 }

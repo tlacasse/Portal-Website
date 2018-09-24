@@ -84,6 +84,7 @@
     <Content Include="sqlite\Tables\Log.sql" />
     <Content Include="sqlite\Tables\PortalGrid.sql" />
     <Content Include="sqlite\Tables\PortalIcon.sql" />
+    <Content Include="sqlite\Tables\PortalIconHistory.sql" />
     <Content Include="sqlite\Views\vwPortalGrid.sql" />
     <Content Include="sqlite\Views\vwPortalIcon.sql" />
   </ItemGroup>

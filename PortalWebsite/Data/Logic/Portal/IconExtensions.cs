@@ -9,7 +9,48 @@ using System.Web;
 
 namespace PortalWebsite.Data.Logic.Portal {
 
-    public static class IconFormPostExtensions {
+    public static class IconExtensions {
+
+        /// <summary>
+        /// Build an INSERT INTO or UPDATE statement for the current state of this Icon.
+        /// </summary>
+        public static string BuildUpdateQuery(this Icon icon) {
+            DatabaseUpdateQuery query = new DatabaseUpdateQuery(icon.IsNew
+                    ? DatabaseUpdateQuery.QueryType.INSERT
+                    : DatabaseUpdateQuery.QueryType.UPDATE
+                , "PortalIcon");
+
+            query.AddField("Name", icon.Name);
+            query.AddField("Link", icon.Link);
+            query.AddField("DateChanged", PortalUtility.SqlTimestamp, false);
+            if (icon.Image != null) {
+                query.AddField("Image", icon.Image);
+            }
+            if (icon.IsNew) {
+                query.AddField("DateCreated", PortalUtility.SqlTimestamp, false);
+            } else {
+                query.WhereClause = "WHERE Id=" + icon.Id;
+            }
+
+            return query.Build();
+        }
+
+        /// <summary>
+        /// Builds a query to insert the current state of this Icon for a history record.
+        /// </summary>
+        public static string BuildHistoryInsertQuery(this Icon icon, bool isNew) {
+            DatabaseUpdateQuery query = new DatabaseUpdateQuery(
+                DatabaseUpdateQuery.QueryType.INSERT,
+                "PortalIconHistory");
+            query.AddField("IconId", icon.Id.ToString(), false);
+            query.AddField("Name", icon.Name);
+            query.AddField("Link", icon.Link);
+            query.AddField("Image", icon.Image);
+            query.AddField("IsNew", isNew ? "1" : "0", false);
+            query.AddField("DateUpdated", PortalUtility.SqlTimestamp, false);
+            return query.Build();
+        }
+
 
         /// <summary>
         /// Sets a new Icon with the values of the Icon FormPost.
@@ -68,14 +109,17 @@ namespace PortalWebsite.Data.Logic.Portal {
                     if (findExisting == null) {
                         throw new PortalException(string.Format("Icon with Id {0} does not exist.", icon.Id));
                     }
+                    icon.Image = icon.Image ?? findExisting.Image; //make sure history has image
                 }
 
                 connection.ExecuteNonQuery(icon.BuildUpdateQuery(), QueryOptions.Log);
+                Icon newIcon = connection.GetIconByName(icon.Name);
+                if (newIcon == null) {
+                    throw new PortalException(string.Format("Icon '{0}' not found.", icon.Name));
+                }
+                connection.ExecuteNonQuery(newIcon.BuildHistoryInsertQuery(icon.IsNew));
 
                 if (file != null) {
-                    Icon newIcon = connection.GetIconByName(icon.Name);
-                    if (newIcon == null)
-                        throw new PortalException(string.Format("Icon '{0}' not found.", icon.Name));
                     file.SaveAs(Path.Combine(basePath,
                         string.Format("Portal/Icons/{0}.{1}", newIcon.Id, newIcon.Image)
                     ));

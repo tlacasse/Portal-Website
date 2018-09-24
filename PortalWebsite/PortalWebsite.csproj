@@ -178,7 +178,7 @@
     <Compile Include="Data\IPostedFile.cs" />
     <Compile Include="Data\Logic\ApiControllerExtensions.cs" />
     <Compile Include="Data\Logic\Portal\GridExtensions.cs" />
-    <Compile Include="Data\Logic\Portal\IconFormPostExtensions.cs" />
+    <Compile Include="Data\Logic\Portal\IconExtensions.cs" />
     <Compile Include="Data\Logic\Portal\PortalConnectionExtensions.cs" />
     <Compile Include="Data\ObjectPost.cs" />
     <Compile Include="Global.asax.cs">
