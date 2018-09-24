@@ -32,6 +32,13 @@ namespace PortalWebsite.Data.Logic.Portal {
             return connection.Execute<Icon>(query).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Returns a list of all active Grid cells with Icons.
+        /// </summary>
+        public static IList<IconPosition> GetGridCells(this IConnection connection) {
+            return connection.Execute<IconPosition>("SELECT * FROM vwPortalGrid");
+        }
+
     }
 
 }

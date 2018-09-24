@@ -30,13 +30,24 @@ Grid.iconBackgroundCSS = 'background-size: contain; '
 /**
  * Fetches the Grid dimensions from the JSON file on the Server.
  */
-Grid.getDimensions = function () {
+Grid.getGrid = function () {
     m.request({
         method: 'GET',
         url: 'api/portal/grid/size/get',
     }).then(function (data) {
         Grid.size = data;
         Grid.grid = Grid.getArray2d(Grid.size.Width, Grid.size.Height, function () { return null; });
+        m.request({
+            method: 'GET',
+            url: 'api/portal/grid/get',
+        }).then(function (data) {
+            for (var i = 0; i < data.length; i++) {
+                var icon = data[i];
+                Grid.grid[icon.XCoord][icon.YCoord] = icon;
+            }
+        }).catch(function (e) {
+            ErrorMessage.show(e);
+        });
     }).catch(function (e) {
         ErrorMessage.show(e);
     });
@@ -98,6 +109,42 @@ Grid.updateGrid = function () {
 Grid.cellOnClick = function (x, y) {
     Grid.grid[x][y] = Grid.activeIcon;
     m.redraw();
+}
+
+/**
+ * Sends the current Grid state (both size and icons) to the server.
+ */
+Grid.postGridUpdate = function () {
+    var gridState = {};
+    gridState.Size = {
+        Width: Grid.size.Width,
+        Height: Grid.size.Height,
+    }
+    var cells = [];
+    for (var i = 0; i < Grid.size.Width; i++) {
+        for (var j = 0; j < Grid.size.Height; j++) {
+            var cell = Grid.grid[i][j];
+            if (cell != null) {
+                cells.push({
+                    XCoord: i,
+                    YCoord: j,
+                    Id: cell.Id,
+                    Name: cell.Name,
+                    Link: cell.Link,
+                });
+            }
+        }
+    }
+    gridState.Cells = cells;
+    m.request({
+        method: 'POST',
+        url: 'api/portal/grid/update',
+        data: gridState,
+    }).then(function (data) {
+        Home.goto();
+    }).catch(function (e) {
+        ErrorMessage.show(e);
+    });
 }
 
 // View Functions
@@ -171,7 +218,7 @@ Grid.getButton = function (name, onclick) {
  */
 Grid.oninit = function () {
     IconList.oninit();
-    Grid.getDimensions();
+    Grid.getGrid();
     Grid.activeIcon = null;
 }
 
@@ -193,7 +240,7 @@ Grid.view = function () {
                 m('span', { style: 'float: right;' }, nbsps(5)),
                 Grid.getButton('Cancel', Home.goto),
                 m('span', { style: 'float: right;' }, nbsps(5)),
-                Grid.getButton('Save', Home.goto),
+                Grid.getButton('Save', Grid.postGridUpdate),
                 m('span', { style: 'float: right;' }, nbsps(5)),
             ]
         ),

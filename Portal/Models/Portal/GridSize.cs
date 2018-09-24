@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Portal.Models.Portal {
 
+    /// <summary>
+    /// Model representing the width and height of a Grid.
+    /// </summary>
     public class GridSize {
 
         private static readonly int MIN = 4;
@@ -41,7 +44,7 @@ namespace Portal.Models.Portal {
         /// <summary>
         /// Throws an exception if any properties are invalid or not allowed.
         /// </summary>
-        public void ValidateData() {
+        public virtual void ValidateData() {
             if (Width > Max)
                 throw new ArgumentOutOfRangeException("Width", string.Format("Maximum width is {0}.", Max));
             if (Height < Min)

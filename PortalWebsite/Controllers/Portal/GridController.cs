@@ -1,6 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Portal;
+using Portal.Data;
 using Portal.Models.Portal;
+using Portal.Models.Portal.Specific;
+using PortalWebsite.Data;
+using PortalWebsite.Data.Logic;
+using PortalWebsite.Data.Logic.Portal;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,6 +41,40 @@ namespace PortalWebsite.Controllers.Portal {
                 CurrentGridSize.Max,
                 CurrentGridSize.Min
             };
+        }
+
+        [HttpGet]
+        [Route("get")]
+        public IEnumerable<IconPosition> GetGridCells() {
+            return this.LogIfError(() => {
+                using (Connection connection = new Connection()) {
+                    return connection.GetGridCells();
+                }
+            });
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public HttpResponseMessage UpdateGrid() {
+            return this.LogIfError(() => {
+                GridState grid = (new ObjectPost<GridState>()).GetPostedObject();
+                GridState current = new GridState() { Size = CurrentGridSize };
+                grid.ValidateData();
+                using (Connection connection = new Connection()) {
+                    current.Cells = connection.GetGridCells();
+                    IEnumerable<IconPosition> toBeInactive = current.GetIconsToBeInactive(grid);
+                    if (toBeInactive.Any()) {
+                        connection.ExecuteNonQuery(toBeInactive.BuildInactivateQuery(), QueryOptions.Log);
+                    }
+                    IEnumerable<IconPosition> toBeAdded = grid.GetIconsToBeAdded(current);
+                    if (toBeAdded.Any()) {
+                        connection.ExecuteNonQuery(toBeAdded.BuildAddIconsQuery(), QueryOptions.Log);
+                    }
+                }
+                CurrentGridSize = grid.Size;
+                CurrentGridSize.SaveSize();
+                return Request.CreateResponse(HttpStatusCode.Accepted);
+            });
         }
 
     }

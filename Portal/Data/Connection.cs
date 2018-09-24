@@ -56,13 +56,17 @@ namespace Portal.Data {
                     while (reader.Read()) {
                         Model model = PortalUtility.ConstructEmpty<Model>();
                         for (int i = 0; i < reader.FieldCount; i++) {
-                            PropertyInfo property = properties.Where(p => p.Name == reader.GetName(i)).First();
-                            if (property.PropertyType.Equals(typeof(int)))
-                                property.SetValue(model, reader.GetInt32(i));
-                            if (property.PropertyType.Equals(typeof(string)))
-                                property.SetValue(model, reader.GetString(i));
-                            if (property.PropertyType.Equals(typeof(DateTime)))
-                                property.SetValue(model, reader.GetDateTime(i));
+                            PropertyInfo property = properties.Where(p => p.Name == reader.GetName(i)).FirstOrDefault();
+                            if (property != null) {
+                                if (property.PropertyType.Equals(typeof(int)))
+                                    property.SetValue(model, reader.GetInt32(i));
+                                if (property.PropertyType.Equals(typeof(string)))
+                                    property.SetValue(model, reader.GetString(i));
+                                if (property.PropertyType.Equals(typeof(bool)))
+                                    property.SetValue(model, reader.GetBoolean(i));
+                                if (property.PropertyType.Equals(typeof(DateTime)))
+                                    property.SetValue(model, reader.GetDateTime(i));
+                            }
                         }
                         results.Add(model);
                     }

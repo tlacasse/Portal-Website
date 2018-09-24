@@ -20,7 +20,7 @@ namespace Portal.Data {
 
         private class Field {
             public string Name { get; set; }
-            public string Value { get; set; }
+            public IEnumerable<string> Values { get; set; }
             public bool IsQuoted { get; set; }
 
             public string Quote {
@@ -60,7 +60,18 @@ namespace Portal.Data {
         public void AddField(string Name, string Value, bool IsQuoted = true) {
             Fields.Add(new Field() {
                 Name = Name,
-                Value = Value,
+                Values = new string[] { Value },
+                IsQuoted = IsQuoted
+            });
+        }
+
+        /// <summary>
+        /// Adds a field to this query.
+        /// </summary>
+        public void AddField(string Name, IEnumerable<string> Value, bool IsQuoted = true) {
+            Fields.Add(new Field() {
+                Name = Name,
+                Values = Value,
                 IsQuoted = IsQuoted
             });
         }
@@ -80,11 +91,17 @@ namespace Portal.Data {
             if (WhereClause == null) {
                 throw new InvalidOperationException("WHERE clause is not set");
             }
+            EnsureValuesAllHaveSameNumber();
+            if (Fields.FirstOrDefault().Values.Count() != 1) {
+                throw new InvalidOperationException("Update statements only allow a single value per field.");
+            }
             StringBuilder sb = new StringBuilder();
             sb.Append("UPDATE " + Table + " SET ");
             sb.Append(
                 string.Join(", ",
-                    Fields.Select(f => string.Format("{0} = {1}{2}{1}", f.Name, f.Quote, f.Value))
+                    Fields.Select(f => string.Format("{0}={1}{2}{1}",
+                        f.IsQuoted ? f.Name.Replace("'", "''") : f.Name,
+                        f.Quote, f.Values.Single()))
                 )
             );
             sb.Append(" ");
@@ -93,17 +110,44 @@ namespace Portal.Data {
         }
 
         private string BuildInsert() {
+            EnsureValuesAllHaveSameNumber();
             StringBuilder sb = new StringBuilder();
-            sb.Append("INSERT INTO " + Table + " ( ");
+            sb.Append("INSERT INTO " + Table + " (");
             sb.Append(string.Join(", ", Fields.Select(f => f.Name)));
-            sb.Append(" ) VALUES ( ");
+            sb.Append(") VALUES ");
+
+            IEnumerable<List<string>> inserts = Fields.First().Values.Select(_ => new List<string>());
+            foreach (Field field in Fields) {
+                inserts = inserts.Zip(field.Values,
+                    (list, value) => AddAndReturnList(list, string.Format("{0}{1}{0}", field.Quote,
+                        field.IsQuoted ? value.Replace("'", "''") : value
+                    ))
+                );
+            }
             sb.Append(
                 string.Join(", ",
-                    Fields.Select(f => string.Format("{0}{1}{0}", f.Quote, f.Value))
+                    inserts.Select(list => "(" + string.Join(", ", list) + ")")
                 )
             );
-            sb.Append(" )");
             return sb.ToString();
+        }
+
+        private void EnsureValuesAllHaveSameNumber() {
+            if (Fields.Any()) {
+                int count = Fields.First().Values.Count();
+                foreach (Field field in Fields) {
+                    if (field.Values.Count() != count) {
+                        throw new ArgumentOutOfRangeException("Fields", "Field value counts are not all the same.");
+                    }
+                }
+            } else {
+                throw new InvalidOperationException("No fields specified.");
+            }
+        }
+
+        private static List<T> AddAndReturnList<T>(List<T> list, T value) {
+            list.Add(value);
+            return list;
         }
 
     }

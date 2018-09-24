@@ -85,7 +85,7 @@ namespace Portal.Models.Portal {
         /// <summary>
         /// Throw an exception if any of the values of this Icon are not acceptable for the Database.
         /// </summary>
-        public void ValidateData() {
+        public virtual void ValidateData() {
             if (string.IsNullOrWhiteSpace(Name))
                 throw new ArgumentNullException("Icon Name");
             if (string.IsNullOrWhiteSpace(Link))
@@ -106,7 +106,7 @@ namespace Portal.Models.Portal {
         /// <summary>
         /// Build an INSERT INTO or UPDATE statement for the current state of this Icon.
         /// </summary>
-        public string BuildUpdateQuery() {
+        public virtual string BuildUpdateQuery() {
             DatabaseUpdateQuery query = new DatabaseUpdateQuery(IsNew
                     ? DatabaseUpdateQuery.QueryType.INSERT
                     : DatabaseUpdateQuery.QueryType.UPDATE
