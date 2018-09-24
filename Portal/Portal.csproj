@@ -66,6 +66,7 @@
     <Compile Include="Data\Connection.cs" />
     <Compile Include="Data\DatabaseUpdateQuery.cs" />
     <Compile Include="Data\IConnection.cs" />
+    <Compile Include="Data\LoggingFailedException.cs" />
     <Compile Include="Data\QueryOptions.cs" />
     <Compile Include="Models\Portal\GridSize.cs" />
     <Compile Include="Models\Portal\Icon.cs" />

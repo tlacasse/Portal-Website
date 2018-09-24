@@ -2,6 +2,7 @@
 using Portal.Data;
 using Portal.Models.Portal;
 using PortalWebsite.Data;
+using PortalWebsite.Data.Logic;
 using PortalWebsite.Data.Logic.Portal;
 using System;
 using System.Collections.Generic;
@@ -22,31 +23,37 @@ namespace PortalWebsite.Portal.Controllers {
         [HttpGet]
         [Route("list")]
         public IList<Icon> GetIconList() {
-            using (Connection connection = new Connection()) {
-                return connection.GetIconList();
-            }
+            return this.LogIfError(() => {
+                using (Connection connection = new Connection()) {
+                    return connection.GetIconList();
+                }
+            });
         }
 
         [HttpGet]
         [Route("get/{urlName}")]
         public Icon GetIconByName(string urlName) {
-            string name = PortalUtility.UnUrlFormat(urlName);
-            Icon icon;
-            using (Connection connection = new Connection()) {
-                icon = connection.GetIconByName(name);
-            }
-            if (icon == null) {
-                throw new PortalException(string.Format("Icon '{0}' not found", name));
-            }
-            return icon;
+            return this.LogIfError(() => {
+                string name = PortalUtility.UnUrlFormat(urlName);
+                Icon icon;
+                using (Connection connection = new Connection()) {
+                    icon = connection.GetIconByName(name);
+                }
+                if (icon == null) {
+                    throw new PortalException(string.Format("Icon '{0}' not found", name));
+                }
+                return icon;
+            });
         }
 
         [HttpPost]
         [Route("post")]
         public async Task<HttpResponseMessage> UpdateIconAsync() {
-            FormPost form = await FormPost.LoadDataAsync(Request);
-            form.UploadIcon(() => new Connection());
-            return Request.CreateResponse(HttpStatusCode.Created);
+            return await this.LogIfError(async () => {
+                FormPost form = await FormPost.LoadDataAsync(Request);
+                form.UploadIcon(() => new Connection());
+                return Request.CreateResponse(HttpStatusCode.Created);
+            });
         }
 
     }

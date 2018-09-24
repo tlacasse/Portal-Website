@@ -75,7 +75,7 @@ namespace Portal.Data {
         /// Executes a SQL statement, such as an UPDATE or INSERT INTO. Throws an exception if no rows were affected.
         /// </summary>
         public int ExecuteNonQuery(string query, QueryOptions options = QueryOptions.None) {
-            if (options.Includes(QueryOptions.Log) ){
+            if (options.Includes(QueryOptions.Log)) {
                 Log("Query", query);
             }
             using (SQLiteCommand command = new SQLiteCommand(query, SQLite)) {
@@ -90,13 +90,36 @@ namespace Portal.Data {
         /// Logs a message with a certain context.
         /// </summary>
         public void Log(string context, string message) {
-            StringBuilder query = new StringBuilder();
-            query.Append("INSERT INTO Log (Date, Context, Message) VALUES ");
-            query.Append(string.Format("({0}, '{1}', '{2}')",
-                PortalUtility.SqlTimestamp, context.Replace("'", "''"), message.Replace("'", "''")
-            ));
-            using (SQLiteCommand command = new SQLiteCommand(query.ToString(), SQLite)) {
-                command.ExecuteNonQuery();
+            Log(context, message, null);
+        }
+
+        /// <summary>
+        /// Logs an error.
+        /// </summary>
+        public void Log(Exception e) {
+            Log("Error", e.Message, e.GetType().ToString());
+        }
+
+        private void Log(string context, string message, string exception) {
+            try {
+                StringBuilder query = new StringBuilder();
+                query.Append("INSERT INTO Log (Date, Context, Message");
+                if (exception != null) {
+                    query.Append(", Exception");
+                }
+                query.Append(") VALUES ");
+                query.Append(string.Format("({0}, '{1}', '{2}'",
+                    PortalUtility.SqlTimestamp, context.Replace("'", "''"), message.Replace("'", "''")
+                ));
+                if (exception != null) {
+                    query.Append(", '").Append(exception).Append("'");
+                }
+                query.Append(")");
+                using (SQLiteCommand command = new SQLiteCommand(query.ToString(), SQLite)) {
+                    command.ExecuteNonQuery();
+                }
+            } catch (Exception e) {
+                throw new LoggingFailedException(e);
             }
         }
 
