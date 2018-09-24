@@ -49,7 +49,7 @@ namespace PortalWebsite.Portal.Controllers {
         [HttpPost]
         [Route("post")]
         public async Task<HttpResponseMessage> UpdateIconAsync() {
-            return await this.LogIfError(async () => {
+            return await this.LogIfErrorAsync(async () => {
                 FormPost form = await FormPost.LoadDataAsync(Request);
                 form.UploadIcon(() => new Connection());
                 return Request.CreateResponse(HttpStatusCode.Created);

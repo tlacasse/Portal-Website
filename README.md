@@ -24,6 +24,8 @@ Database is set up with [these tables and views](https://github.com/tlacasse/Por
 
 ### Future Plans
 
+* "Saved" message after saving / confirmation button on cancel.
+* API Viewer
 * Security & navigation for on-the-go phone viewing
 * Database front-ends
 	* Classes
@@ -33,4 +35,3 @@ Database is set up with [these tables and views](https://github.com/tlacasse/Por
 	* Rating
 	* Recommended meal
 * Laundry view
-* API Viewer
