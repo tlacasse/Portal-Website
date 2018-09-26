@@ -167,7 +167,7 @@ Edit.view = function () {
                 Edit.emptyRow(),
                 Edit.textField('Name:', 'iconName', Edit.icon.Name, function (e) { Edit.icon.Name = e.target.value; }),
                 Edit.textField('Link:', 'iconLink', Edit.icon.Link, function (e) { Edit.icon.Link = e.target.value; }),
-                Edit.formRow('Image', [
+                Edit.formRow('Image:', [
                     m('span', { class: 'icon-form-file' },
                         m('label', { for: 'iconFile' }, [
                             'Select Icon File',

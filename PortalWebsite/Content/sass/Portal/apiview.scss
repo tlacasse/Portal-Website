@@ -1,0 +1,34 @@
+﻿@import "vars";
+
+.api-core {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+$list-ratio: 15%;
+
+.api-list-col1, .api-list-col2 {
+    font-size: 0.5em;
+}
+
+.api-list-col1 {
+    width: $list-ratio;
+}
+
+.api-list-col2 {
+    width: 100% - $list-ratio;
+}
+
+.api-list-element:hover {
+    td {
+        color: $c-header-bg;
+        cursor: pointer;
+    }
+}
+
+.api-table {
+    .icon-form-prompt {
+        padding: 1em 0em 1em 1em;
+    }
+}

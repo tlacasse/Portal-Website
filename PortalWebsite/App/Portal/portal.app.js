@@ -5,6 +5,7 @@ m.route(root, '/', {
     '/edit/:name': Edit,
     '/new': Edit,
     '/grid': Grid,
+    '/view/api': Api,
 });
 
 // error message

@@ -14,9 +14,6 @@ using System.Net;
 
 namespace PortalWebsite.Portal.Controllers {
 
-    /// <summary>
-    /// Anything related to Icons.
-    /// </summary>
     [RoutePrefix("api/portal/icon")]
     public class IconController : ApiController {
 
@@ -31,10 +28,10 @@ namespace PortalWebsite.Portal.Controllers {
         }
 
         [HttpGet]
-        [Route("get/{urlName}")]
-        public Icon GetIconByName(string urlName) {
+        [Route("get/{name}")]
+        public Icon GetIconByName(string name) {
             return this.LogIfError(() => {
-                string name = PortalUtility.UnUrlFormat(urlName);
+                name = PortalUtility.UnUrlFormat(name);
                 Icon icon;
                 using (Connection connection = new Connection()) {
                     icon = connection.GetIconByName(name);

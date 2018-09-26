@@ -68,6 +68,7 @@
     <Compile Include="Data\IConnection.cs" />
     <Compile Include="Data\LoggingFailedException.cs" />
     <Compile Include="Data\QueryOptions.cs" />
+    <Compile Include="Models\Portal\ApiItem.cs" />
     <Compile Include="Models\Portal\GridSize.cs" />
     <Compile Include="Models\Portal\Icon.cs" />
     <Compile Include="Models\Portal\IconPosition.cs" />

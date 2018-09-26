@@ -16,9 +16,6 @@ using System.Web.Http;
 
 namespace PortalWebsite.Controllers.Portal {
 
-    /// <summary>
-    /// Anything related to configuring the Grid of Icons.
-    /// </summary>
     [RoutePrefix("api/portal/grid")]
     public class GridController : ApiController {
 

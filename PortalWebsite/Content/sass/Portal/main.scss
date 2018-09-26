@@ -18,7 +18,7 @@ body {
 
 // Split Content
 
-$split-ratio: .3;
+$split-ratio: .33;
 
 $width-left: $usable-width * $split-ratio;
 $width-right: $usable-width * (1 - $split-ratio);
@@ -95,4 +95,12 @@ a, a:link, a:visited {
 
 a:hover, a:active {
     color: $c-link-active;
+}
+
+// General Style
+
+div.hrule {
+    width: 100%;
+    height: 0.2 * $fs;
+    border-bottom: $border-width ridge $c-contentheader-merge;
 }

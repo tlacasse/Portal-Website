@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Portal\ApiViewController.cs" />
     <Compile Include="Controllers\Portal\GridController.cs" />
     <Compile Include="Controllers\Portal\IconController.cs" />
     <Compile Include="Data\IFormPost.cs" />
@@ -189,6 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\Portal\functions.utility.js" />
+    <Content Include="App\Portal\views\api.view.js" />
     <Content Include="App\Portal\views\edit.view.js" />
     <Content Include="App\Portal\views\errormessage.view.js" />
     <Content Include="App\Portal\views\grid.view.js" />
@@ -224,6 +226,7 @@
     <Content Include="Content\sass\Portal\iconform.scss" />
     <Content Include="Content\sass\Portal\errormessage.scss" />
     <Content Include="Content\sass\Portal\grid.scss" />
+    <Content Include="Content\sass\Portal\apiview.scss" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
