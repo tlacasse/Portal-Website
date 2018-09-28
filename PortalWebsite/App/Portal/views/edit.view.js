@@ -39,7 +39,7 @@ Edit.getSource = function () {
     if (Edit.isNewIcon === false) {
         m.request({
             method: 'GET',
-            url: 'api/portal/icon/get/' + m.route.param('name'),
+            url: '/api/portal/icon/get/' + m.route.param('name'),
         }).then(function (data) {
             Edit.icon = data;
         }).catch(function (e) {
@@ -79,7 +79,7 @@ Edit.formSubmit = function () {
 
     m.request({
         method: 'POST',
-        url: 'api/portal/icon/post',
+        url: '/api/portal/icon/post',
         data: data,
     }).then(function (data) {
         Home.goto();

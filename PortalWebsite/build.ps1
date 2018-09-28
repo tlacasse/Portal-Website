@@ -1,8 +1,10 @@
 ﻿param(
 	  [string]$env = 'dev'
 	, [string]$buildPath = (Join-Path $PSScriptRoot '_Build')
-	, [switch]$ui
+	, [switch]$all
+	, [switch]$portal
 	, [switch]$server
+	, [switch]$framework
 )
 
 function Path-NotExists(){
@@ -28,12 +30,12 @@ if (Path-NotExists $portalPath){
 	New-Item -Path $portalPath -ItemType directory -Verbose
 }
 
-if (-not $server){
-	robocopy $PSScriptRoot $buildPath 'favicon.ico' 'Web.config' 'index.html' 'Global.asax' /COPY:DATS
+if ($all -or (-not $server)){
+	robocopy $PSScriptRoot $buildPath 'favicon.ico' 'Web.config' 'Global.asax' /COPY:DATS
+	robocopy (Join-Path $PSScriptRoot 'Views') (Join-Path $buildPath 'Views') /COPY:DATS /S
 }
 
-if (-not $ui){
-	
+if ($all -or $server){
 	Write-Host '-----------------------------' -ForegroundColor Green
 	Write-Host 'Building CSproject.' -ForegroundColor Green
 	Write-Host '-----------------------------' -ForegroundColor Green
@@ -51,15 +53,18 @@ if (-not $ui){
 	robocopy $sourceBin $destBin /COPY:DATS /S
 }
 
-if (-not $server){
+if ($all -or (-not $server)){
 	Write-Host '-----------------------------' -ForegroundColor Green
 	Write-Host 'Gulp build.' -ForegroundColor Green
 	Write-Host '-----------------------------' -ForegroundColor Green
 
-	if ($ui){
-		& (Resolve-Path 'C:\Users\**\AppData\Roaming\npm\gulp.cmd') 'quick'
-	}else{
-		& (Resolve-Path 'C:\Users\**\AppData\Roaming\npm\gulp.cmd') --env $env
+	$gulp = Resolve-Path 'C:\Users\**\AppData\Roaming\npm\gulp.cmd'
+
+	if ($all -or $framework){
+		& $gulp 'Framework' --env $env
+	}
+	if ($all -or $portal){
+		& $gulp 'Portal' --env $env
 	}
 }
 

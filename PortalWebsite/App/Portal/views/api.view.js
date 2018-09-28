@@ -19,7 +19,7 @@ Api.response = '';
 Api.getApiItems = function () {
     m.request({
         method: 'GET',
-        url: 'api/portal/api/get',
+        url: '/api/portal/api/get',
     }).then(function (data) {
         Api.items = data;
     }).catch(function (e) {
@@ -47,7 +47,7 @@ Api.getRoutingVars = function (apiItem) {
 Api.doApiCall = function () {
     m.request({
         method: 'GET',
-        url: 'api/' + Api.active.Uri,
+        url: '/' + Api.active.Uri,
     }).then(function (data) {
         Api.response = JSON.stringify(data, undefined, 4);
     }).catch(function (e) {
@@ -76,7 +76,7 @@ Api.apiItemToRow = function (apiItem) {
             class: 'api-list-element',
         }, [
                 m('td', apiItem.Verb.toUpperCase()),
-                m('td', apiItem.Uri),
+                m('td', apiItem.Uri.substring(4)),
             ])
     );
 }
@@ -105,13 +105,13 @@ Api.view = function () {
             ''
         ),
         Templates.threePane(
-            m('div', { class: 'section-title' }, 'api/' + Api.active.Uri),
+            m('div', { class: 'section-title' }, Api.active.Uri),
             m('div', { class: 'api-core' },
                 Api.hasSelected ? [
                     m('table', { class: 'icon-form-table api-table' }, [
                         Edit.emptyRow(),
                         Edit.formRow('Method:', Api.active.Verb.toUpperCase()),
-                        Edit.formRow('Uri:', window.location.hostname + '/api/' + Api.active.Uri),
+                        Edit.formRow('Uri:', window.location.hostname + '/' + Api.active.Uri),
                         m('ul', Api.getRoutingVars(Api.active).map(x => m('li', x))),
                         m('button', { class: 'icon-form-input icon-form-button', onclick: Api.doApiCall }, 'Call API'),
                     ]),

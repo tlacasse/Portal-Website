@@ -33,13 +33,13 @@ Grid.iconBackgroundCSS = 'background-size: contain; '
 Grid.getGrid = function () {
     m.request({
         method: 'GET',
-        url: 'api/portal/grid/size/get',
+        url: '/api/portal/grid/size/get',
     }).then(function (data) {
         Grid.size = data;
         Grid.grid = Grid.getArray2d(Grid.size.Width, Grid.size.Height, function () { return null; });
         m.request({
             method: 'GET',
-            url: 'api/portal/grid/get',
+            url: '/api/portal/grid/get',
         }).then(function (data) {
             for (var i = 0; i < data.length; i++) {
                 var icon = data[i];
@@ -138,7 +138,7 @@ Grid.postGridUpdate = function () {
     gridState.Cells = cells;
     m.request({
         method: 'POST',
-        url: 'api/portal/grid/update',
+        url: '/api/portal/grid/update',
         data: gridState,
     }).then(function (data) {
         Home.goto();

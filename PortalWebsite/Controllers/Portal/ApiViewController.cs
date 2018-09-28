@@ -35,7 +35,7 @@ namespace PortalWebsite.Controllers.Portal {
                             .FirstOrDefault();
                         if (route != null && verb != null) {
                             yield return new ApiItem() {
-                                Uri = (routePrefix.Prefix + '/' + route.Template).Substring(4), // 4 -> "api/".Length
+                                Uri = routePrefix.Prefix + '/' + route.Template,
                                 Verb = verb.GetType().ToString().Replace("Attribute", "").Replace("System.Web.Http.Http", "")
                             };
                         }

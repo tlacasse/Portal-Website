@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@if (Request.UserHostAddress != "::1") {
+    Response.Redirect("Login");
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />

@@ -38,7 +38,7 @@ IconList.iconNameCompare = function (a, b) {
 IconList.getIconList = function () {
     m.request({
         method: 'GET',
-        url: 'api/portal/icon/list',
+        url: '/api/portal/icon/list',
     }).then(function (data) {
         IconList.source = data;
         if (IconList.isGridList) {

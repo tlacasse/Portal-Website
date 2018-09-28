@@ -170,7 +170,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\Portal\ApiViewController.cs" />
     <Compile Include="Controllers\Portal\GridController.cs" />
     <Compile Include="Controllers\Portal\IconController.cs" />
@@ -201,12 +203,14 @@
     <Content Include="Content\js\mithril.js" />
     <Content Include="Content\js\mithril.min.js" />
     <Content Include="favicon.ico" />
+    <None Include="Views\App\Index.cshtml" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="gulpfile.js" />
-    <Content Include="index.html" />
+    <Content Include="Views\App\Login.cshtml" />
+    <None Include="Views\App\Portal.cshtml" />
     <None Include="build.ps1" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -235,6 +239,7 @@
       <Name>Portal</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

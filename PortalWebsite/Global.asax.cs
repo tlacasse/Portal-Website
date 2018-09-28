@@ -18,6 +18,7 @@ namespace PortalWebsite {
 
         protected void Application_Start() {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             if (File.Exists(GridController.GRID_DIMENSIONS_FILE)) {
                 GridController.CurrentGridSize =

@@ -50,61 +50,80 @@ function sortComparator(file1, file2) {
     return 0;
 }
 
+function fileAppend(path) {
+    path.basename += dateAppend;
+}
+
+function addMinExt(path) {
+    path.basename += '.min';
+}
+
 ///////////////////////////////////////////////////////////////
 // Tasks
 
-gulp.task('clean', function () {
-    return del([
-        build + '/styles/**/*.css',
-        build + '/app/**/*.js',
-    ]);
-});
+function createTaskGroup(name) {
 
-gulp.task('app', function () {
-    return gulp.src('App/**/*.js')
-        .pipe(sort({ comparator: sortComparator }))
-        .pipe(isProduction() ? concat('app.js') : noop())
-        .pipe(isProduction() ? minify() : noop())
-        .pipe(rename(function (path) {
-            path.basename += dateAppend;
-        }))
-        .pipe(isProduction() ? rename(function (path) { path.basename += '.min'; }) : noop())
-        .pipe(gulp.dest(build + '/app'));
-});
+    gulp.task('clean_' + name, function () {
+        return del([
+            build + '/styles/' + name + '/**/*.css',
+            build + '/apps/' + name + '/**/*.js',
+        ]);
+    });
+
+    gulp.task('app_' + name, function () {
+        return gulp.src('App/' + name + '/**/*.js')
+            .pipe(sort({ comparator: sortComparator }))
+            .pipe(isProduction() ? concat('app.js') : noop())
+            .pipe(isProduction() ? minify() : noop())
+            .pipe(rename(fileAppend))
+            .pipe(isProduction() ? rename(addMinExt) : noop())
+            .pipe(gulp.dest(build + '/Apps/' + name));
+    });
+
+    gulp.task('sass_' + name, function () {
+        return gulp.src('Content/sass/' + name + '/**/*.scss')
+            .pipe(sass())
+            .pipe(isProduction() ? concat('style.css') : noop())
+            .pipe(isProduction() ? cleanCSS() : noop())
+            .pipe(rename(fileAppend))
+            .pipe(isProduction() ? rename(addMinExt) : noop())
+            .pipe(gulp.dest(build + '/Styles/' + name));
+    });
+
+    gulp.task('inject_' + name, function () {
+        return gulp.src(build + '/Views/App/' + name + '.cshtml')
+            .pipe(inject(
+                gulp.src(build + '/Framework/*.js'),
+                { relative: true, name: 'framework' }
+            ))
+            .pipe(inject(
+                gulp.src(build + '/Apps/' + name + '/**/*.js')
+                    .pipe(sort({ comparator: sortComparator })),
+                { relative: true, name: 'app' })
+            )
+            .pipe(inject(
+                gulp.src(build + '/Styles/' + name + '/**/*.css', { read: false }),
+                { relative: true })
+            )
+            .pipe(gulp.dest(build + '/Views/App'))
+    });
+
+    gulp.task(name, gulp.series(
+        'clean_' + name,
+        'app_' + name,
+        'sass_' + name,
+        'inject_' + name
+    ));
+}
 
 gulp.task('mithril', function () {
     return gulp.src(isProduction() ? 'Content/js/mithril.min.js' : 'Content/js/mithril.js')
-        .pipe(gulp.dest(build + '/mithril'));
+        .pipe(gulp.dest(build + '/Framework'));
 });
 
-gulp.task('sass', function () {
-    return gulp.src('Content/sass/**/*.scss')
-        .pipe(sass())
-        .pipe(isProduction() ? concat('style.css') : noop())
-        .pipe(isProduction() ? cleanCSS() : noop())
-        .pipe(rename(function (path) {
-            path.basename += dateAppend;
-        }))
-        .pipe(isProduction() ? rename(function (path) { path.basename += '.min'; }) : noop())
-        .pipe(gulp.dest(build + '/styles'));
-});
+///////////////////////////////////////////////////////////////
+// Runnable Tasks
 
-gulp.task('inject', function () {
-    return gulp.src(build + '/index.html')
-        .pipe(inject(
-            gulp.src(build + '/mithril/*.js'),
-            { relative: true, name: 'framework' }
-        ))
-        .pipe(inject(
-            gulp.src(build + '/app/**/*.js').pipe(sort({ comparator: sortComparator })),
-            { relative: true, name: 'app' })
-        )
-        .pipe(inject(
-            gulp.src(build + '/styles/**/*.css', { read: false }),
-            { relative: true })
-        )
-        .pipe(gulp.dest(build));
-});
+gulp.task('Framework', gulp.series('mithril'));
 
-gulp.task('default', gulp.series('clean', 'app', 'mithril', 'sass', 'inject'));
-gulp.task('quick', gulp.series('clean', 'app', 'sass', 'inject'));
+createTaskGroup('Portal');

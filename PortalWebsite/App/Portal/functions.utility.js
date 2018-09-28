@@ -91,7 +91,7 @@ function emptyIcon() {
  * @param {Icon} icon
  */
 function iconImagePath(icon) {
-    return 'Portal/Icons/' + icon.Id + '.' + icon.Image + '?d=' + icon.DateChanged;
+    return '/Portal/Icons/' + icon.Id + '.' + icon.Image + '?d=' + icon.DateChanged;
 }
 
 /**
