@@ -2,7 +2,6 @@
 using Portal;
 using Portal.Data;
 using Portal.Models.Portal;
-using Portal.Models.Portal.Specific;
 using PortalWebsite.Data;
 using PortalWebsite.Data.Logic;
 using PortalWebsite.Data.Logic.Portal;
@@ -55,10 +54,9 @@ namespace PortalWebsite.Controllers.Portal {
         public HttpResponseMessage UpdateGrid() {
             return this.LogIfError(() => {
                 GridState grid = (new ObjectPost<GridState>()).GetPostedObject();
-                GridState current = new GridState() { Size = CurrentGridSize };
                 grid.ValidateData();
                 using (Connection connection = new Connection()) {
-                    current.Cells = connection.GetGridCells();
+                    GridState current = connection.GetCurrentGridState();
                     IEnumerable<IconPosition> toBeInactive = current.GetIconsToBeInactive(grid);
                     if (toBeInactive.Any()) {
                         connection.ExecuteNonQuery(toBeInactive.BuildInactivateQuery(), QueryOptions.Log);

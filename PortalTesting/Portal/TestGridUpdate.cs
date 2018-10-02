@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Portal.Models.Portal;
-using Portal.Models.Portal.Specific;
 using PortalWebsite.Data.Logic.Portal;
 
 namespace PortalTesting.Portal {

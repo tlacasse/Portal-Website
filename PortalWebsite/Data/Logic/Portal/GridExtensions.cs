@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Portal;
 using Portal.Data;
+using Portal.Data.Web;
 using Portal.Models.Portal;
-using Portal.Models.Portal.Specific;
 using PortalWebsite.Controllers.Portal;
 using System;
 using System.Collections.Generic;
@@ -93,6 +93,36 @@ namespace PortalWebsite.Data.Logic.Portal {
             addQuery.AddField("DateUsed", toBeAdded.Select(_ => PortalUtility.SqlTimestamp), false);
             addQuery.AddField("Active", toBeAdded.Select(_ => "1"), false);
             return addQuery.Build();
+        }
+
+        private static readonly string GRID_STYLE_FORMAT =
+            "background-image: url(/Portal/Icons/{0}.{1}); "
+            + "background-size: contain; "
+            + "background-repeat: no-repeat; "
+            + "background-position: center; ";
+
+        /// <summary>
+        /// Builds the HTML of an Icon Grid.
+        /// </summary>
+        public static string BuildGridHTML(this GridState grid) {
+            HtmlBuilder builder = new HtmlBuilder();
+            //
+            for (int y = 0; y < grid.Size.Height; y++) {
+                builder.Tag("tr").Start();
+                for (int x = 0; x < grid.Size.Width; x++) {
+                    IconPosition test = new IconPosition() { XCoord = x, YCoord = y };
+                    Icon icon = grid.Cells.Where(ip => ip.PositionEquals(test)).FirstOrDefault();
+                    HtmlTagBuilder div =
+                        builder.Tag("td").Start().Tag("div");
+                    if (icon != null) {
+                        div.Attribute("style", string.Format(GRID_STYLE_FORMAT, icon.Id, icon.Image))
+                            .Attribute("onclick", string.Format("goToLink('{0}');", icon.Link));
+                    }
+                    div.Start().End().End();
+                }
+                builder.End();
+            }
+            return builder.Finish();
         }
 
     }

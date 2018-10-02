@@ -66,6 +66,13 @@ namespace Portal {
             }
         }
 
+        /// <summary>
+        /// Returns a DateTime in a string formatted for Sqlite.
+        /// </summary>
+        public static string DateTimeToSqlLiteString(DateTime dateTime) {
+            return dateTime.ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
     }
 
 }

@@ -5,6 +5,7 @@ m.route(root, '/', {
     '/edit/:name': Edit,
     '/new': Edit,
     '/grid': Grid,
+    '/build': Build,
     '/view/api': Api,
 });
 

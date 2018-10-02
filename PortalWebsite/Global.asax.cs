@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Portal;
 using Portal.Models.Portal;
 using PortalWebsite.Controllers.Portal;
 using PortalWebsite.Data.Logic.Portal;
@@ -30,6 +31,15 @@ namespace PortalWebsite {
                 };
                 GridController.CurrentGridSize.SaveSize();
             }
+
+            if (File.Exists(BuildController.LAST_BUILD_FILE)) {
+                BuildController.LastBuildTime = DateTime.Parse(File.ReadAllText(BuildController.LAST_BUILD_FILE));
+            } else {
+                BuildController.LastBuildTime = DateTime.MinValue;
+                File.WriteAllText(BuildController.LAST_BUILD_FILE, BuildController.LastBuildTime.ToString());
+            }
+
+            File.Copy(BuildController.FRONT_PAGE_PATH, BuildController.FRONT_PAGE_PATH_SAVE, true);
         }
 
     }

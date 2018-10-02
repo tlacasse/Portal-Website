@@ -1,5 +1,7 @@
-﻿using Portal.Data;
+﻿using Portal;
+using Portal.Data;
 using Portal.Models.Portal;
+using PortalWebsite.Controllers.Portal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +39,27 @@ namespace PortalWebsite.Data.Logic.Portal {
         /// </summary>
         public static IList<IconPosition> GetGridCells(this IConnection connection) {
             return connection.Execute<IconPosition>("SELECT * FROM vwPortalGrid");
+        }
+
+        /// <summary>
+        /// Returns a Model of the current Grid State.
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <returns></returns>
+        public static GridState GetCurrentGridState(this IConnection connection) {
+            GridState current = new GridState() { Size = GridController.CurrentGridSize };
+            current.Cells = connection.GetGridCells();
+            return current;
+        }
+
+        /// <summary>
+        /// Returns the history of Grid/Icon changes since the last Grid build.
+        /// </summary>
+        public static IList<GridChangeItem> GetGridChanges(this IConnection connection) {
+            string query =
+                string.Format("SELECT * FROM vwPortalGridChanges WHERE DateTime > '{0}'",
+                    PortalUtility.DateTimeToSqlLiteString(BuildController.LastBuildTime));
+            return connection.Execute<GridChangeItem>(query);
         }
 
     }

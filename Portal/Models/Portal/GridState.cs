@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Portal.Models.Portal.Specific {
+namespace Portal.Models.Portal {
 
     /// <summary>
     /// Relevant data for the current state of a grid.

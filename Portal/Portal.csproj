@@ -68,11 +68,14 @@
     <Compile Include="Data\IConnection.cs" />
     <Compile Include="Data\LoggingFailedException.cs" />
     <Compile Include="Data\QueryOptions.cs" />
+    <Compile Include="Data\Web\HtmlBuilder.cs" />
+    <Compile Include="Data\Web\HtmlTagBuilder.cs" />
     <Compile Include="Models\Portal\ApiItem.cs" />
+    <Compile Include="Models\Portal\GridChangeItem.cs" />
     <Compile Include="Models\Portal\GridSize.cs" />
     <Compile Include="Models\Portal\Icon.cs" />
     <Compile Include="Models\Portal\IconPosition.cs" />
-    <Compile Include="Models\Portal\Specific\GridState.cs" />
+    <Compile Include="Models\Portal\GridState.cs" />
     <Compile Include="PortalException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PortalUtility.cs" />
@@ -87,6 +90,7 @@
     <Content Include="sqlite\Tables\PortalIcon.sql" />
     <Content Include="sqlite\Tables\PortalIconHistory.sql" />
     <Content Include="sqlite\Views\vwPortalGrid.sql" />
+    <Content Include="sqlite\Views\vwPortalGridChanges.sql" />
     <Content Include="sqlite\Views\vwPortalIcon.sql" />
   </ItemGroup>
   <ItemGroup />

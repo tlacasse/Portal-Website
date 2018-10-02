@@ -31,6 +31,7 @@ Home.view = function () {
                 m('ul', [
                     m('li', m("a[href=/new]", { oncreate: m.route.link }, 'New Icon')),
                     m('li', m("a[href=/grid]", { oncreate: m.route.link }, 'Grid Configuration')),
+                    m('li', m("a[href=/build]", { oncreate: m.route.link }, 'Build Icon Grid')),
                 ]),
                 m('br'),
                 m('span', { class: 'section-title' }, 'System'),
@@ -40,7 +41,11 @@ Home.view = function () {
                     m('li', m("a[href=/view/api]", { oncreate: m.route.link }, 'Api Viewer')),
                 ]),
             ],
-            ''
+            m('button', {
+                class: 'icon-form-input icon-form-button', onclick: function () {
+                    window.location = '/';
+                }
+            }, 'Exit')
         ),
     );
 }

@@ -6,28 +6,55 @@
 <head>
     <meta charset="utf-8" />
     <title>Portal</title>
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
     <style>
         body {
-            background: radial-gradient(#2d24a8,#0b092a);
             padding: 0px;
             margin: 0px;
         }
 
+        #bg {
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(#2d24a8, #0b092a);
+        }
+
         table {
-            width: 100%;
-            height: 100%;
-            border-spacing: 0px;
+            position: absolute;
+            top: 2.5vh;
+            left: 2.5vw;
+            width: 95vw;
+            height: 95vh;
+            border-collapse: separate;
         }
 
         tr {
             width: 100%;
         }
+
+        td div {
+            position: relative;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 80%;
+        }
+
+            td div:hover {
+                cursor: pointer;
+            }
     </style>
 </head>
 <body>
-    <table>
-        <!-- Icons -->
-    </table>
+    <div id="bg">
+        <table>
+            <!-- Icons -->
+        </table>
+    </div>
+    <script>
+        function goToLink(url) {
+            window.location.href = url;
+        }
+    </script>
 </body>
 </html>

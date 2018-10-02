@@ -32,8 +32,9 @@ if (Path-NotExists $portalPath){
 
 if ($all -or (-not $server)){
 	robocopy $PSScriptRoot $buildPath 'favicon.ico' 'Web.config' 'Global.asax' /COPY:DATS
-	robocopy (Join-Path $PSScriptRoot 'Views') (Join-Path $buildPath 'Views') /COPY:DATS /S
 }
+
+robocopy (Join-Path $PSScriptRoot 'Views') (Join-Path $buildPath 'Views') /COPY:DATS /S
 
 if ($all -or $server){
 	Write-Host '-----------------------------' -ForegroundColor Green
