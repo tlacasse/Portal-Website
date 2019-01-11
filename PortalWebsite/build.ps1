@@ -1,20 +1,20 @@
 ﻿param (
-	  [string]$env = 'dev'
-	, [string]$buildPath = (Join-Path $PSScriptRoot '_Build')
-	, [switch]$all
-	, [switch]$portal
-	, [switch]$server
-	, [switch]$framework
+      [string]$env = 'dev'
+    , [string]$buildPath = (Join-Path $PSScriptRoot '_Build')
+    , [switch]$all
+    , [switch]$portal
+    , [switch]$server
+    , [switch]$framework
     , [switch]$config
     , [string]$connectionString = ('Data Source=' + (Join-Path $buildPath 'Portal\PortalWebsite.db') + ";Version=3;Password=portal;")
 )
 
 function Path-NotExists() {
-	param (
-		[string]$pathToTest
-	)
+    param (
+        [string]$pathToTest
+    )
 
-	return -not (Test-Path($pathToTest))
+    return -not (Test-Path($pathToTest))
 } 
 
 function Inject-WebConfig() {
@@ -35,15 +35,15 @@ Write-Host 'Checking File Existence.' -ForegroundColor Green
 Write-Host '-----------------------------' -ForegroundColor Green
 
 if (Path-NotExists $buildPath) {
-	New-Item -Path $buildPath -ItemType directory -Verbose
+    New-Item -Path $buildPath -ItemType directory -Verbose
 }
 $scriptsPath = Join-Path $buildPath 'Scripts'
 if (Path-NotExists $scriptsPath) {
-	New-Item -Path $scriptsPath -ItemType directory -Verbose
+    New-Item -Path $scriptsPath -ItemType directory -Verbose
 }
 $portalPath = Join-Path $buildPath 'Portal'
 if (Path-NotExists $portalPath) {
-	New-Item -Path $portalPath -ItemType directory -Verbose
+    New-Item -Path $portalPath -ItemType directory -Verbose
 }
 
 if ($all -or $config) {
@@ -54,44 +54,44 @@ if ($all -or $config) {
 robocopy (Join-Path $PSScriptRoot 'Views') (Join-Path $buildPath 'Views') /COPY:DATS /S
 
 if ($all -or $server) {
-	Write-Host '-----------------------------' -ForegroundColor Green
-	Write-Host 'Building CSproject.' -ForegroundColor Green
-	Write-Host '-----------------------------' -ForegroundColor Green
+    Write-Host '-----------------------------' -ForegroundColor Green
+    Write-Host 'Building CSproject.' -ForegroundColor Green
+    Write-Host '-----------------------------' -ForegroundColor Green
 
-	$project = Join-Path $PSScriptRoot 'PortalWebsite.csproj'
-	$msBuildExe = Resolve-Path 'C:\Program Files (x86)\MSBuild\**\Bin\msbuild.exe'
-	if ($env -eq 'release') {
-		& $msBuildExe $project /t:Build /m /p:Configuration=Release
-	} else {
-		& $msBuildExe $project /t:Build /m
-	}
+    $project = Join-Path $PSScriptRoot 'PortalWebsite.csproj'
+    $msBuildExe = Resolve-Path 'C:\Program Files (x86)\MSBuild\**\Bin\msbuild.exe'
+    if ($env -eq 'release') {
+        & $msBuildExe $project /t:Build /m /p:Configuration=Release
+    } else {
+        & $msBuildExe $project /t:Build /m
+    }
 
-	Write-Host '-----------------------------' -ForegroundColor Green
-	Write-Host 'Copy Binaries.' -ForegroundColor Green
-	Write-Host '-----------------------------' -ForegroundColor Green
+    Write-Host '-----------------------------' -ForegroundColor Green
+    Write-Host 'Copy Binaries.' -ForegroundColor Green
+    Write-Host '-----------------------------' -ForegroundColor Green
 
-	$sourceBin = Join-Path $PSScriptRoot 'bin'
-	$destBin = Join-Path $buildPath 'bin'
-	robocopy $sourceBin $destBin /COPY:DATS /S
+    $sourceBin = Join-Path $PSScriptRoot 'bin'
+    $destBin = Join-Path $buildPath 'bin'
+    robocopy $sourceBin $destBin /COPY:DATS /S
 
-	if ($env -eq 'release') {
-		Get-ChildItem (Join-Path $buildPath 'bin') | Where-Object { $_.FullName -like '*.xml' -or $_.FullName -like '*.pdb'} | Remove-Item -Verbose
-	}
+    if ($env -eq 'release') {
+        Get-ChildItem (Join-Path $buildPath 'bin') | Where-Object { $_.FullName -like '*.xml' -or $_.FullName -like '*.pdb'} | Remove-Item -Verbose
+    }
 }
 
 if ($all -or (-not $server)) {
-	Write-Host '-----------------------------' -ForegroundColor Green
-	Write-Host 'Gulp build.' -ForegroundColor Green
-	Write-Host '-----------------------------' -ForegroundColor Green
+    Write-Host '-----------------------------' -ForegroundColor Green
+    Write-Host 'Gulp build.' -ForegroundColor Green
+    Write-Host '-----------------------------' -ForegroundColor Green
 
-	$gulp = Resolve-Path 'C:\Users\**\AppData\Roaming\npm\gulp.cmd'
+    $gulp = Resolve-Path 'C:\Users\**\AppData\Roaming\npm\gulp.cmd'
     
-	if ($all -or $framework) {
-		& $gulp 'Framework' --env $env
-	}
-	if ($all -or $portal) {
-		& $gulp 'Portal' --env $env
-	}
+    if ($all -or $framework) {
+        & $gulp 'Framework' --env $env
+    }
+    if ($all -or $portal) {
+        & $gulp 'Portal' --env $env
+    }
 }
 
 $number = [int]([Environment]::GetEnvironmentVariable('portal_build_number', 'User')) + 1
