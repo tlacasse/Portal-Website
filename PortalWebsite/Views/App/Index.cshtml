@@ -1,5 +1,5 @@
 ﻿@if (Request.UserHostAddress != "::1") {
-    Response.Redirect("Login");
+    Response.Redirect("app/login");
 }
 <!DOCTYPE html>
 <html>
@@ -43,6 +43,11 @@
             td div:hover {
                 cursor: pointer;
             }
+
+        .selected {
+            background-color: rgba(0, 204, 255, 0.5);
+            border-radius: 5%;
+        }
     </style>
 </head>
 <body>
@@ -52,8 +57,18 @@
         </table>
     </div>
     <script>
+        var cells = document.getElementsByClassName('cell');
         function goToLink(url) {
             window.location.href = url;
+        }
+        function highlight(e) {
+            for (var i = 0; i < cells.length; i++) {
+                console.log(i);
+                console.log(cells[i].parentElement.classList);
+                cells[i].parentElement.classList.remove('selected');
+                console.log(cells[i].parentElement.classList);
+            }
+            e.parentElement.classList.add('selected');
         }
     </script>
 </body>
