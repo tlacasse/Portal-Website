@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Configuration;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Portal.Data {
         /// SQLite connection string.
         /// </summary>
         private static readonly string CONNECTION_STRING =
-            "Data Source=" + Path.Combine(PortalUtility.SitePath, "Portal\\PortalWebsite.db") + ";Version=3;Password=portal;";
+            ConfigurationManager.ConnectionStrings["Portal"].ConnectionString;
 
         /// <summary>
         /// SQLite connection.

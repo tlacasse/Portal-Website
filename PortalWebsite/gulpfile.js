@@ -21,7 +21,7 @@ var knownOptions = {
 
 var options = minimist(process.argv.slice(2), knownOptions);
 
-function isProduction() {
+function isRelease() {
     return options.env.toUpperCase() === 'release'.toUpperCase();
 }
 
@@ -38,7 +38,7 @@ function getDiff(file1, file2, extension) {
 function sortComparator(file1, file2) {
     var diff;
 
-    diff = getDiff(file1, file2, 'utility');
+    diff = getDiff(file1, file2, 'util');
     if (diff !== 0) return diff;
 
     diff = getDiff(file1, file2, 'view');
@@ -55,7 +55,7 @@ function fileAppend(path) {
 }
 
 function addMinExt(path) {
-    path.basename += '.min';
+    path.basename += '-min';
 }
 
 ///////////////////////////////////////////////////////////////
@@ -73,36 +73,39 @@ function createTaskGroup(name) {
     gulp.task('app_' + name, function () {
         return gulp.src('App/' + name + '/**/*.js')
             .pipe(sort({ comparator: sortComparator }))
-            .pipe(isProduction() ? concat('app.js') : noop())
-            .pipe(isProduction() ? minify() : noop())
+            .pipe(isRelease() ? concat(name.toLowerCase() + '.js') : noop())
+            .pipe(isRelease() ? minify({ noSource: true }) : noop())
             .pipe(rename(fileAppend))
-            .pipe(isProduction() ? rename(addMinExt) : noop())
-            .pipe(gulp.dest(build + '/Apps/' + name));
+            .pipe(gulp.dest(build + '/Apps' + (isRelease() ? '' : ('/' + name))));
     });
 
     gulp.task('sass_' + name, function () {
         return gulp.src('Content/sass/' + name + '/**/*.scss')
             .pipe(sass())
-            .pipe(isProduction() ? concat('style.css') : noop())
-            .pipe(isProduction() ? cleanCSS() : noop())
+            .pipe(isRelease() ? concat(name.toLowerCase() + '.css') : noop())
+            .pipe(isRelease() ? cleanCSS() : noop())
+            .pipe(isRelease() ? rename(addMinExt) : noop())
             .pipe(rename(fileAppend))
-            .pipe(isProduction() ? rename(addMinExt) : noop())
-            .pipe(gulp.dest(build + '/Styles/' + name));
+            .pipe(gulp.dest(build + '/Styles' + (isRelease() ? '' : ('/' + name))));
     });
 
     gulp.task('inject_' + name, function () {
         return gulp.src(build + '/Views/App/' + name + '.cshtml')
             .pipe(inject(
-                gulp.src(build + '/Framework/*.js'),
+                gulp.src(build + '/Framework/*.js', { read: false }),
                 { relative: true, name: 'framework' }
             ))
             .pipe(inject(
-                gulp.src(build + '/Apps/' + name + '/**/*.js')
+                gulp.src(build + (isRelease()
+                    ? ('/Apps/' + name.toLowerCase() + '-min' + dateAppend + '.js')
+                    : ('/Apps/' + name + '/**/*.js')), { read: false })
                     .pipe(sort({ comparator: sortComparator })),
                 { relative: true, name: 'app' })
             )
             .pipe(inject(
-                gulp.src(build + '/Styles/' + name + '/**/*.css', { read: false }),
+                gulp.src(build + (isRelease()
+                    ? ('/Styles/' + name.toLowerCase() + '-min' + dateAppend + '.css')
+                    : ('/Styles/' + name + '/**/*.css')), { read: false }),
                 { relative: true })
             )
             .pipe(gulp.dest(build + '/Views/App'))
@@ -117,7 +120,7 @@ function createTaskGroup(name) {
 }
 
 gulp.task('mithril', function () {
-    return gulp.src(isProduction() ? 'Content/js/mithril.min.js' : 'Content/js/mithril.js')
+    return gulp.src(isRelease() ? 'Content/js/mithril.min.js' : 'Content/js/mithril.js')
         .pipe(gulp.dest(build + '/Framework'));
 });
 
