@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalWebsite", "PortalWebsite\PortalWebsite.csproj", "{1E461197-3EC5-4445-A3EF-53F1CC02F963}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal.Website", "Portal.Website\Portal.Website.csproj", "{1E461197-3EC5-4445-A3EF-53F1CC02F963}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal", "Portal\Portal.csproj", "{039723AB-0BE4-4BCA-B324-72CA19AB7862}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalTesting", "PortalTesting\PortalTesting.csproj", "{1372534B-4ACF-4C52-9750-DDDA3445BA7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal.Testing", "Portal.Testing\Portal.Testing.csproj", "{1372534B-4ACF-4C52-9750-DDDA3445BA7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

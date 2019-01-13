@@ -18,7 +18,11 @@ namespace Portal.Data {
         /// <summary>
         /// If the query should be logged.
         /// </summary>
-        Log = 1
+        Log = 1,
+        /// <summary>
+        /// If a non-result query has no effected rows, an exception will not be thrown.
+        /// </summary>
+        AllowNoUpdatedRows = 2,
     }
 
     public static class QueryOptionsExtensions {

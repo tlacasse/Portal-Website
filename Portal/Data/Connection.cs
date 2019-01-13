@@ -85,7 +85,7 @@ namespace Portal.Data {
             }
             using (SQLiteCommand command = new SQLiteCommand(query, SQLite)) {
                 int affected = command.ExecuteNonQuery();
-                if (affected == 0)
+                if (affected == 0 && options.Includes(QueryOptions.AllowNoUpdatedRows) == false)
                     throw new PortalException("No rows were affected", query);
                 return affected;
             }
