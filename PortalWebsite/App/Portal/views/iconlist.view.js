@@ -1,143 +1,136 @@
 ﻿/**
  * Navigation Icon List populating the left content of most pages.
  */
-var IconList = {};
+var IconList = (function () {
+    "use strict";
+    var vm = {};
 
-/**
- * Source list of Icon models.
- */
-IconList.source = [];
+    // source list of icon models
+    vm.sourceList = [];
 
-/**
- * If the IconList is on the Grid Configuration page.
- */
-IconList.isGridList = false;
+    // if this is on the Grid Configuration page
+    vm.isGridList = false;
 
-// Functions
-
-/**
- * Go to the Edit view of an Icon.
- * @param {String} icon
- */
-IconList.gotoIcon = function (icon) {
-    m.route.set('/edit/' + formatURL(icon.Name));
-}
-
-/**
- * Icon sorting comparison function.
- * @param {Icon} a
- * @param {Icon} b
- */
-IconList.iconNameCompare = function (a, b) {
-    return a.Name.localeCompare(b.Name);
-}
-
-/**
- * Retrieves the Icon List from the server.
- */
-IconList.getIconList = function () {
-    m.request({
-        method: 'GET',
-        url: '/api/portal/icon/list',
-    }).then(function (data) {
-        IconList.source = data;
-        if (IconList.isGridList) {
-            IconList.source.push({ Name: '' });
-        }
-    }).catch(function (e) {
-        ErrorMessage.show(e);
-    });
-}
-
-/**
- * Does an action, based on page context, when clicking an Icon.
- * @param {Icon} icon
- */
-IconList.iconOnClick = function (icon) {
-    if (IconList.isGridList) {
-        Grid.activeIcon = icon;
-        m.redraw();
-    } else {
-        IconList.gotoIcon(icon);
+    function iconNameCompare(a, b) {
+        return a.Name.localeCompare(b.Name);
     }
-}
 
-// View Functions
+    function getIconList() {
+        m.request({
+            method: 'GET',
+            url: '/api/portal/icon/list',
+        }).then(function (data) {
+            vm.sourceList = data;
+            if (vm.isGridList) {
+                // empty icon for erase
+                vm.sourceList.push({ Name: '' });
+            }
+        }).catch(function (e) {
+            ErrorMessage.show(e);
+        });
+    }
 
-/**
- * Formats an Icon into a row on the list.
- * @param {Icon} icon
- */
-IconList.iconToRow = function (icon) {
-    var onclick, src, name, classes;
-    classes = 'icon-list-element';
-    if (icon.Name === '') {
-        // eraser icon
-        onclick = function () { IconList.iconOnClick(null); };
-        src = iconImagePath(emptyIcon());
-        name = '(Erase)';
-        if (IconList.isGridList && Grid.activeIcon == null) {
-            classes += ' icon-list-grid-selected'
-        }
-    } else {
-        // normal icon
-        onclick = function () { IconList.iconOnClick(icon); };
-        src = iconImagePath(icon);
-        name = icon.Name;
-        if (IconList.isGridList && Grid.activeIcon != null && Grid.activeIcon.Id == icon.Id) {
-            classes += ' icon-list-grid-selected'
+    function iconOnClick(icon) {
+        if (vm.isGridList) {
+            Grid.setActiveIcon(icon);
+            m.redraw();
+        } else {
+            gotoIcon(icon);
         }
     }
-    return (
-        m('tr', {
-            class: classes,
-            onclick: onclick,
-        }, [
-                m('td', m('div', { class: 'icon-list-image' },
-                    m('img', { src: src })
-                )),
-                m('td', name),
+
+    function gotoIcon(icon) {
+        m.route.set('/edit/' + formatURL(icon.Name));
+    }
+
+    // mithril oninit
+    function oninit() {
+        vm.isGridList = (m.route.get().indexOf('grid') >= 0);
+        getIconList();
+    }
+
+    ////////////////////// View
+
+    function emptyRow() {
+        return (
+            m('tr', [
+                m('td', { class: 'icon-list-col1' }, ' '),
+                m('td', { class: 'icon-list-col2' }, ' '),
             ])
-    );
-}
+        );
+    }
 
-/**
- * A empty row on the Icon List, defines formatting.
- */
-IconList.emptyRow = function () {
-    return (
-        m('tr', [
-            m('td', { class: 'icon-list-col1' }, ' '),
-            m('td', { class: 'icon-list-col2' }, ' '),
-        ])
-    );
-}
+    function prepIconData() {
+        return {
+            onclick: null,
+            imagePath: null,
+            name: null,
+            classes: 'icon-list-element',
+        };
+    }
 
-// View
+    function prepEmptyIcon() {
+        var iconRow = prepIconData();
+        iconRow.onclick = function () { iconOnClick(null); };
+        iconRow.imagePath = iconImagePath(emptyIcon());
+        iconRow.name = '(Erase)';
+        if (vm.isGridList && Grid.getActiveIcon() == null) {
+            iconRow.classes += ' icon-list-grid-selected'
+        }
+        return iconRow;
+    }
 
-/**
- * Mithril oninit.
- */
-IconList.oninit = function () {
-    IconList.isGridList = (m.route.get().indexOf('grid') >= 0);
-    IconList.getIconList();
-}
+    function prepIcon(icon) {
+        var iconRow = prepIconData();
+        iconRow.onclick = function () { iconOnClick(icon); };
+        iconRow.imagePath = iconImagePath(icon);
+        iconRow.name = icon.Name;
+        if (vm.isGridList && Grid.getActiveIcon() != null && Grid.getActiveIcon().Id == icon.Id) {
+            iconRow.classes += ' icon-list-grid-selected'
+        }
+        return iconRow;
+    }
 
-/**
- * Mithril view.
- */
-IconList.view = function () {
-    return (
-        Templates.threePane(
-            m('div', { class: 'section-title' }, 'Icons'),
-            m('table', { class: 'icon-list-table' }, [
-                IconList.emptyRow(),
-                IconList.source
-                    .sort(IconList.iconNameCompare)
-                    .map(x => IconList.iconToRow(x)),
-                IconList.emptyRow(),
-            ]),
-            ''
-        )
-    );
-}
+    function iconToRow(icon) {
+        var iconRow = icon.Name === '' ? prepEmptyIcon() : prepIcon(icon);
+        return (
+            m('tr', {
+                class: iconRow.classes,
+                onclick: iconRow.onclick,
+            }, [
+                    m('td', m('div', { class: 'icon-list-image' },
+                        m('img', { src: iconRow.imagePath })
+                    )),
+                    m('td', iconRow.name),
+                ])
+        );
+    }
+
+    function view() {
+        return (
+            Templates.threePane(
+                m('div', { class: 'section-title' }, 'Icons'),
+                m('table', { class: 'icon-list-table' }, [
+                    emptyRow(),
+                    vm.sourceList
+                        .sort(iconNameCompare)
+                        .map(x => iconToRow(x)),
+                    emptyRow(),
+                ]),
+                ''
+            )
+        );
+    }
+
+    return {
+        oninit: oninit,
+        view: view,
+        gotoIcon: gotoIcon,
+        isGridList: function () {
+            return vm.isGridList;
+        },
+        private: function () {
+            return vm;
+        },
+    };
+})();

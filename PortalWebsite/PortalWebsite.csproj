@@ -192,20 +192,23 @@
     <Compile Include="Data\FormPost.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\Portal\functions.utility.js" />
+    <Content Include="-1.png" />
+    <Content Include="App\Portal\functions.util.js" />
     <Content Include="App\Portal\views\api.view.js" />
     <Content Include="App\Portal\views\build.view.js" />
     <Content Include="App\Portal\views\edit.view.js" />
-    <Content Include="App\Portal\views\errormessage.view.js" />
+    <Content Include="App\Shared\views\errormessage.view.js" />
     <Content Include="App\Portal\views\grid.view.js" />
     <Content Include="App\Portal\views\home.view.js" />
     <Content Include="App\Portal\views\iconlist.view.js" />
-    <Content Include="App\Portal\templates.utility.js" />
+    <Content Include="App\Portal\templates.util.js" />
     <Content Include="App\Portal\portal.app.js" />
+    <Content Include="App\Shared\functions.util.js" />
     <Content Include="Content\js\mithril.js" />
     <Content Include="Content\js\mithril.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Content\sass\Portal\build.scss" />
+    <Content Include="setup.ps1" />
     <None Include="Views\App\Index.cshtml" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">

@@ -1,204 +1,195 @@
 ﻿/**
- * View for updating an Icon, or adding a new one.
+ * Updating an Icon, or adding a new one.
  */
-var Edit = {};
+var Edit = (function () {
+    "use strict";
+    var vm = {};
 
-/**
- * Whether or not this is an entirely new icon.
- */
-Edit.isNewIcon = true;
+    // if entirely new icon
+    vm.isNewIcon = false;
 
-/**
- * String storing the route path to diff and signal a refresh of the page.
- */
-Edit.pathSave = '';
+    // Icon view model
+    vm.iconModel = emptyIcon();
 
-/**
- * String storing the name of the attached Image file.
- */
-Edit.fileName = '';
+    // name of attached image file
+    vm.imageFileName = '';
 
-/**
- * Unique string to prevent Input caching.
- */
-Edit.unique = String(new Date()) + String(Math.random());
+    // stores the route, to diff and signal a page refresh
+    vm.routeSave = '';
 
-/**
- * Client side Icon Model storage.
- */
-Edit.icon = emptyIcon();
+    // unique string to prevent input caching.
+    vm.unique = String(new Date()) + String(Math.random());
 
-// Functions
+    function getSourceIcon() {
+        if (vm.isNewIcon === false) {
+            m.request({
+                method: 'GET',
+                url: '/api/portal/icon/get/' + m.route.param('name'),
+            }).then(function (data) {
+                vm.iconModel = data;
+            }).catch(function (e) {
+                ErrorMessage.show(e);
+            });
+        } else {
+            vm.iconModel = emptyIcon();
+        }
+    }
 
-/**
- * Based on the route parameter or not, fetches the existing Icon from the server, or use a empty new one.
- */
-Edit.getSource = function () {
-    Edit.isNewIcon = nonexistant(m.route.param('name'));
-    Edit.pathSave = m.route.get();
-    if (Edit.isNewIcon === false) {
+    function setupPage() {
+        vm.isNewIcon = nonexistent(m.route.param('name'));
+        vm.routeSave = m.route.get();
+        getSourceIcon();
+    }
+
+    function getFileInput() {
+        var iconfileinput = get('iconFile');
+        return iconfileinput == null ? null : iconfileinput.files[0];
+    }
+
+    function updateFileName() {
+        var file = getFileInput();
+        if (nonexistent(file) === false) {
+            vm.imageFileName = file.name;
+        }
+    }
+
+    function submitForm() {
+        var data = new FormData();
+        data.append('File', getFileInput());
+        data.append('Name', vm.iconModel.Name);
+        data.append('Link', vm.iconModel.Link);
+        data.append('Id', vm.iconModel.Id);
+
         m.request({
-            method: 'GET',
-            url: '/api/portal/icon/get/' + m.route.param('name'),
+            method: 'POST',
+            url: '/api/portal/icon/post',
+            data: data,
         }).then(function (data) {
-            Edit.icon = data;
+            Home.goto();
         }).catch(function (e) {
             ErrorMessage.show(e);
         });
-    } else {
-        Edit.icon = emptyIcon();
     }
-}
 
-/**
- * Gets the attached Image files.
- */
-Edit.getFileInput = function () {
-    var iconfileinput = document.getElementById('iconFile');
-    return iconfileinput == null ? null : iconfileinput.files[0];
-}
-
-/**
- * Updates the visual file name.
- */
-Edit.updateFileName = function () {
-    var file = Edit.getFileInput();
-    if (nonexistant(file) === false) {
-        Edit.fileName = file.name;
+    // mithril oninit
+    function oninit() {
+        IconList.oninit();
+        setupPage();
     }
-}
-/**
- * Sends the updated Icon info to the server.
- */
-Edit.formSubmit = function () {
-    var data = new FormData();
-    data.append('File', Edit.getFileInput());
-    data.append('Name', Edit.icon.Name);
-    data.append('Link', Edit.icon.Link);
-    data.append('Id', Edit.icon.Id);
 
-    m.request({
-        method: 'POST',
-        url: '/api/portal/icon/post',
-        data: data,
-    }).then(function (data) {
-        Home.goto();
-    }).catch(function (e) {
-        ErrorMessage.show(e);
-    });
-}
-
-// View Functions
-
-/**
- * Empty row in the form, specifies formatting.
- */
-Edit.emptyRow = function () {
-    return (
-        m('tr', [
-            m('td', { class: 'icon-form-col1' }, ' '),
-            m('td', { class: 'icon-form-col2' }, ' '),
-        ])
-    );
-}
-
-/**
- * A label-input row of the form.
- * @param {Component} prompt
- * @param {Component} field 
- */
-Edit.formRow = function (prompt, field) {
-    return (
-        m('tr', [
-            m('td', m('div', { class: 'icon-form-prompt' }, prompt)),
-            m('td', field),
-        ])
-    );
-}
-
-/**
- * A label-input row of the form specifically for a text field.
- * @param {any} prompt
- * @param {any} id
- * @param {any} value
- * @param {any} updateFunction
- */
-Edit.textField = function (prompt, id, value, updateFunction) {
-    return Edit.formRow(prompt,
-        m('input', {
-            type: 'text',
-            id: id,
-            name: id + Edit.unique,
-            class: 'icon-form-input',
-            value: value,
-            onchange: updateFunction,
-        })
-    );
-}
-
-// View
-
-/**
- * Mithril oninit.
- */
-Edit.oninit = function () {
-    IconList.oninit();
-    Edit.getSource();
-}
-
-/**
- * Mithril onupdate.
- */
-Edit.onupdate = function () {
-    if (m.route.get() !== Edit.pathSave) {
-        Edit.getSource();
+    // mithril onupdate
+    function onupdate() {
+        if (m.route.get() !== vm.routeSave) {
+            setupPage();
+        }
     }
-}
 
-/**
- * Mithril view.
- */
-Edit.view = function () {
-    return Templates.splitContent(
-        IconList.view(),
-        Templates.threePane(
-            m('div', { class: 'section-title' }, (Edit.isNewIcon ? 'New Icon' : Edit.icon.Name)),
-            m('table', { class: 'icon-form-table' }, [
-                Edit.emptyRow(),
-                Edit.textField('Name:', 'iconName', Edit.icon.Name, function (e) { Edit.icon.Name = e.target.value; }),
-                Edit.textField('Link:', 'iconLink', Edit.icon.Link, function (e) { Edit.icon.Link = e.target.value; }),
-                Edit.formRow('Image:', [
-                    m('span', { class: 'icon-form-file' },
-                        m('label', { for: 'iconFile' }, [
-                            'Select Icon File',
-                            m('input', {
-                                type: 'file',
-                                id: 'iconFile',
-                                accept: 'image/*',
-                                onchange: Edit.updateFileName,
-                            })
-                        ])
-                    ),
-                    m('span', nbsps(5) + Edit.fileName)
-                ]),
-                Edit.formRow(nbsp(),
-                    m('div', { class: 'icon-form-img' },
-                        m('img', { src: iconImagePath(Edit.icon) })
-                    )
-                ),
-                Edit.emptyRow(),
-                Edit.formRow(nbsp(), [
-                    m('button', {
-                        class: 'icon-form-input icon-form-button icon-form-button-left',
-                        onclick: Edit.formSubmit,
-                    }, 'Save'),
-                    m('button', {
-                        class: 'icon-form-input icon-form-button icon-form-button-right',
-                        onclick: Home.goto,
-                    }, 'Cancel'),
+    ////////////////////// View
+
+    function emptyRow() {
+        return (
+            m('tr', [
+                m('td', { class: 'icon-form-col1' }, ' '),
+                m('td', { class: 'icon-form-col2' }, ' '),
+            ])
+        );
+    }
+
+    function formRow(prompt, field) {
+        return (
+            m('tr', [
+                m('td', m('div', { class: 'icon-form-prompt' }, prompt)),
+                m('td', field),
+            ])
+        );
+    }
+
+    function textField(prompt, id, value, updateFunction) {
+        return formRow(prompt,
+            m('input', {
+                type: 'text',
+                id: id,
+                name: id + vm.unique,
+                class: 'icon-form-input',
+                value: value,
+                onchange: updateFunction,
+            })
+        );
+    }
+
+    function imageFileInputRow() {
+        return formRow('Image:', [
+            m('span', { class: 'icon-form-file' },
+                m('label', { for: 'iconFile' }, [
+                    'Select Icon File',
+                    m('input', {
+                        type: 'file',
+                        id: 'iconFile',
+                        accept: 'image/*',
+                        onchange: updateFileName,
+                    })
                 ])
-            ]),
-            ''
-        ),
-    );
-}
+            ),
+            m('span', nbsps(5) + vm.imageFileName)
+        ]);
+    }
+
+    function imageDisplayRow() {
+        return formRow(nbsp(),
+            m('div', { class: 'icon-form-img' },
+                m('img', { src: iconImagePath(vm.iconModel) })
+            )
+        );
+    }
+
+    function buttonsRow() {
+        return formRow(nbsp(), [
+            m('button', {
+                class: 'icon-form-input icon-form-button icon-form-button-left',
+                onclick: submitForm,
+            }, 'Save'),
+            m('button', {
+                class: 'icon-form-input icon-form-button icon-form-button-right',
+                onclick: Home.goto,
+            }, 'Cancel'),
+        ])
+    }
+
+    function view() {
+        return Templates.splitContent(
+            IconList.view(),
+            Templates.threePane(
+                m('div', { class: 'section-title' }, (vm.isNewIcon ? 'New Icon' : vm.iconModel.Name)),
+                m('table', { class: 'icon-form-table' }, [
+                    emptyRow(),
+                    textField('Name:', 'iconName', vm.iconModel.Name, function (e) { vm.iconModel.Name = e.target.value; }),
+                    textField('Link:', 'iconLink', vm.iconModel.Link, function (e) { vm.iconModel.Link = e.target.value; }),
+                    imageFileInputRow(),
+                    imageDisplayRow(),
+                    emptyRow(),
+                    buttonsRow(),
+                ]),
+                ''
+            ),
+        );
+    }
+
+    return {
+        oninit: oninit,
+        onupdate: onupdate,
+        view: view,
+        submitForm: submitForm,
+        isNewIcon: function () {
+            return vm.isNewIcon;
+        },
+        getIconModel: function () {
+            return vm.iconModel;
+        },
+        setIconModel: function (x) {
+            vm.iconModel = x;
+        },
+        private: function () {
+            return vm;
+        },
+    };
+})();

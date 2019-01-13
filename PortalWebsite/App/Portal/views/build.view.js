@@ -1,103 +1,92 @@
 ﻿/**
- * Build Grid screen.
+ * Build Grid screen. Displays new changes.
  */
-var Build = {};
+var Build = (function () {
+    "use strict";
+    var vm = {};
 
-/**
- * DateTime when last build was run.
- */
-Build.lastBuildDate = '';
+    // DateTime string when last build was run
+    vm.lastBuildDate = '';
 
-/**
- * List of changes since the last build.
- */
-Build.gridChanges = [];
+    // list of changes since the last build
+    vm.gridChanges = [];
 
-// Functions
-
-/**
- * Retrieves any build information.
- */
-Build.getBuildData = function () {
-    m.request({
-        method: 'GET',
-        url: '/api/portal/build/lasttime',
-    }).then(function (data) {
-        Build.lastBuildDate = data;
+    function getBuildData() {
         m.request({
             method: 'GET',
-            url: '/api/portal/build/changes',
+            url: '/api/portal/build/lasttime',
         }).then(function (data) {
-            Build.gridChanges = data;
+            vm.lastBuildDate = data;
+            m.request({
+                method: 'GET',
+                url: '/api/portal/build/changes',
+            }).then(function (data) {
+                vm.gridChanges = data;
+            }).catch(function (e) {
+                ErrorMessage.show(e);
+            });
         }).catch(function (e) {
             ErrorMessage.show(e);
         });
-    }).catch(function (e) {
-        ErrorMessage.show(e);
-    });
-}
+    }
 
-/**
- * Tell the server to build the grid.
- */
-Build.buildGrid = function () {
-    m.request({
-        method: 'POST',
-        url: '/api/portal/build/build',
-    }).then(function (data) {
-        Home.goto();
-    }).catch(function (e) {
-        ErrorMessage.show(e);
-    });
-}
+    function submitBuild() {
+        m.request({
+            method: 'POST',
+            url: '/api/portal/build/build',
+        }).then(function (data) {
+            Home.goto();
+        }).catch(function (e) {
+            ErrorMessage.show(e);
+        });
+    }
 
-// View Functions
+    // mithril oninit
+    function oninit() {
+        IconList.oninit();
+        getBuildData();
+    }
 
-/**
- * Convert a GridChangeItem into a table row.
- * @param {GridChangeItem} change
- */
-Build.changeToRow = function (change) {
-    return (
-        m('tr', [
-            m('td', { class: 'grid-changes-table-col1' }, change.DateTime),
-            m('td', { class: 'grid-changes-table-col2' }, change.Event),
-        ])
-    );
-}
+    ////////////////////// View
 
-// View
+    function changeToRow(change) {
+        return (
+            m('tr', [
+                m('td', { class: 'grid-changes-table-col1' }, change.DateTime),
+                m('td', { class: 'grid-changes-table-col2' }, change.Event),
+            ])
+        );
+    }
 
-/**
- * Mithril oninit.
- */
-Build.oninit = function () {
-    IconList.oninit();
-    Build.getBuildData();
-}
+    function view() {
+        return Templates.splitContent(
+            IconList.view(),
+            Templates.threePane(
+                m('div', { class: 'section-title' }, 'Build Grid'),
+                [
+                    m('span', { class: 'section-title' }, 'Last Build Date: ' + vm.lastBuildDate),
+                    m('div', { class: 'hrule' }),
+                    m('br'),
+                    m('div', { class: 'grid-changes-container' },
+                        m('table', { class: 'grid-changes-table' },
+                            vm.gridChanges
+                                .map(x => changeToRow(x))
+                        )
+                    ),
+                    m('br'),
+                    m('button', { class: 'icon-form-input icon-form-button', onclick: submitBuild }, 'Build Icon Grid')
+                ],
+                m('button', { class: 'icon-form-input icon-form-button', onclick: Home.goto }, 'Back')
+            ),
+        );
+    }
 
-/**
- * Mithril view.
- */
-Build.view = function () {
-    return Templates.splitContent(
-        IconList.view(),
-        Templates.threePane(
-            m('div', { class: 'section-title' }, 'Build Grid'),
-            [
-                m('span', { class: 'section-title' }, 'Last Build Date: ' + Build.lastBuildDate),
-                m('div', { class: 'hrule' }),
-                m('br'),
-                m('div', { class: 'grid-changes-container' },
-                    m('table', { class: 'grid-changes-table' },
-                        Build.gridChanges
-                            .map(x => Build.changeToRow(x))
-                    )
-                ),
-                m('br'),
-                m('button', { class: 'icon-form-input icon-form-button', onclick: Build.buildGrid }, 'Build Icon Grid')
-            ],
-            m('button', { class: 'icon-form-input icon-form-button', onclick: Home.goto }, 'Back')
-        ),
-    );
-}
+    return {
+        oninit: oninit,
+        view: view,
+        submitBuild: submitBuild,
+        private: function () {
+            return vm;
+        },
+    };
+})();

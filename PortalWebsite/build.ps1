@@ -86,12 +86,17 @@ if ($all -or (-not $server)) {
 
     $gulp = Resolve-Path 'C:\Users\**\AppData\Roaming\npm\gulp.cmd'
     
+    $tasks = @()
     if ($all -or $framework) {
-        & $gulp 'Framework' --env $env
+        $tasks += 'Framework'
+    }
+    if ($all -or $portal){
+        $tasks += 'Shared'
     }
     if ($all -or $portal) {
-        & $gulp 'Portal' --env $env
+        $tasks += 'Portal'
     }
+    & $gulp 'build' --env $env --what ($tasks -join ',')
 }
 
 $number = [int]([Environment]::GetEnvironmentVariable('portal_build_number', 'User')) + 1

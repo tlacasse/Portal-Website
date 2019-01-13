@@ -13,9 +13,10 @@ var minimist = require("minimist");
 var del = require('del');
 
 var knownOptions = {
-    string: 'env',
+    string: ['env', 'what'],
     default: {
-        env: 'dev'
+        env: 'dev',
+        what: '',
     }
 };
 
@@ -62,16 +63,17 @@ function addMinExt(path) {
 // Tasks
 
 function createTaskGroup(name) {
+    var isShared = (name === 'Shared');
 
-    gulp.task('clean_' + name, function () {
+    gulp.task(name + '_clean', function () {
         return del([
             build + '/styles/' + name + '/**/*.css',
             build + '/apps/' + name + '/**/*.js',
         ]);
     });
 
-    gulp.task('app_' + name, function () {
-        return gulp.src('App/' + name + '/**/*.js')
+    gulp.task(name + '_app', function () {
+        return gulp.src(['App/' + name + '/**/*.js'])
             .pipe(sort({ comparator: sortComparator }))
             .pipe(isRelease() ? concat(name.toLowerCase() + '.js') : noop())
             .pipe(isRelease() ? minify({ noSource: true }) : noop())
@@ -79,7 +81,7 @@ function createTaskGroup(name) {
             .pipe(gulp.dest(build + '/Apps' + (isRelease() ? '' : ('/' + name))));
     });
 
-    gulp.task('sass_' + name, function () {
+    gulp.task(name + '_sass', function () {
         return gulp.src('Content/sass/' + name + '/**/*.scss')
             .pipe(sass())
             .pipe(isRelease() ? concat(name.toLowerCase() + '.css') : noop())
@@ -89,34 +91,51 @@ function createTaskGroup(name) {
             .pipe(gulp.dest(build + '/Styles' + (isRelease() ? '' : ('/' + name))));
     });
 
-    gulp.task('inject_' + name, function () {
+    gulp.task(name + '_inject', function () {
+        var jssrc = [];
+        var csssrc = [];
+        if (isRelease()) {
+            jssrc.push(build + '/Apps/' + name.toLowerCase() + '-min' + dateAppend + '.js');
+            jssrc.push(build + '/Apps/shared-min' + dateAppend + '.js');
+            csssrc.push(build + '/Styles/' + name.toLowerCase() + '-min' + dateAppend + '.css')
+            csssrc.push(build + '/Styles/shared-min' + dateAppend + '.css')
+        } else {
+            jssrc.push(build + '/Apps/' + name + '/**/*.js');
+            jssrc.push(build + '/Apps/Shared/**/*.js');
+            csssrc.push(build + '/Styles/' + name + '/**/*.css')
+            csssrc.push(build + '/Styles/Shared/**/*.css')
+        }
+
         return gulp.src(build + '/Views/App/' + name + '.cshtml')
             .pipe(inject(
                 gulp.src(build + '/Framework/*.js', { read: false }),
                 { relative: true, name: 'framework' }
             ))
             .pipe(inject(
-                gulp.src(build + (isRelease()
-                    ? ('/Apps/' + name.toLowerCase() + '-min' + dateAppend + '.js')
-                    : ('/Apps/' + name + '/**/*.js')), { read: false })
-                    .pipe(sort({ comparator: sortComparator })),
+                gulp.src(jssrc).pipe(sort({ comparator: sortComparator })),
                 { relative: true, name: 'app' })
             )
             .pipe(inject(
-                gulp.src(build + (isRelease()
-                    ? ('/Styles/' + name.toLowerCase() + '-min' + dateAppend + '.css')
-                    : ('/Styles/' + name + '/**/*.css')), { read: false }),
+                gulp.src(csssrc, { read: false }),
                 { relative: true })
             )
             .pipe(gulp.dest(build + '/Views/App'))
     });
 
-    gulp.task(name, gulp.series(
-        'clean_' + name,
-        'app_' + name,
-        'sass_' + name,
-        'inject_' + name
-    ));
+    if (isShared) {
+        gulp.task(name, gulp.series(
+            name + '_clean',
+            name + '_app',
+            name + '_sass'
+        ));
+    } else {
+        gulp.task(name, gulp.series(
+            name + '_clean',
+            name + '_app',
+            name + '_sass',
+            name + '_inject'
+        ));
+    }
 }
 
 gulp.task('mithril', function () {
@@ -129,4 +148,7 @@ gulp.task('mithril', function () {
 
 gulp.task('Framework', gulp.series('mithril'));
 
+createTaskGroup('Shared');
 createTaskGroup('Portal');
+
+gulp.task('build', gulp.series(options.what.split(',')));

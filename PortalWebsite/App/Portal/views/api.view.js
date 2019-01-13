@@ -1,124 +1,152 @@
 ﻿/**
  * View for listing all api uri's.
  */
-var Api = {};
+var Api = (function () {
+    "use strict";
+    var vm = {};
 
-Api.items = [];
+    // api information
+    vm.items = [];
 
-Api.active = {
-    Verb: 'Post',
-    Uri: '',
-}
-
-Api.hasSelected = false;
-
-Api.response = '';
-
-// Functions
-
-Api.getApiItems = function () {
-    m.request({
-        method: 'GET',
-        url: '/api/portal/api/get',
-    }).then(function (data) {
-        Api.items = data;
-    }).catch(function (e) {
-        ErrorMessage.show(e);
-    });
-}
-
-Api.setApiView = function (apiItem) {
-    Api.hasSelected = true;
-    Api.active = apiItem;
-    Api.response = '';
-}
-
-Api.getRoutingVars = function (apiItem) {
-    var route = apiItem.Uri;
-    var params = [];
-    var start = -1;
-    while ((start = route.indexOf('{', start + 1)) !== -1) {
-        var end = route.indexOf('}', start + 1);
-        params.push(route.substring(start + 1, end));
+    // current api item selection
+    vm.active = {
+        Verb: 'Post',
+        Uri: '',
     }
-    return params;
-}
 
-Api.doApiCall = function () {
-    m.request({
-        method: 'GET',
-        url: '/' + Api.active.Uri,
-    }).then(function (data) {
-        Api.response = JSON.stringify(data, undefined, 4);
-    }).catch(function (e) {
-        ErrorMessage.show(e);
-    });
-}
+    // if an api item has been selected
+    vm.hasSelected = false;
 
-// View Functions
+    // api get response
+    vm.response = '';
 
-/**
- * A empty row on the Api list, defines formatting.
- */
-Api.emptyRow = function () {
-    return (
-        m('tr', [
-            m('td', { class: 'api-list-col1' }, ' '),
-            m('td', { class: 'api-list-col2' }, ' '),
-        ])
-    );
-}
+    function getApiItems() {
+        m.request({
+            method: 'GET',
+            url: '/api/portal/api/get',
+        }).then(function (data) {
+            vm.items = data;
+        }).catch(function (e) {
+            ErrorMessage.show(e);
+        });
+    }
 
-Api.apiItemToRow = function (apiItem) {
-    return (
-        m('tr', {
-            onclick: function () { Api.setApiView(apiItem); },
-            class: 'api-list-element',
-        }, [
-                m('td', apiItem.Verb.toUpperCase()),
-                m('td', apiItem.Uri.substring(4)),
+    function getRoutingVars(apiItem) {
+        var route = apiItem.Uri;
+        var params = [];
+        var start = -1;
+        while ((start = route.indexOf('{', start + 1)) !== -1) {
+            var end = route.indexOf('}', start + 1);
+            params.push(route.substring(start + 1, end));
+        }
+        return params;
+    }
+
+    function doApiCall() {
+        m.request({
+            method: 'GET',
+            url: '/' + vm.active.Uri,
+        }).then(function (data) {
+            vm.response = JSON.stringify(data, undefined, 4);
+        }).catch(function (e) {
+            ErrorMessage.show(e);
+        });
+    }
+
+    function setApiView(apiItem) {
+        vm.hasSelected = true;
+        vm.active = apiItem;
+        vm.response = '';
+    }
+
+    // mithril oninit
+    function oninit() {
+        getApiItems();
+    }
+
+    ////////////////////// View
+
+    function emptyRow() {
+        return (
+            m('tr', [
+                m('td', { class: 'api-list-col1' }, ' '),
+                m('td', { class: 'api-list-col2' }, ' '),
             ])
-    );
-}
+        );
+    }
 
-// View 
+    function apiItemToRow(apiItem) {
+        return (
+            m('tr', {
+                onclick: function () { setApiView(apiItem); },
+                class: 'api-list-element',
+            }, [
+                    m('td', apiItem.Verb.toUpperCase()),
+                    m('td', apiItem.Uri.substring(4)),
+                ])
+        );
+    }
 
-/**
- * Mithril oninit.
- */
-Api.oninit = function () {
-    Api.getApiItems();
-}
+    function formEmptyRow() {
+        return (
+            m('tr', [
+                m('td', { class: 'icon-form-col1' }, ' '),
+                m('td', { class: 'icon-form-col2' }, ' '),
+            ])
+        );
+    }
 
-/**
- * Mithril view.
- */
-Api.view = function () {
-    return Templates.splitContent(
-        Templates.threePane(
+    function formRow(prompt, field) {
+        return (
+            m('tr', [
+                m('td', m('div', { class: 'icon-form-prompt' }, prompt)),
+                m('td', field),
+            ])
+        );
+    }
+
+    function leftSide() {
+        return Templates.threePane(
             m('div', { class: 'section-title' }, 'Api Viewer'),
             m('table', { class: 'icon-list-table' }, [
-                Api.emptyRow(),
-                Api.items.map(x => Api.apiItemToRow(x)),
-                Api.emptyRow(),
+                emptyRow(),
+                vm.items.map(x => apiItemToRow(x)),
+                emptyRow(),
             ]),
             ''
-        ),
-        Templates.threePane(
-            m('div', { class: 'section-title' }, Api.active.Uri),
+        )
+    }
+
+    function rightSide() {
+        return Templates.threePane(
+            m('div', { class: 'section-title' }, vm.active.Uri),
             m('div', { class: 'api-core' },
-                Api.hasSelected ? [
+                vm.hasSelected ? [
                     m('table', { class: 'icon-form-table api-table' }, [
-                        Edit.emptyRow(),
-                        Edit.formRow('Method:', Api.active.Verb.toUpperCase()),
-                        Edit.formRow('Uri:', window.location.hostname + '/' + Api.active.Uri),
-                        m('ul', Api.getRoutingVars(Api.active).map(x => m('li', x))),
-                        m('button', { class: 'icon-form-input icon-form-button', onclick: Api.doApiCall }, 'Call API'),
+                        formEmptyRow(),
+                        formRow('Method:', vm.active.Verb.toUpperCase()),
+                        formRow('Uri:', window.location.hostname + '/' + vm.active.Uri),
+                        m('ul', getRoutingVars(vm.active).map(x => m('li', x))),
+                        m('button', { class: 'icon-form-input icon-form-button', onclick: doApiCall }, 'Call API'),
                     ]),
-                    m('pre', Api.response),
+                    m('pre', vm.response),
                 ] : ''
             ),
             m('button', { class: 'icon-form-input icon-form-button', onclick: Home.goto }, 'Back')
-        ),
-    );
-}
+        )
+    }
+
+    function view() {
+        return Templates.splitContent(
+            leftSide(), rightSide()
+        );
+    }
+
+    return {
+        oninit: oninit,
+        view: view,
+        private: function () {
+            return vm;
+        },
+    };
+})();
