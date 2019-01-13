@@ -1,9 +1,9 @@
 ﻿using Portal;
 using Portal.Data;
 using Portal.Models.Portal;
-using PortalWebsite.Data;
-using PortalWebsite.Data.Logic;
-using PortalWebsite.Data.Logic.Portal;
+using Portal.Website.Data;
+using Portal.Website.Data.Logic;
+using Portal.Website.Data.Logic.Portal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Net;
 
-namespace PortalWebsite.Portal.Controllers {
+namespace Portal.Website.Portal.Controllers {
 
     [RoutePrefix("api/portal/icon")]
     public class IconController : ApiController {

@@ -1,4 +1,4 @@
-﻿using PortalWebsite.Data;
+﻿using Portal.Website.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalTesting.Portal.Fakes {
+namespace Portal.Testing.Portal.Fakes {
 
     public class FakeIconPostedFile : IPostedFile {
 

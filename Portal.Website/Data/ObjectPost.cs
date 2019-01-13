@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace PortalWebsite.Data {
+namespace Portal.Website.Data {
 
     /// <summary>
     /// A posted JS object, which is likely to be too complex / not user defined to be in FormData.

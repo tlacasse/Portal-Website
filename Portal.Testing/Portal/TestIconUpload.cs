@@ -3,11 +3,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Portal;
 using Portal.Data;
 using Portal.Models.Portal;
-using PortalTesting.Portal.Fakes;
-using PortalWebsite.Data;
-using PortalWebsite.Data.Logic.Portal;
+using Portal.Testing.Portal.Fakes;
+using Portal.Website.Data;
+using Portal.Website.Data.Logic.Portal;
 
-namespace PortalTesting.Portal {
+namespace Portal.Testing.Portal {
 
     // not very well designed tests.
     [TestClass]

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalTesting.Portal.Fakes {
+namespace Portal.Testing.Portal.Fakes {
 
     public class FakeIconConnection : IConnection {
 

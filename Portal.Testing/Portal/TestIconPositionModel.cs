@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Portal.Models.Portal;
 
-namespace PortalTesting.Portal {
+namespace Portal.Testing.Portal {
 
     [TestClass]
     public class TestIconPositionModel {

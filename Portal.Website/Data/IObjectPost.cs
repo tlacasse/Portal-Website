@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalWebsite.Data {
+namespace Portal.Website.Data {
 
     public interface IObjectPost<Obj> {
 

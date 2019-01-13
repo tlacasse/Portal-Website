@@ -3,9 +3,9 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Portal.Models.Portal;
-using PortalWebsite.Data.Logic.Portal;
+using Portal.Website.Data.Logic.Portal;
 
-namespace PortalTesting.Portal {
+namespace Portal.Testing.Portal {
 
     [TestClass]
     public class TestGridUpdate {

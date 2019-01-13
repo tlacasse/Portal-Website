@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace PortalTesting.Portal.Fakes {
+namespace Portal.Testing.Portal.Fakes {
 
     [RoutePrefix("testing/prefix")]
     public class FakeApiController : ApiController {

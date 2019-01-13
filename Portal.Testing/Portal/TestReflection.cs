@@ -4,9 +4,9 @@ using System.Reflection;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Portal.Models.Portal;
-using PortalWebsite.Controllers.Portal;
+using Portal.Website.Controllers.Portal;
 
-namespace PortalTesting.Portal {
+namespace Portal.Testing.Portal {
 
     [TestClass]
     public class TestReflection {

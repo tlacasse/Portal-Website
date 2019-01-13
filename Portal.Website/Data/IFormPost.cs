@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PortalWebsite.Data {
+namespace Portal.Website.Data {
 
     /// <summary>
     /// Interface for a posted form.

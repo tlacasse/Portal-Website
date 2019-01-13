@@ -1,8 +1,8 @@
 ﻿using Portal;
 using Portal.Data;
 using Portal.Models.Portal;
-using PortalWebsite.Data.Logic;
-using PortalWebsite.Data.Logic.Portal;
+using Portal.Website.Data.Logic;
+using Portal.Website.Data.Logic.Portal;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace PortalWebsite.Controllers.Portal {
+namespace Portal.Website.Controllers.Portal {
 
     [RoutePrefix("api/portal/build")]
     public class BuildController : ApiController {

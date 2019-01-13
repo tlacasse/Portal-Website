@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Portal;
 
-namespace PortalTesting {
+namespace Portal.Testing {
 
     [TestClass]
     public class TestPortalUtility {

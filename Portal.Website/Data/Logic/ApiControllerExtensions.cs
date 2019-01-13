@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
-namespace PortalWebsite.Data.Logic {
+namespace Portal.Website.Data.Logic {
 
     public static class ApiControllerExtensions {
 

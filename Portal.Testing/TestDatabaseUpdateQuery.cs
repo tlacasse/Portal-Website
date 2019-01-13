@@ -3,7 +3,7 @@ using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Portal.Data;
 
-namespace PortalTesting {
+namespace Portal.Testing {
 
     [TestClass]
     public class TestDatabaseUpdateQuery {

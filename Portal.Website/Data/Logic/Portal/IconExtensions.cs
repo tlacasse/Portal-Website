@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace PortalWebsite.Data.Logic.Portal {
+namespace Portal.Website.Data.Logic.Portal {
 
     public static class IconExtensions {
 

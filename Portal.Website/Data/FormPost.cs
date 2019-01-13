@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Collections.Specialized;
 
-namespace PortalWebsite.Data {
+namespace Portal.Website.Data {
 
     /// <summary>
     /// Wrapper of a Request, with form data and files.

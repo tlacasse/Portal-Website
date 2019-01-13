@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Web.Http;
 
-namespace PortalWebsite.Controllers.Portal {
+namespace Portal.Website.Controllers.Portal {
 
     [RoutePrefix("api/portal/api")]
     public class ApiViewController : ApiController {

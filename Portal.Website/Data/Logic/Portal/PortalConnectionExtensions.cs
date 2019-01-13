@@ -1,13 +1,13 @@
 ﻿using Portal;
 using Portal.Data;
 using Portal.Models.Portal;
-using PortalWebsite.Controllers.Portal;
+using Portal.Website.Controllers.Portal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace PortalWebsite.Data.Logic.Portal {
+namespace Portal.Website.Data.Logic.Portal {
 
     public static class PortalConnectionExtensions {
 

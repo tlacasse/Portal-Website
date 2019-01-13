@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Portal;
 using Portal.Models.Portal;
-using PortalWebsite.Controllers.Portal;
-using PortalWebsite.Data.Logic.Portal;
+using Portal.Website.Controllers.Portal;
+using Portal.Website.Data.Logic.Portal;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +13,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace PortalWebsite {
+namespace Portal.Website {
 
     public class WebApiApplication : HttpApplication {
 
