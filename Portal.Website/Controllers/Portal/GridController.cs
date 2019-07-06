@@ -1,73 +1,38 @@
-﻿using Newtonsoft.Json;
-using Portal;
-using Portal.Data;
-using Portal.Models.Portal;
-using Portal.Website.Data;
-using Portal.Website.Data.Logic;
-using Portal.Website.Data.Logic.Portal;
-using System;
+﻿using Portal.Models.Portal;
+using Portal.Requests.Portal;
+using Portal.Website.Structure;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using static Portal.Requests.Portal.GridSizeRequest;
 
 namespace Portal.Website.Controllers.Portal {
 
     [RoutePrefix("api/portal/grid")]
-    public class GridController : ApiController {
-
-        /// <summary>
-        /// File location for storing the JSON of the Grid Dimensions.
-        /// </summary>
-        public static readonly string GRID_DIMENSIONS_FILE = Path.Combine(PortalUtility.SitePath, "Portal/grid.json");
-
-        /// <summary>
-        /// Runtime state of the Grid Dimensions.
-        /// </summary>
-        internal static GridSize CurrentGridSize { get; set; }
+    public class GridController : ApiControllerBase {
 
         [HttpGet]
-        [Route("size/get")]
-        public dynamic GetDimensions() {
-            return new { //anonymous type to include Max/Min
-                CurrentGridSize.Width,
-                CurrentGridSize.Height,
-                CurrentGridSize.Max,
-                CurrentGridSize.Min
-            };
+        [Route("size")]
+        public ExtendedGridSize GetDimensions() {
+            return Process(() => {
+                return Get<GridSizeRequest>().Process(null);
+            });
         }
 
         [HttpGet]
         [Route("get")]
         public IEnumerable<IconPosition> GetGridCells() {
-            return this.LogIfError(() => {
-                using (Connection connection = new Connection()) {
-                    return connection.GetGridCells();
-                }
+            return Process(() => {
+                return Get<GridCellsRequest>().Process(null);
             });
         }
 
         [HttpPost]
         [Route("update")]
-        public HttpResponseMessage UpdateGrid() {
-            return this.LogIfError(() => {
-                GridState grid = (new ObjectPost<GridState>()).GetPostedObject();
-                grid.ValidateData();
-                using (Connection connection = new Connection()) {
-                    GridState current = connection.GetCurrentGridState();
-                    IEnumerable<IconPosition> toBeInactive = current.GetIconsToBeInactive(grid);
-                    if (toBeInactive.Any()) {
-                        connection.ExecuteNonQuery(toBeInactive.BuildInactivateQuery(), QueryOptions.Log);
-                    }
-                    IEnumerable<IconPosition> toBeAdded = grid.GetIconsToBeAdded(current);
-                    if (toBeAdded.Any()) {
-                        connection.ExecuteNonQuery(toBeAdded.BuildAddIconsQuery(), QueryOptions.Log);
-                    }
-                }
-                CurrentGridSize = grid.Size;
-                CurrentGridSize.SaveSize();
+        public HttpResponseMessage UpdateGrid(GridState newGrid) {
+            return Process(() => {
+                Get<GridUpdateRequest>().Process(newGrid);
                 return Request.CreateResponse(HttpStatusCode.Accepted);
             });
         }

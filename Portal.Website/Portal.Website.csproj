@@ -12,8 +12,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PortalWebsite</RootNamespace>
-    <AssemblyName>PortalWebsite</AssemblyName>
+    <RootNamespace>Portal.Website</RootNamespace>
+    <AssemblyName>Portal.Website</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -170,6 +170,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\GridDataSetup.cs" />
+    <Compile Include="App_Start\RequestConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AppController.cs" />
@@ -177,19 +179,11 @@
     <Compile Include="Controllers\Portal\BuildController.cs" />
     <Compile Include="Controllers\Portal\GridController.cs" />
     <Compile Include="Controllers\Portal\IconController.cs" />
-    <Compile Include="Data\IFormPost.cs" />
-    <Compile Include="Data\IObjectPost.cs" />
-    <Compile Include="Data\IPostedFile.cs" />
-    <Compile Include="Data\Logic\ApiControllerExtensions.cs" />
-    <Compile Include="Data\Logic\Portal\GridExtensions.cs" />
-    <Compile Include="Data\Logic\Portal\IconExtensions.cs" />
-    <Compile Include="Data\Logic\Portal\PortalConnectionExtensions.cs" />
-    <Compile Include="Data\ObjectPost.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data\FormPost.cs" />
+    <Compile Include="Structure\ApiControllerBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="-1.png" />
@@ -209,7 +203,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Content\sass\Portal\build.scss" />
     <Content Include="setup.ps1" />
-    <None Include="Views\App\Index.cshtml" />
+    <None Include="Views\Shared\IndexEmpty.cshtml" />
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -240,6 +234,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Portal.Requests\Portal.Requests.csproj">
+      <Project>{dc2ed6be-2f0e-4308-956e-b35aff8c8a25}</Project>
+      <Name>Portal.Requests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Portal\Portal.csproj">
       <Project>{039723ab-0be4-4bca-b324-72ca19ab7862}</Project>
       <Name>Portal</Name>

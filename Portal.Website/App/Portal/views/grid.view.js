@@ -18,7 +18,7 @@ var Grid = (function () {
     function getGrid() {
         m.request({
             method: 'GET',
-            url: '/api/portal/grid/size/get',
+            url: '/api/portal/grid/size',
         }).then(function (data) {
             vm.size = data;
             vm.grid = getArray2d(vm.size.Width, vm.size.Height, function () { return null; });

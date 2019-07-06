@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace Portal.Website.Controllers {
 
     public class AppController : Controller {
 
-        public ActionResult Index() {
+        public ViewResult Index() {
             return View();
         }
 
-        public ActionResult Portal() {
+        public ViewResult Portal() {
             return View();
         }
 
-        public ActionResult Login() {
+        public ViewResult Login() {
             return View();
         }
 

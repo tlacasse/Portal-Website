@@ -8,8 +8,8 @@
     <ProjectGuid>{1372534B-4ACF-4C52-9750-DDDA3445BA7E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PortalTesting</RootNamespace>
-    <AssemblyName>PortalTesting</AssemblyName>
+    <RootNamespace>Portal.Testing</RootNamespace>
+    <AssemblyName>Portal.Testing</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -69,17 +69,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Portal\Fakes\FakeApiController.cs" />
-    <Compile Include="Portal\Fakes\FakeIconConnection.cs" />
-    <Compile Include="Portal\Fakes\FakeIconFormPost.cs" />
-    <Compile Include="Portal\Fakes\FakeIconPostedFile.cs" />
-    <Compile Include="Portal\TestGridUpdate.cs" />
-    <Compile Include="Portal\TestIconModel.cs" />
-    <Compile Include="Portal\TestIconPositionModel.cs" />
-    <Compile Include="Portal\TestIconUpload.cs" />
-    <Compile Include="Portal\TestGridSizeModel.cs" />
-    <Compile Include="Portal\TestReflection.cs" />
-    <Compile Include="TestDatabaseUpdateQuery.cs" />
+    <Compile Include="AbstractTest.cs" />
+    <Compile Include="Fakes\Data\FakeConnection.cs" />
+    <Compile Include="Fakes\Data\FakeConnectionFactory.cs" />
+    <Compile Include="Fakes\Data\FakeFileReceiver.cs" />
+    <Compile Include="Fakes\Data\FakePostedFile.cs" />
+    <Compile Include="Fakes\Data\FakeWebsiteState.cs" />
+    <Compile Include="Portal\Models\TestModelEquality.cs" />
+    <Compile Include="Portal\PortalTestUtility.cs" />
+    <Compile Include="Portal\TheIconUploadRequest\TestIconUploadSuccessOnNewIcon.cs" />
+    <Compile Include="Portal\TheLastBuildTimeRequest\TestLastBuildTimeRequest.cs" />
+    <Compile Include="TestDatabaseChangeQuery.cs" />
     <Compile Include="TestPortalUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -88,6 +88,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Portal.Requests\Portal.Requests.csproj">
+      <Project>{dc2ed6be-2f0e-4308-956e-b35aff8c8a25}</Project>
+      <Name>Portal.Requests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Portal.Website\Portal.Website.csproj">
       <Project>{1e461197-3ec5-4445-a3ef-53f1cc02f963}</Project>
       <Name>Portal.Website</Name>
@@ -97,6 +101,7 @@
       <Name>Portal</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

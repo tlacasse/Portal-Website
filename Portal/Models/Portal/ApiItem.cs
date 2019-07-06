@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Portal.Models.Portal {
 
     /// <summary>
@@ -21,23 +16,14 @@ namespace Portal.Models.Portal {
         /// </summary>
         public string Uri { get; set; }
 
-        /// <summary>
-        /// To String.
-        /// </summary>
         public override string ToString() {
             return string.Format("{0} {1}", Verb.ToUpper(), Uri);
         }
 
-        /// <summary>
-        /// Hash Code.
-        /// </summary>
         public override int GetHashCode() {
             return ToString().GetHashCode();
         }
 
-        /// <summary>
-        /// Equals.
-        /// </summary>
         public override bool Equals(object obj) {
             ApiItem other = obj as ApiItem;
             if (other == null)

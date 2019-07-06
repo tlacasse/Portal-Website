@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Portal.Models.Portal {
 
     /// <summary>
-    /// Represents an Icon at a certain position in the grid.
+    /// Represents a clickable icon at a certain coordinate.
     /// </summary>
     public class IconPosition : Icon {
 
@@ -22,41 +18,14 @@ namespace Portal.Models.Portal {
         public int YCoord { get; set; } = -1;
 
         /// <summary>
-        /// Identifier for a Grid record.
+        /// Identifier for a Grid record. Not equal to Icon Id.
         /// </summary>
         public int GridId { get; set; } = -1;
 
         /// <summary>
-        /// DateTime when the 
+        /// DateTime when the Icon was placed on the grid.
         /// </summary>
         public DateTime DateUsed { get; set; }
-
-        /// <summary>
-        /// To String.
-        /// </summary>
-        public override string ToString() {
-            return string.Format("{0}x{1} ({2})", XCoord, YCoord, base.ToString());
-        }
-
-        /// <summary>
-        /// Hash Code.
-        /// </summary>
-        public override int GetHashCode() {
-            return ToString().GetHashCode();
-        }
-
-        /// <summary>
-        /// Equals.
-        /// </summary>
-        public override bool Equals(object obj) {
-            if (base.Equals(obj)) {
-                IconPosition other = obj as IconPosition;
-                if (other == null)
-                    return false;
-                return this.PositionEquals(other);
-            }
-            return false;
-        }
 
         /// <summary>
         /// Returns true if the coordinates are equal, not considering the actual icon.
@@ -66,9 +35,6 @@ namespace Portal.Models.Portal {
                 && this.YCoord == other.YCoord;
         }
 
-        /// <summary>
-        /// Throws an exception if any properties are invalid or not allowed. Prefer ValidateData(GridSize).
-        /// </summary>
         public override void ValidateData() {
             base.ValidateData();
             if (XCoord < 0)
@@ -77,15 +43,30 @@ namespace Portal.Models.Portal {
                 throw new ArgumentOutOfRangeException("YCoord");
         }
 
-        /// <summary>
-        /// Throws an exception if any properties are invalid or not allowed.
-        /// </summary>
         public void ValidateData(GridSize currentGridSize) {
             ValidateData();
             if (XCoord > currentGridSize.Width - 1)
                 throw new ArgumentOutOfRangeException("XCoord");
             if (YCoord > currentGridSize.Height - 1)
                 throw new ArgumentOutOfRangeException("YCoord");
+        }
+
+        public override string ToString() {
+            return string.Format("{0}x{1} ({2})", XCoord, YCoord, base.ToString());
+        }
+
+        public override int GetHashCode() {
+            return ToString().GetHashCode();
+        }
+
+        public override bool Equals(object obj) {
+            if (base.Equals(obj)) {
+                IconPosition other = obj as IconPosition;
+                if (other == null)
+                    return false;
+                return this.PositionEquals(other);
+            }
+            return false;
         }
 
     }

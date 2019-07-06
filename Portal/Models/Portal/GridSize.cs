@@ -1,32 +1,29 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
 
 namespace Portal.Models.Portal {
 
     /// <summary>
-    /// Model representing the width and height of a Grid.
+    /// Represents the dimensions of a grid.
     /// </summary>
-    public class GridSize {
+    public class GridSize : IModel {
 
-        private static readonly int MIN = 4;
-        private static readonly int MAX = 30;
+        private static readonly int MIN = int.Parse(ConfigurationManager.AppSettings["gridMin"]);
+        private static readonly int MAX = int.Parse(ConfigurationManager.AppSettings["gridMax"]);
 
         /// <summary>
-        /// The number of Icons allowed horizontally.
+        /// Number of cells horizontally.
         /// </summary>
         public int Width { get; set; }
 
         /// <summary>
-        /// The number of Icons allowed vertically.
+        /// Number of cells vertically.
         /// </summary>
         public int Height { get; set; }
 
         /// <summary>
-        /// The minimum number of Icons in either direction.
+        /// Minimum number of cells in either direction.
         /// </summary>
         [JsonIgnore]
         public int Min {
@@ -34,17 +31,14 @@ namespace Portal.Models.Portal {
         }
 
         /// <summary>
-        /// The maximum number of Icons in either direction.
+        /// Maximum number of cells in either direction.
         /// </summary>
         [JsonIgnore]
         public int Max {
             get { return MAX; }
         }
 
-        /// <summary>
-        /// Throws an exception if any properties are invalid or not allowed.
-        /// </summary>
-        public virtual void ValidateData() {
+        public void ValidateData() {
             if (Width > Max)
                 throw new ArgumentOutOfRangeException("Width", string.Format("Maximum width is {0}.", Max));
             if (Height < Min)
@@ -53,23 +47,14 @@ namespace Portal.Models.Portal {
                 throw new ArgumentOutOfRangeException("Width", "Width must be greater than Height.");
         }
 
-        /// <summary>
-        /// To String.
-        /// </summary>
         public override string ToString() {
             return string.Format("{0}x{1}", Width, Height);
         }
 
-        /// <summary>
-        /// Hash Code.
-        /// </summary>
         public override int GetHashCode() {
             return ToString().GetHashCode();
         }
 
-        /// <summary>
-        /// Equals.
-        /// </summary>
         public override bool Equals(object obj) {
             GridSize other = obj as GridSize;
             if (other == null)

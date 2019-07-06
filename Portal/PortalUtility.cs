@@ -1,24 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace Portal {
 
-    /// <summary>
-    /// Various Utilities.
-    /// </summary>
     public static class PortalUtility {
-
-        /// <summary>
-        /// The path to the Build Output, where the website is executed.
-        /// </summary>
-        public static string SitePath {
-            get { return HttpContext.Current.Server.MapPath("~"); }
-        }
 
         /// <summary>
         /// The database value for the current datetime.

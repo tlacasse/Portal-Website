@@ -64,13 +64,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Connection.cs" />
-    <Compile Include="Data\DatabaseUpdateQuery.cs" />
-    <Compile Include="Data\IConnection.cs" />
-    <Compile Include="Data\LoggingFailedException.cs" />
-    <Compile Include="Data\QueryOptions.cs" />
-    <Compile Include="Data\Web\HtmlBuilder.cs" />
-    <Compile Include="Data\Web\HtmlTagBuilder.cs" />
+    <Compile Include="Data\Sqlite\Connection.cs" />
+    <Compile Include="Data\Sqlite\ConnectionFactory.cs" />
+    <Compile Include="Data\Sqlite\IConnection.cs" />
+    <Compile Include="Data\Sqlite\IConnectionFactory.cs" />
+    <Compile Include="Data\Sqlite\LoggingFailedException.cs" />
+    <Compile Include="Data\Sqlite\QueryOptions.cs" />
+    <Compile Include="Data\Sqlite\QueryType.cs" />
+    <Compile Include="Data\Sqlite\DatabaseChangeQuery.cs" />
+    <Compile Include="Data\Web\Form\FileReceiver.cs" />
+    <Compile Include="Data\Web\Form\IFileReceiver.cs" />
+    <Compile Include="Data\Web\Form\IPostedFile.cs" />
+    <Compile Include="Data\Web\Form\HttpPostedFileWrapper.cs" />
+    <Compile Include="Data\Web\IWebsiteState.cs" />
+    <Compile Include="Data\Web\WebsiteState.cs" />
+    <Compile Include="Models\IModel.cs" />
     <Compile Include="Models\Portal\ApiItem.cs" />
     <Compile Include="Models\Portal\GridChangeItem.cs" />
     <Compile Include="Models\Portal\GridSize.cs" />
@@ -80,9 +88,12 @@
     <Compile Include="PortalException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PortalUtility.cs" />
+    <Compile Include="Void.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

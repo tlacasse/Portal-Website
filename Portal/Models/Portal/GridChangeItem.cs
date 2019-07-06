@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Portal.Models.Portal {
 
     /// <summary>
-    /// Represents a description record of a Grid change.
+    /// Represents info about a change to the grid.
     /// </summary>
-    public class GridChangeItem {
+    public class GridChangeItem : IModel {
 
         /// <summary>
         /// The DateTime of the change.
@@ -17,27 +13,25 @@ namespace Portal.Models.Portal {
         public DateTime DateTime { get; set; }
 
         /// <summary>
-        /// A description of the change.
+        /// A small description of the change.
         /// </summary>
         public string Event { get; set; }
 
-        /// <summary>
-        /// To String.
-        /// </summary>
+        public void ValidateData() {
+            if (DateTime == null)
+                throw new ArgumentNullException("DateTime");
+            if (string.IsNullOrWhiteSpace(Event))
+                throw new ArgumentNullException("Event");
+        }
+
         public override string ToString() {
             return string.Format("{0} - {1}", DateTime, Event);
         }
 
-        /// <summary>
-        /// Hash Code.
-        /// </summary>
         public override int GetHashCode() {
             return ToString().GetHashCode();
         }
 
-        /// <summary>
-        /// Equals.
-        /// </summary>
         public override bool Equals(object obj) {
             GridChangeItem other = obj as GridChangeItem;
             if (other == null)

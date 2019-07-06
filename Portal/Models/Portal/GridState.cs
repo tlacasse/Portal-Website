@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Portal.Models.Portal {
 
     /// <summary>
-    /// Relevant data for the current state of a grid.
+    /// Represents a specific size grid and the Icons that populate it.
     /// </summary>
-    public class GridState {
+    public class GridState : IModel {
 
         /// <summary>
         /// The dimensions of the grid.
@@ -17,38 +14,27 @@ namespace Portal.Models.Portal {
         public GridSize Size { get; set; }
 
         /// <summary>
-        /// Each of the icons and their positions.
+        /// A list of positioned Icons that populate the grid.
         /// </summary>
         public IEnumerable<IconPosition> Cells { get; set; }
 
-        /// <summary>
-        /// Throws an exception if any properties are invalid or not allowed.
-        /// </summary>
         public void ValidateData() {
+            Size.ValidateData();
             foreach (IconPosition icon in Cells) {
                 icon.ValidateData(Size);
             }
         }
 
-        /// <summary>
-        /// To String.
-        /// </summary>
         public override string ToString() {
             return string.Format("{0} ({1})", Size.ToString(), Cells == null ? 0 : Cells.Count());
         }
 
-        /// <summary>
-        /// Hash Code.
-        /// </summary>
         public override int GetHashCode() {
             return Size.GetHashCode() * (Cells == null ? 1 :
                 Cells.Aggregate(31, (a, b) => a.GetHashCode() * b.GetHashCode())
             );
         }
 
-        /// <summary>
-        /// Equals.
-        /// </summary>
         public override bool Equals(object obj) {
             GridState other = obj as GridState;
             if (other == null)
