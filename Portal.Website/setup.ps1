@@ -29,5 +29,5 @@ New-Item -ItemType Directory -Path (Join-Path $buildPath 'App_Data/Icons')
 Copy-Item (Join-Path $PSScriptRoot '-1.png') -Destination (Join-Path $buildPath 'App_Data/Icons')
 
 # Notes
-Write-Output
-Write-Output "Create database in $buildName/App_Data" -ForegroundColor 'green'
+Write-Host
+Write-Host "Create database in $buildName/App_Data" -ForegroundColor 'green'
