@@ -133,8 +133,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="-1.png" />
+    <Content Include="content\js\mithril.js" />
+    <Content Include="content\js\mithril.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="gulpfile.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -143,11 +147,17 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="build.ps1" />
     <None Include="packages.config" />
+    <Content Include="setup.ps1" />
+    <Content Include="Views\App\Login.cshtml" />
+    <Content Include="Views\App\Portal.cshtml" />
+    <Content Include="Views\Shared\IndexEmpty.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Portal\Portal.csproj">
