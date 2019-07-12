@@ -6,6 +6,7 @@ param (
     , [switch]$server
     , [switch]$framework
     , [switch]$config
+    , [switch]$views
     , [string]$connectionString = ('Data Source=' + (Join-Path $buildPath 'App_Data\PortalWebsite.db') + ";Version=3;Password=portal;")
 )
 
@@ -30,6 +31,8 @@ function Inject-WebConfig() {
     [System.IO.File]::WriteAllText($configPath, $webConfig)
 }
 
+$client = $portal -or $framework
+
 Write-Host '-----------------------------' -ForegroundColor Green
 Write-Host 'Checking File Existence.' -ForegroundColor Green
 Write-Host '-----------------------------' -ForegroundColor Green
@@ -51,14 +54,16 @@ if ($all -or $config) {
     Inject-WebConfig -Key 'ConnectionString' -Value $connectionString
 }
 
-robocopy (Join-Path $PSScriptRoot 'Views') (Join-Path $buildPath 'Views') /COPY:DATS /S
+if ($all -or $views -or $client) {
+    robocopy (Join-Path $PSScriptRoot 'Views') (Join-Path $buildPath 'Views') /COPY:DATS /S
+}
 
 if ($all -or $server) {
     Write-Host '-----------------------------' -ForegroundColor Green
     Write-Host 'Building CSproject.' -ForegroundColor Green
     Write-Host '-----------------------------' -ForegroundColor Green
 
-    $project = Join-Path $PSScriptRoot 'PortalWebsite.csproj'
+    $project = Join-Path $PSScriptRoot 'Portal.Website.csproj'
     $msBuildExe = Resolve-Path 'C:\Program Files (x86)\MSBuild\**\Bin\msbuild.exe'
     if ($env -eq 'release') {
         & $msBuildExe $project /t:Build /m /p:Configuration=Release
@@ -81,7 +86,7 @@ if ($all -or $server) {
     }
 }
 
-if ($all -or (-not $server)) {
+if ($all -or $client) {
     Write-Host '-----------------------------' -ForegroundColor Green
     Write-Host 'Gulp build.' -ForegroundColor Green
     Write-Host '-----------------------------' -ForegroundColor Green
