@@ -90,7 +90,17 @@
     <Compile Include="PortalException.cs" />
     <Compile Include="PortalUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\DependentBase.cs" />
+    <Compile Include="Requests\IRequest.cs" />
+    <Compile Include="Requests\IRequestProcessor.cs" />
+    <Compile Include="Requests\Processors\LoggingRequestProcessor.cs" />
     <Compile Include="SqliteUtility.cs" />
+    <Compile Include="Structure\IReadOnlyRegisterLibrary.cs" />
+    <Compile Include="Structure\IRegisterLibrary.cs" />
+    <Compile Include="Structure\RegisterLibrary.cs" />
+    <Compile Include="Void.cs" />
+  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
