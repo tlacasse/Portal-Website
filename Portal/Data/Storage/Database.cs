@@ -32,11 +32,11 @@ namespace Portal.Data.Storage {
 
         public void Update(IModel model) {
             this.NeedNotNull(model);
-            TableConfig table = GetTableName(model.GetType());
+            TableConfig table = GetTable(model.GetType());
             string tableName = table.Name;
-            if (table.Write == false) {
+            if (table.AllowedUpdates < TableAccess.FullReadWrite) {
                 throw new InvalidOperationException(
-                    string.Format("Can not write to '{0}'", tableName));
+                    string.Format("Can not update records in '{0}'", tableName));
             }
 
             IEnumerable<PropertyInfo> properties = GetProperties(model);
@@ -50,13 +50,13 @@ namespace Portal.Data.Storage {
             Queries.Add(new Tuple<string, QueryOptions>(query, QueryOptions.Log));
         }
 
-        public void Add(IModel model) {
+        public void Insert(IModel model) {
             this.NeedNotNull(model);
-            TableConfig table = GetTableName(model.GetType());
+            TableConfig table = GetTable(model.GetType());
             string tableName = table.Name;
-            if (table.Write == false) {
+            if (table.AllowedUpdates < TableAccess.InsertOnly) {
                 throw new InvalidOperationException(
-                    string.Format("Can not write to '{0}'", tableName));
+                    string.Format("Can not add records to '{0}'", tableName));
             }
 
             IEnumerable<PropertyInfo> properties = GetProperties(model);
@@ -68,13 +68,13 @@ namespace Portal.Data.Storage {
             Queries.Add(new Tuple<string, QueryOptions>(query, QueryOptions.Log));
         }
 
-        public void Remove(IModel model) {
+        public void Delete(IModel model) {
             this.NeedNotNull(model);
-            TableConfig table = GetTableName(model.GetType());
+            TableConfig table = GetTable(model.GetType());
             string tableName = table.Name;
-            if (table.Write == false) {
+            if (table.AllowedUpdates < TableAccess.FullReadWrite) {
                 throw new InvalidOperationException(
-                    string.Format("Can not write to '{0}'", tableName));
+                    string.Format("Can not remove records in '{0}'", tableName));
             }
 
             PropertyInfo idProperty = GetIdProperty(model);
@@ -90,7 +90,7 @@ namespace Portal.Data.Storage {
             if (!string.IsNullOrWhiteSpace(whereClause)) {
                 whereClause = "WHERE " + whereClause;
             }
-            TableConfig table = GetTableName(typeof(M));
+            TableConfig table = GetTable(typeof(M));
             string tableName = table.Name;
             string query = string.Format("SELECT * FROM {0} {1}", tableName, whereClause);
             return Connection.Execute<M>(query, queryOptions);
@@ -117,7 +117,7 @@ namespace Portal.Data.Storage {
             Connection.Log(e);
         }
 
-        private TableConfig GetTableName(Type type) {
+        private TableConfig GetTable(Type type) {
             if (TableMap.ContainsKey(type) == false) {
                 throw new ArgumentException(type + " table name is not available.");
             }
@@ -125,22 +125,20 @@ namespace Portal.Data.Storage {
         }
 
         private PropertyInfo GetIdProperty(object obj) {
+            Type objtype = obj.GetType();
             return obj.GetType()
                 .GetProperties()
-                .Where(p => p.GetCustomAttributes()
-                    .Any(a => a is IdentityAttribute))
+                .Where(p => p.HasAttribute<IdentityAttribute>())
                 .Single();
         }
 
         private IEnumerable<PropertyInfo> GetProperties(object obj, bool includeId = false) {
             IEnumerable<PropertyInfo> properties =
                 obj.GetType().GetProperties()
-                .Where(p => p.GetCustomAttributes()
-                    .NotAny(a => a is UpdateIgnoreAttribute));
+                .Where(p => !p.HasAttribute<UpdateIgnoreAttribute>());
             if (includeId == false) {
                 properties = properties
-                    .Where(p => p.GetCustomAttributes()
-                        .NotAny(a => a is IdentityAttribute));
+                    .Where(p => !p.HasAttribute<IdentityAttribute>());
             }
             return properties;
         }

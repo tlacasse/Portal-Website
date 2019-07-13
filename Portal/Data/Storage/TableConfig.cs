@@ -3,13 +3,13 @@ namespace Portal.Data.Storage {
 
     public sealed class TableConfig {
 
-        public string Name { get; set; }
+        public string Name { get; }
 
-        public bool Write { get; set; }
+        public TableAccess AllowedUpdates { get; }
 
-        public TableConfig(string Name, bool Write) {
+        public TableConfig(string Name, TableAccess AllowedUpdates) {
             this.Name = Name;
-            this.Write = Write;
+            this.AllowedUpdates = AllowedUpdates;
         }
 
     }

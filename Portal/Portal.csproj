@@ -80,6 +80,7 @@
     <Compile Include="Data\Storage\IDatabase.cs" />
     <Compile Include="Data\Storage\IDatabaseFactory.cs" />
     <Compile Include="Data\Storage\TableConfig.cs" />
+    <Compile Include="Data\Storage\TableAccess.cs" />
     <Compile Include="Data\Web\Form\FileReceiver.cs" />
     <Compile Include="Data\Web\Form\HttpPostedFileWrapper.cs" />
     <Compile Include="Data\Web\Form\IFileReceiver.cs" />

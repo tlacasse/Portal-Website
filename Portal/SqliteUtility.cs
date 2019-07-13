@@ -24,6 +24,9 @@ namespace Portal {
             if (value is string) {
                 return "'" + value.ToString() + "'";
             }
+            if (value is bool) {
+                return ((bool)value) ? "1" : "0";
+            }
             if (value is DateTime) {
                 return "'" + ((DateTime)value).ToSqlString() + "'";
             }

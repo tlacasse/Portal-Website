@@ -12,9 +12,9 @@ namespace Portal.Data.Storage {
 
         void Update(IModel model);
 
-        void Add(IModel model);
+        void Insert(IModel model);
 
-        void Remove(IModel model);
+        void Delete(IModel model);
 
         IReadOnlyList<M> Query<M>(IWhere where,
             QueryOptions queryOptions = QueryOptions.None) where M : IModel;

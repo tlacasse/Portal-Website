@@ -5,6 +5,8 @@ namespace Portal.Data.Models {
 
         void ValidateData();
 
+        bool IsRecordEqual(IModel obj);
+
     }
 
 }

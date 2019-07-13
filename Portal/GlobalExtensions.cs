@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Portal {
 
@@ -31,6 +32,10 @@ namespace Portal {
             if (test == null) {
                 throw param == null ? new ArgumentException() : new ArgumentNullException(param);
             }
+        }
+
+        public static bool HasAttribute<A>(this PropertyInfo attribute) where A : Attribute {
+            return attribute.GetCustomAttribute(typeof(A), false) != null;
         }
 
     }

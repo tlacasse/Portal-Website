@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Portal.Data.Querying {
 
-    public sealed class Or {
+    public sealed class Or : IWhere {
 
         private IEnumerable<IWhere> Conditions { get; }
 
