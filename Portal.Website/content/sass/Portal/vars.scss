@@ -1,0 +1,26 @@
+﻿// Colors
+
+$c-body-bg: #000066;
+$c-bodycontent-merge: #003cb2;
+$c-content-bg: #0079ff;
+$c-contentheader-merge: #179eff;
+$c-header-bg: #33ccff;
+
+$c-link: #ccccff;
+$c-link-active: #ff66ff;
+
+$c-input: #ff9966;
+$c-input-light: #ffccb3;
+
+// Page Sizing
+$fs: 2.5vh;
+
+$outside-padding-w: 5vw;
+$outside-padding-h: 4vh;
+$inside-padding: 2vw;
+$usable-height: 100vh - (2 * $outside-padding-h);
+$usable-width: 100vw - (2 * $outside-padding-w) - $inside-padding;
+
+$border-width: 0.3vh;
+
+$header-height: $fs * 2.5;
