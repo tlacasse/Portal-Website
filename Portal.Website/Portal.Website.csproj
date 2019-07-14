@@ -175,6 +175,10 @@
     <Content Include="Views\Shared\IndexEmpty.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Portal.App.Portal\Portal.App.Portal.csproj">
+      <Project>{6E314DD6-7A79-4613-9EB5-F5D0DC7F6650}</Project>
+      <Name>Portal.App.Portal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Portal\Portal.csproj">
       <Project>{d6d00894-be74-4a56-9968-faab1c151dc2}</Project>
       <Name>Portal</Name>
