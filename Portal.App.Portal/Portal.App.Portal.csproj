@@ -41,7 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PortalDatabaseExtensions.cs" />
+    <Compile Include="Models\Icon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\IconByNameRequest.cs" />
+    <Compile Include="Requests\IconListRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Portal\Portal.csproj">
