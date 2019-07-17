@@ -7,6 +7,10 @@ namespace Portal.Tests.Fakes {
 
         public readonly List<FakeDatabase> FakeDatabases = new List<FakeDatabase>();
 
+        public FakeDatabaseFactory(params FakeDatabase[] databases) {
+            FakeDatabases.AddRange(databases);
+        }
+
         public IDatabase Create() {
             FakeDatabase db = FakeDatabases[0];
             FakeDatabases.RemoveAt(0);

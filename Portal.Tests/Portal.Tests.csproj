@@ -49,15 +49,27 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fakes\FakeEmptyFileReceiver.cs" />
+    <Compile Include="Fakes\FakeWebsiteState.cs" />
     <Compile Include="Fakes\RecordingFakeConnection.cs" />
     <Compile Include="Fakes\FakeDatabase.cs" />
     <Compile Include="Fakes\FakeDatabaseFactory.cs" />
+    <Compile Include="Fakes\FakeFileReceiver.cs" />
+    <Compile Include="Fakes\FakePostedFile.cs" />
     <Compile Include="Framework\Helpers\DatabaseHelper.cs" />
     <Compile Include="Framework\Helpers\QueryingHelper.cs" />
     <Compile Include="Framework\TestDatabase\WithUpdatesOnDatabaseRecords.cs" />
     <Compile Include="Framework\TestQuerying\WithQueriesOnEnumerable.cs" />
     <Compile Include="Framework\TestQuerying\WithQueryOnDatabase.cs" />
+    <Compile Include="Portal\Requests\TestIconUploadRequest\WhenIconHasDuplicateName.cs" />
+    <Compile Include="Portal\Requests\TestIconUploadRequest\WhenIconImageFileIsTooBig.cs" />
+    <Compile Include="Portal\Requests\TestIconUploadRequest\WhenIconIsANewIcon.cs" />
+    <Compile Include="Portal\Requests\TestIconUploadRequest\WhenIconIsANewIconWithoutImageFile.cs" />
+    <Compile Include="Portal\Requests\TestIconUploadRequest\WhenIconIsAnExistingIcon.cs" />
+    <Compile Include="Portal\Requests\TestIconUploadRequest\WhenIconIsInvalid.cs" />
+    <Compile Include="Portal\Requests\TestIconUploadRequest\WhenIconIsNotNewButDoesNotExist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBase.cs" />
     <Compile Include="TestObject.cs" />
   </ItemGroup>
   <ItemGroup>
