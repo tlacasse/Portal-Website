@@ -25,9 +25,11 @@ namespace Portal.Website {
                 IReadOnlyDictionary<string, IDatabaseFactory> databaseFactories, IConnectionFactory connectionFactory) {
 
             IWebsiteState websiteState = new WebsiteState();
+            IFileReceiver fileReceiver = new FileReceiver();
 
             requestLibrary.Include(new IconByNameRequest(websiteState, databaseFactories["Portal"]));
             requestLibrary.Include(new IconListRequest(websiteState, databaseFactories["Portal"]));
+            requestLibrary.Include(new IconUploadRequest(websiteState, databaseFactories["Portal"], fileReceiver));
 
             RequestProcessor = new LoggingRequestProcessor(connectionFactory);
         }
