@@ -2,6 +2,7 @@
 using Portal.App.Portal.Models;
 using Portal.App.Portal.Requests;
 using Portal.Tests.Fakes;
+using System;
 using System.Linq;
 
 namespace Portal.Tests.Portal.Requests.TestIconUploadRequest {
@@ -49,6 +50,8 @@ namespace Portal.Tests.Portal.Requests.TestIconUploadRequest {
         public void SavedIconHasDates() {
             Assert.IsNotNull(newIcon.DateCreated);
             Assert.IsNotNull(newIcon.DateChanged);
+            Assert.AreNotEqual(default(DateTime), newIcon.DateCreated);
+            Assert.AreNotEqual(default(DateTime), newIcon.DateChanged);
             Assert.IsTrue(newIcon.DateCreated >= icon.DateCreated);
             Assert.IsTrue(newIcon.DateChanged >= icon.DateChanged);
         }
@@ -60,6 +63,7 @@ namespace Portal.Tests.Portal.Requests.TestIconUploadRequest {
             Assert.AreEqual(newIcon.Link, history.Link);
             Assert.IsTrue(history.IsNew);
             Assert.IsNotNull(history.DateUpdated);
+            Assert.AreNotEqual(default(DateTime), history.DateUpdated);
             Assert.IsTrue(history.DateUpdated >= newIcon.DateChanged);
         }
 
