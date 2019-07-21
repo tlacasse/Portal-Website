@@ -24,5 +24,5 @@ function emptyIcon() {
 }
 
 function iconImagePath(icon) {
-    return '/App_Data/Icons/' + icon.Id + '.' + icon.Image + '?d=' + icon.DateChanged;
+    return '/Data/Icons/' + icon.Id + '.' + icon.Image + '?d=' + icon.DateChanged;
 }

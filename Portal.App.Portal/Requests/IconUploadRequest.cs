@@ -11,7 +11,7 @@ namespace Portal.App.Portal.Requests {
     public class IconUploadRequest : DependentBase, IRequest<Icon, Void> {
 
         public static readonly int MAX_ICON_MB = 10;
-        public static readonly string SAVE_PATH_TEMPLATE = "App_Data/Icons/{0}.{1}";
+        public static readonly string SAVE_PATH_TEMPLATE = "Data/Icons/{0}.{1}";
 
         private IFileReceiver FileReceiver { get; }
 
