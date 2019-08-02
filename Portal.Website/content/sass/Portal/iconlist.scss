@@ -1,0 +1,55 @@
+﻿@import "vars";
+
+.icon-list {
+    width: 100%;
+    height: $usable-height - ($header-height * 2);
+    display: block;
+    overflow: auto;
+}
+
+.icon-list-table {
+    width: 100%;
+    border-spacing: 0px;
+    font-size: 1em;
+}
+
+$list-ratio: 20%;
+
+.icon-list-col1, .icon-list-col2 {
+    font-size: 0.5em;
+}
+
+.icon-list-col1 {
+    width: $list-ratio;
+}
+
+.icon-list-col2 {
+    width: 100% - $list-ratio;
+}
+
+.icon-list-element {
+    cursor: pointer;
+
+    td {
+        padding: 0.2em;
+    }
+}
+
+.icon-list-element:hover {
+    td {
+        color: $c-header-bg;
+    }
+}
+
+.icon-list-image {
+    width: 2em;
+    height: 2em;
+    display: block;
+    margin: 0px auto;
+
+    img {
+        width: 100%;
+        height: 100%;
+        border: 0.04em solid $c-body-bg;
+    }
+}

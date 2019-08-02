@@ -7,7 +7,7 @@ namespace Portal.Data.Web.Form {
 
         public IEnumerable<IPostedFile> GetPostedFiles() {
             HttpFileCollection files = HttpContext.Current.Request.Files;
-            if (files.Count == 0) return null;
+            if (files.Count == 0) return new IPostedFile[] { };
 
             List<HttpPostedFileWrapper> results = new List<HttpPostedFileWrapper>();
             for (int i = 0; i < files.Count; i++) {

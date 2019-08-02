@@ -12,6 +12,27 @@ namespace Portal {
             return (T)(constructor.Invoke(null));
         }
 
+        public static string UrlFormat(string name) {
+            if (string.IsNullOrWhiteSpace(name)) return string.Empty;
+            return string.Join("_", name.ToLower().Split(' '));
+        }
+
+        public static string UnUrlFormat(string name) {
+            return string.Join(" ", name
+                .Split('_')
+                .Select(w => w.Substring(0, 1).ToUpper() + w.Substring(1))
+           );
+        }
+
+        public static string GetImageExtension(string contentType) {
+            switch (contentType) {
+                case "image/jpeg": return "jpg";
+                case "image/png": return "png";
+                default:
+                    throw new ArgumentOutOfRangeException("Content Type");
+            }
+        }
+
     }
 
 }

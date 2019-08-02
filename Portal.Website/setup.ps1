@@ -25,7 +25,8 @@ $packages | % { npm install $_ --save-dev }
 
 New-Item -ItemType Directory -Path $buildPath
 New-Item -ItemType Directory -Path (Join-Path $buildPath 'App_Data')
-New-Item -ItemType Directory -Path (Join-Path $buildPath 'App_Data/Icons')
+New-Item -ItemType Directory -Path (Join-Path $buildPath 'Data')
+New-Item -ItemType Directory -Path (Join-Path $buildPath 'Data/Icons')
 Copy-Item (Join-Path $PSScriptRoot '-1.png') -Destination (Join-Path $buildPath 'App_Data/Icons')
 
 # Notes

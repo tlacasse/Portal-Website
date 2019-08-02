@@ -101,7 +101,10 @@
     <Compile Include="Structure\RegisterLibrary.cs" />
     <Compile Include="Void.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="sqlite\PortalIcon.sql" />
+    <Content Include="sqlite\PortalIconHistory.sql" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

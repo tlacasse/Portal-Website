@@ -5,8 +5,6 @@ using Portal.Data.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Portal.Tests.Fakes {
 
@@ -14,35 +12,66 @@ namespace Portal.Tests.Fakes {
 
         public int UncommittedChanges => throw new NotImplementedException();
 
-        public readonly List<IModel> AddedObjects = new List<IModel>();
-        public readonly List<IModel> RemovedObjects = new List<IModel>();
-        public readonly List<IModel> UpdatedObjects = new List<IModel>();
-
         public readonly List<string> NonQueriesExecuted = new List<string>();
 
         public readonly Dictionary<Type, List<IModel>> WorkingDatabase = new Dictionary<Type, List<IModel>>();
+        public readonly Dictionary<Type, List<IModel>> InsertedObjects = new Dictionary<Type, List<IModel>>();
+        public readonly Dictionary<Type, List<IModel>> DeletedObjects = new Dictionary<Type, List<IModel>>();
+        public readonly Dictionary<Type, List<IModel>> UpdatedObjects = new Dictionary<Type, List<IModel>>();
 
         public void Dispose() {
         }
 
         public void Insert(IModel model) {
-            AddedObjects.Add(model);
+            EnsureValue(InsertedObjects, model.GetType());
+            InsertedObjects[model.GetType()].Add(model);
         }
 
         public void Delete(IModel model) {
-            RemovedObjects.Add(model);
+            EnsureValue(DeletedObjects, model.GetType());
+            DeletedObjects[model.GetType()].Add(model);
         }
 
         public void Update(IModel model) {
-            UpdatedObjects.Add(model);
+            EnsureValue(UpdatedObjects, model.GetType());
+            UpdatedObjects[model.GetType()].Add(model);
         }
 
         public int Commit() {
-            return 1;
+            InsertedObjects.ForEach(pair => {
+                EnsureValue(WorkingDatabase, pair.Key);
+                pair.Value.ForEach(x => WorkingDatabase[pair.Key].Add(x));
+            });
+            DeletedObjects.ForEach(pair => {
+                EnsureValue(WorkingDatabase, pair.Key);
+                pair.Value.ForEach(d => {
+                    WorkingDatabase[pair.Key]
+                        .Where(x => x.IsRecordEqual(d))
+                        .ToList()
+                        .ForEach(x => WorkingDatabase[pair.Key].Remove(x));
+                });
+            });
+            UpdatedObjects.ForEach(pair => {
+                EnsureValue(WorkingDatabase, pair.Key);
+                pair.Value.ForEach(u => {
+                    var toRemove = WorkingDatabase[pair.Key]
+                        .Where(x => x.IsRecordEqual(u))
+                        .Single();
+                    WorkingDatabase[pair.Key].Remove(toRemove);
+                    WorkingDatabase[pair.Key].Add(u);
+                });
+            });
+            return new[] { InsertedObjects, DeletedObjects, UpdatedObjects }
+                .SelectMany(d => d.Values)
+                .Select(v => v.Count)
+                .Sum();
         }
 
         public IReadOnlyList<M> Query<M>(IWhere where, QueryOptions queryOptions = QueryOptions.None) where M : IModel {
-            throw new NotImplementedException();
+            EnsureValue(WorkingDatabase, typeof(M));
+            return WorkingDatabase[typeof(M)]
+                .Where(where)
+                .Select(x => (M)x).ToList();
         }
 
         public void ExecuteNonQuery(string query, QueryOptions options = QueryOptions.None) {
@@ -53,6 +82,12 @@ namespace Portal.Tests.Fakes {
         }
 
         public void Log(Exception e) {
+        }
+
+        private void EnsureValue(Dictionary<Type, List<IModel>> dict, Type key) {
+            if (!dict.ContainsKey(key)) {
+                dict.Add(key, new List<IModel>());
+            }
         }
 
     }

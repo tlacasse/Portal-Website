@@ -44,9 +44,13 @@ $scriptsPath = Join-Path $buildPath 'Scripts'
 if (Path-NotExists $scriptsPath) {
     New-Item -Path $scriptsPath -ItemType directory -Verbose
 }
-$portalPath = Join-Path $buildPath 'App_Data'
-if (Path-NotExists $portalPath) {
-    New-Item -Path $portalPath -ItemType directory -Verbose
+$appDataPath = Join-Path $buildPath 'App_Data'
+if (Path-NotExists $appDataPath) {
+    New-Item -Path $appDataPath -ItemType directory -Verbose
+}
+$dataPath = Join-Path $buildPath 'Data'
+if (Path-NotExists $dataPath) {
+    New-Item -Path $dataPath -ItemType directory -Verbose
 }
 
 if ($all -or $config) {
