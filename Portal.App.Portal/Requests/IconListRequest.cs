@@ -7,13 +7,13 @@ using System.Collections.Generic;
 
 namespace Portal.App.Portal.Requests {
 
-    public class IconListRequest : DependentBase, IRequest<Void, IReadOnlyList<Icon>> {
+    public class IconListRequest : DependentBase, IRequestOut<IReadOnlyList<Icon>> {
 
         public IconListRequest(IWebsiteState WebsiteState, IDatabaseFactory DatabaseFactory)
             : base(WebsiteState, DatabaseFactory) {
         }
 
-        public IReadOnlyList<Icon> Process(Void model) {
+        public IReadOnlyList<Icon> Process() {
             using (IDatabase database = DatabaseFactory.Create()) {
                 return database.Query<Icon>(new All());
             }

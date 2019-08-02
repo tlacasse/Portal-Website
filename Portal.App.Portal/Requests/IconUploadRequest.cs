@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Portal.App.Portal.Requests {
 
-    public class IconUploadRequest : DependentBase, IRequest<Icon, Void> {
+    public class IconUploadRequest : DependentBase, IRequestIn<Icon> {
 
         public static readonly int MAX_ICON_MB = 10;
         public static readonly string SAVE_PATH_TEMPLATE = "Data/Icons/{0}.{1}";
@@ -20,7 +20,8 @@ namespace Portal.App.Portal.Requests {
             this.FileReceiver = FileReceiver;
         }
 
-        public Void Process(Icon model) {
+        public void Process(Icon model) {
+            this.NeedNotNull(model, "uploaded icon");
             model.ValidateData();
 
             // Force DB name to be correctly formatted
@@ -33,8 +34,6 @@ namespace Portal.App.Portal.Requests {
                 Icon newIcon = UpdateDatabase(database, model);
                 SaveFile(file, newIcon);
             }
-
-            return null;
         }
 
         private IPostedFile GetAndCheckFile(Icon model) {

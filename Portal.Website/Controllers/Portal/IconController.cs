@@ -15,7 +15,7 @@ namespace Portal.Website.Portal.Controllers {
         [Route("list")]
         public IReadOnlyList<Icon> GetIconList() {
             return Process(() => {
-                return Get<IconListRequest>().Process(null);
+                return Get<IconListRequest>().Process();
             });
         }
 
