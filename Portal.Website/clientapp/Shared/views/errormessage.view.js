@@ -10,7 +10,7 @@ var ErrorMessage = (function () {
 
     function show(exceptionObject) {
         get('message-box').style.display = 'block';
-        vm.exception = objectToArray(exceptionObject);
+        vm.exception = objectToArray(exceptionObject.response);
     }
 
     function hide() {

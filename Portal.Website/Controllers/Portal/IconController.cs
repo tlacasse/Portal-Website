@@ -29,7 +29,8 @@ namespace Portal.Website.Portal.Controllers {
 
         [HttpPost]
         [Route("post")]
-        public HttpResponseMessage UpdateIconAsync(Icon icon) {
+        public HttpResponseMessage UpdateIcon() {
+            Icon icon = ParseFormData<Icon>();
             return Process(() => {
                 Get<IconUploadRequest>().Process(icon);
                 return Request.CreateResponse(HttpStatusCode.Created);

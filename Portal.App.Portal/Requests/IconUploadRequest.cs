@@ -22,12 +22,14 @@ namespace Portal.App.Portal.Requests {
 
         public void Process(Icon model) {
             this.NeedNotNull(model, "uploaded icon");
+            IPostedFile file = GetFile(model);
+
             model.ValidateData();
 
             // Force DB name to be correctly formatted
             model.Name = PortalUtility.UnUrlFormat(PortalUtility.UrlFormat(model.Name));
 
-            IPostedFile file = GetAndCheckFile(model);
+            CheckFile(file, model);
 
             using (IDatabase database = DatabaseFactory.Create()) {
                 CheckAgainstExistingIcons(database, model);
@@ -36,8 +38,15 @@ namespace Portal.App.Portal.Requests {
             }
         }
 
-        private IPostedFile GetAndCheckFile(Icon model) {
+        private IPostedFile GetFile(Icon modelToUpdate) {
             IPostedFile file = FileReceiver.GetPostedFiles().FirstOrDefault();
+            if (file != null) {
+                modelToUpdate.Image = PortalUtility.GetImageExtension(file.ContentType);
+            }
+            return file;
+        }
+
+        private void CheckFile(IPostedFile file, Icon model) {
             if (model.IsNew && file == null) {
                 throw new ArgumentNullException("Icon Image File");
             }
@@ -45,7 +54,6 @@ namespace Portal.App.Portal.Requests {
                 throw new ArgumentOutOfRangeException("Image Upload",
                     string.Format("Is too large (limit {0}MB)", MAX_ICON_MB));
             }
-            return file;
         }
 
         private void CheckAgainstExistingIcons(IDatabase database, Icon model) {

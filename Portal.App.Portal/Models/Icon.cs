@@ -56,9 +56,7 @@ namespace Portal.App.Portal.Models {
         }
 
         public override string ToString() {
-            return string.Format("{0} ({1})",
-                Name, Link == null ? "" : Link.Substring(0, 50)
-            );
+            return string.Format("{0} ({1})", Name, Link);
         }
 
         public bool IsRecordEqual(IModel obj) {

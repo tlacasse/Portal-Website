@@ -39,6 +39,7 @@ var Edit = (function () {
         vm.isNewIcon = nonexistent(m.route.param('name'));
         vm.routeSave = m.route.get();
         getSourceIcon();
+        vm.imageFileName = '';
     }
 
     function getFileInput() {
@@ -63,7 +64,7 @@ var Edit = (function () {
         m.request({
             method: 'POST',
             url: '/api/portal/icon/post',
-            data: data,
+            body: data,
         }).then(function (data) {
             Home.goto();
         }).catch(function (e) {
