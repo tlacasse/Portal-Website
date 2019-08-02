@@ -9,6 +9,8 @@ namespace Portal.Website {
             config.MapHttpAttributeRoutes();
             config.Formatters.XmlFormatter.SupportedMediaTypes.Add(
                 new MediaTypeHeaderValue("multipart/form-data"));
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(
+                new MediaTypeHeaderValue("multipart/form-data"));
         }
 
     }
