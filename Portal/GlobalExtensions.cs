@@ -34,7 +34,7 @@ namespace Portal {
             }
         }
 
-        public static bool HasAttribute<A>(this PropertyInfo attribute) where A : Attribute {
+        public static bool HasAttribute<A>(this MemberInfo attribute) where A : Attribute {
             return attribute.GetCustomAttribute(typeof(A), false) != null;
         }
 

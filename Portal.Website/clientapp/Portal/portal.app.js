@@ -4,6 +4,7 @@ m.route(root, '/', {
     '/': Home,
     '/edit/:name': Edit,
     '/new': Edit,
+    '/grid': Grid,
 });
 
 // error message

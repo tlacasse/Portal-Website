@@ -21,13 +21,22 @@ var IconList = (function () {
             url: '/api/portal/icon/list',
         }).then(function (data) {
             vm.sourceList = data;
+            if (vm.isGridList) {
+                // empty icon for erase
+                vm.sourceList.push({ Name: '' });
+            }
         }).catch(function (e) {
             ErrorMessage.show(e);
         });
     }
 
     function iconOnClick(icon) {
-        gotoIcon(icon);
+        if (vm.isGridList) {
+            Grid.setActiveIcon(icon);
+            m.redraw();
+        } else {
+            gotoIcon(icon);
+        }
     }
 
     function gotoIcon(icon) {
@@ -36,6 +45,7 @@ var IconList = (function () {
 
     // mithril oninit
     function oninit() {
+        vm.isGridList = (m.route.get().indexOf('grid') >= 0);
         getIconList();
     }
 
@@ -59,16 +69,30 @@ var IconList = (function () {
         };
     }
 
+    function prepEmptyIcon() {
+        var iconRow = prepIconData();
+        iconRow.onclick = function () { iconOnClick(null); };
+        iconRow.imagePath = iconImagePath(emptyIcon());
+        iconRow.name = '(Erase)';
+        if (vm.isGridList && Grid.getActiveIcon() == null) {
+            iconRow.classes += ' icon-list-grid-selected'
+        }
+        return iconRow;
+    }
+
     function prepIcon(icon) {
         var iconRow = prepIconData();
         iconRow.onclick = function () { iconOnClick(icon); };
         iconRow.imagePath = iconImagePath(icon);
         iconRow.name = icon.Name;
+        if (vm.isGridList && Grid.getActiveIcon() != null && Grid.getActiveIcon().Id == icon.Id) {
+            iconRow.classes += ' icon-list-grid-selected'
+        }
         return iconRow;
     }
 
     function iconToRow(icon) {
-        var iconRow = prepIcon(icon);
+        var iconRow = icon.Name === '' ? prepEmptyIcon() : prepIcon(icon);
         return (
             m('tr', {
                 class: iconRow.classes,
@@ -102,6 +126,9 @@ var IconList = (function () {
         oninit: oninit,
         view: view,
         gotoIcon: gotoIcon,
+        isGridList: function () {
+            return vm.isGridList;
+        },
         private: function () {
             return vm;
         },

@@ -17,7 +17,7 @@ namespace Portal.Website {
 
         public static void RegisterDatabaseFactories(IConnectionFactory connectionFactory) {
 
-            Dictionary<Type, TableConfig> portal = new Dictionary<Type, TableConfig> {
+            Dictionary<Type, TableConfig> portal = new Dictionary<Type, TableConfig>() {
                 [typeof(Icon)] = new TableConfig("PortalIcon", TableAccess.FullReadWrite),
                 [typeof(IconHistory)] = new TableConfig("PortalIconHistory", TableAccess.InsertOnly)
             };
