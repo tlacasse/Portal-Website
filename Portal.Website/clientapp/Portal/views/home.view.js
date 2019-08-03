@@ -19,7 +19,7 @@ var Home = (function () {
             m('span', { class: 'section-title' }, 'Configuration'),
             m('div', { class: 'hrule' }),
             m('ul', [
-                m('li', m("a[href=#!/new]", { oncreate: m.route.link }, 'New Icon')),
+                m('li', m(m.route.Link, { href: '/new' }, 'New Icon')),
             ]),
             m('br'),
             m('span', { class: 'section-title' }, 'System'),
