@@ -12,12 +12,12 @@ namespace Portal.Requests.Processors {
         }
 
         public T Process<T>(Func<T> requestCall) {
-            try {
-                return requestCall.Invoke();
-            } catch (Exception e) {
-                LogError(e);
-                throw e;
-            }
+            //try {
+            return requestCall.Invoke();
+            //} catch (Exception e) {
+            //    LogError(e);
+            //    throw;
+            //}
         }
 
         private void LogError(Exception e) {

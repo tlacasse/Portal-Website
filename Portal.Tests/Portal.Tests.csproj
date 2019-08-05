@@ -61,6 +61,7 @@
     <Compile Include="Framework\TestDatabase\WithUpdatesOnDatabaseRecords.cs" />
     <Compile Include="Framework\TestQuerying\WithQueriesOnEnumerable.cs" />
     <Compile Include="Framework\TestQuerying\WithQueryOnDatabase.cs" />
+    <Compile Include="Framework\TestSettings\WithSelectedSettings.cs" />
     <Compile Include="Portal\Requests\TestIconUploadRequest\WhenIconHasDuplicateName.cs" />
     <Compile Include="Portal\Requests\TestIconUploadRequest\WhenIconImageFileIsTooBig.cs" />
     <Compile Include="Portal\Requests\TestIconUploadRequest\WhenIconIsANewIcon.cs" />

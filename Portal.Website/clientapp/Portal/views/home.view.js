@@ -21,12 +21,14 @@ var Home = (function () {
             m('ul', [
                 m('li', m(m.route.Link, { href: '/new' }, 'New Icon')),
                 m('li', m(m.route.Link, { href: '/grid' }, 'Grid Configuration')),
+                //m('li', m("a[href=#!/build]", { oncreate: m.route.link }, 'Build Icon Grid')),
             ]),
             m('br'),
             m('span', { class: 'section-title' }, 'System'),
             m('div', { class: 'hrule' }),
             m('ul', [
                 m('li', m("a[href=https://github.com/tlacasse/Portal-Website]", 'Website Source')),
+                //m('li', m("a[href=#!/view/api]", { oncreate: m.route.link }, 'Api Viewer')),
             ]),
         ];
     }

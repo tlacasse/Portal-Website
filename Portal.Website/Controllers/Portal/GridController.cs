@@ -16,6 +16,23 @@ namespace Portal.Website.Controllers.Portal {
             });
         }
 
+        /*[HttpGet]
+        [Route("get")]
+        public IEnumerable<IconPosition> GetGridCells() {
+            return Process(() => {
+                return Get<GridCellsRequest>().Process(null);
+            });
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public HttpResponseMessage UpdateGrid(GridState newGrid) {
+            return Process(() => {
+                Get<GridUpdateRequest>().Process(newGrid);
+                return Request.CreateResponse(HttpStatusCode.Accepted);
+            });
+        }*/
+
     }
 
 }

@@ -22,6 +22,17 @@ var Grid = (function () {
         }).then(function (data) {
             vm.size = data;
             vm.grid = getArray2d(vm.size.Width, vm.size.Height, function () { return null; });
+            /*m.request({
+                method: 'GET',
+                url: '/api/portal/grid/get',
+            }).then(function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var icon = data[i];
+                    vm.grid[icon.XCoord][icon.YCoord] = icon;
+                }
+            }).catch(function (e) {
+                ErrorMessage.show(e);
+            });*/
         }).catch(function (e) {
             ErrorMessage.show(e);
         });
@@ -55,6 +66,39 @@ var Grid = (function () {
     function cellClick(x, y) {
         vm.grid[x][y] = vm.activeIcon;
         m.redraw();
+    }
+
+    function submitGrid() {
+        var gridState = {};
+        gridState.Size = {
+            Width: vm.size.Width,
+            Height: vm.size.Height,
+        }
+        var cells = [];
+        for (var i = 0; i < vm.size.Width; i++) {
+            for (var j = 0; j < vm.size.Height; j++) {
+                var cell = vm.grid[i][j];
+                if (cell != null) {
+                    cells.push({
+                        XCoord: i,
+                        YCoord: j,
+                        Id: cell.Id,
+                        Name: cell.Name,
+                        Link: cell.Link,
+                    });
+                }
+            }
+        }
+        gridState.Cells = cells;
+        m.request({
+            method: 'POST',
+            url: '/api/portal/grid/update',
+            data: gridState,
+        }).then(function (data) {
+            Home.goto();
+        }).catch(function (e) {
+            ErrorMessage.show(e);
+        });
     }
 
     // mithril oninit
@@ -138,6 +182,8 @@ var Grid = (function () {
                     m('span', { style: 'float: right;' }, nbsps(5)),
                     getButton('Cancel', Home.goto),
                     m('span', { style: 'float: right;' }, nbsps(5)),
+                    getButton('Save', submitGrid),
+                    m('span', { style: 'float: right;' }, nbsps(5)),
                 ]
             ),
         );
@@ -147,6 +193,7 @@ var Grid = (function () {
         oninit: oninit,
         view: view,
         cellClick: cellClick,
+        submitGrid: submitGrid,
         getActiveIcon: function () {
             return vm.activeIcon;
         },

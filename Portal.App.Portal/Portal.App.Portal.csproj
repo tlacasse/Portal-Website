@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Data\GridSize.cs" />
     <Compile Include="Models\IconHistory.cs" />
+    <Compile Include="Models\IconPosition.cs" />
     <Compile Include="PortalDatabaseExtensions.cs" />
     <Compile Include="Models\Icon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
