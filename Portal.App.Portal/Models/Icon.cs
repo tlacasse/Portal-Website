@@ -1,27 +1,28 @@
-﻿using Portal.Data.Models;
-using Portal.Data.Models.Attributes;
+﻿using Portal.Data.ActiveRecord;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Portal.App.Portal.Models {
 
-    public class Icon : IModel {
+    [Table("PortalIcon")]
+    public class Icon : ActiveRecordBase {
 
-        [Identity]
-        public int Id { get; set; } = -1;
-
+        [Column("Name")]
         public string Name { get; set; }
 
+        [Column("Image")]
         public string Image { get; set; }
 
+        [Column("Link")]
         public string Link { get; set; }
 
+        [Column("DateCreated")]
         public DateTime DateCreated { get; set; }
 
+        [Column("DateChanged")]
         public DateTime DateChanged { get; set; }
 
-        [UpdateIgnore]
         public bool IsNew {
             get { return Id < 0; }
         }
@@ -57,39 +58,6 @@ namespace Portal.App.Portal.Models {
 
         public override string ToString() {
             return string.Format("{0} ({1})", Name, Link);
-        }
-
-        public bool IsRecordEqual(IModel obj) {
-            Icon other = obj as Icon;
-            return other != null && this.Id == other.Id && this.Id >= 0;
-        }
-
-        // generated
-
-        public override bool Equals(object obj) {
-            var icon = obj as Icon;
-            return icon != null &&
-                   Id == icon.Id &&
-                   Name == icon.Name &&
-                   Image == icon.Image &&
-                   Link == icon.Link;
-        }
-
-        public override int GetHashCode() {
-            var hashCode = 259765913;
-            hashCode = hashCode * -1521134295 + Id.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Image);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Link);
-            return hashCode;
-        }
-
-        public static bool operator ==(Icon icon1, Icon icon2) {
-            return EqualityComparer<Icon>.Default.Equals(icon1, icon2);
-        }
-
-        public static bool operator !=(Icon icon1, Icon icon2) {
-            return !(icon1 == icon2);
         }
 
     }

@@ -10,6 +10,7 @@ namespace Portal.Data.Web {
         public string GetPath(string relativePath) {
             return Path.Combine(WebsitePath, relativePath);
         }
+
     }
 
 }

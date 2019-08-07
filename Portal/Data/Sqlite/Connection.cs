@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Portal.Data.ActiveRecord;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
@@ -12,6 +13,8 @@ namespace Portal.Data.Sqlite {
 
         private SQLiteConnection SQLite { get; }
 
+        public bool IsClosed { get; private set; } = false;
+
         public Connection(string connectionString) {
             SQLite = new SQLiteConnection(connectionString);
             SQLite.Open();
@@ -19,9 +22,11 @@ namespace Portal.Data.Sqlite {
 
         public void Dispose() {
             if (SQLite != null) SQLite.Dispose();
+            IsClosed = true;
         }
 
         public IReadOnlyList<Model> Execute<Model>(string query, QueryOptions options = QueryOptions.None) {
+            AssertOpen();
             if (options.Includes(QueryOptions.Log)) {
                 Log("Query", query);
             }
@@ -32,6 +37,7 @@ namespace Portal.Data.Sqlite {
                     while (reader.Read()) {
                         Model model = PortalUtility.ConstructEmpty<Model>();
                         for (int i = 0; i < reader.FieldCount; i++) {
+                            IEnumerable<ColumnItem>
                             PropertyInfo property = properties.Where(p => p.Name == reader.GetName(i)).FirstOrDefault();
                             if (property != null) {
                                 if (property.PropertyType.Equals(typeof(int)))
@@ -52,18 +58,20 @@ namespace Portal.Data.Sqlite {
         }
 
         public int ExecuteNonQuery(string query, QueryOptions options = QueryOptions.None) {
+            AssertOpen();
             if (options.Includes(QueryOptions.Log)) {
                 Log("Query", query);
             }
             using (SQLiteCommand command = new SQLiteCommand(query, SQLite)) {
                 int affected = command.ExecuteNonQuery();
                 if (affected == 0 && options.Includes(QueryOptions.AllowNoUpdatedRows) == false)
-                    throw new PortalException("No rows were affected", query);
+                    throw new NoRowsAffectedException("No rows were affected", query);
                 return affected;
             }
         }
 
         public void Log(string context, string message) {
+            AssertOpen();
             Log(context, message, null);
         }
 
@@ -92,6 +100,10 @@ namespace Portal.Data.Sqlite {
             } catch (Exception e) {
                 throw new LoggingFailedException(e);
             }
+        }
+
+        private void AssertOpen() {
+            if (IsClosed) throw new InvalidOperationException("Connection is closed.");
         }
 
     }

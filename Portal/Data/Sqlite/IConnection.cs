@@ -9,6 +9,8 @@ namespace Portal.Data.Sqlite {
 
         int ExecuteNonQuery(string query, QueryOptions options = QueryOptions.None);
 
+        bool IsClosed { get; }
+
     }
 
 }

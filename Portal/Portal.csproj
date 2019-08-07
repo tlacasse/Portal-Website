@@ -60,27 +60,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Models\Attributes\IdentityAttribute.cs" />
-    <Compile Include="Data\Models\Attributes\UpdateIgnoreAttribute.cs" />
-    <Compile Include="Data\Models\IModel.cs" />
+    <Compile Include="Data\ActiveRecord\ActiveRecordBase.cs" />
+    <Compile Include="Data\ActiveRecord\ColumnItem.cs" />
+    <Compile Include="Data\ActiveRecord\Loading\ActiveRecordExtensions.cs" />
+    <Compile Include="Data\ActiveRecord\Loading\ActiveRecordLoader.cs" />
+    <Compile Include="Data\ActiveRecord\Loading\ActiveRecordLoadingException.cs" />
+    <Compile Include="Data\ActiveRecord\ColumnAttributes.cs" />
+    <Compile Include="Data\ActiveRecord\IActiveRecord.cs" />
+    <Compile Include="Data\ActiveRecord\Mapping\SqlTranslationExtensions.cs" />
+    <Compile Include="Data\ActiveRecord\Storage\ActiveContext.cs" />
+    <Compile Include="Data\ActiveRecord\Storage\AppendTableBase.cs" />
+    <Compile Include="Data\ActiveRecord\Storage\IActiveContext.cs" />
+    <Compile Include="Data\ActiveRecord\Storage\IAppendTable.cs" />
+    <Compile Include="Data\ActiveRecord\Storage\IView.cs" />
+    <Compile Include="Data\ActiveRecord\Storage\ITable.cs" />
+    <Compile Include="Data\ActiveRecord\Storage\TableBase.cs" />
+    <Compile Include="Data\ActiveRecord\Storage\ViewBase.cs" />
+    <Compile Include="Data\ActiveRecord\TableAttributes.cs" />
+    <Compile Include="Data\ActiveRecord\Storage\Query.cs" />
+    <Compile Include="Data\Sqlite\ConnectionCache.cs" />
+    <Compile Include="Data\Sqlite\DatabaseAccessBase.cs" />
+    <Compile Include="Data\Sqlite\IConnectionCache.cs" />
     <Compile Include="Data\Sqlite\ILogger.cs" />
     <Compile Include="Data\Sqlite\Connection.cs" />
-    <Compile Include="Data\Sqlite\ConnectionFactory.cs" />
     <Compile Include="Data\Sqlite\IConnection.cs" />
-    <Compile Include="Data\Sqlite\IConnectionFactory.cs" />
     <Compile Include="Data\Sqlite\LoggingFailedException.cs" />
     <Compile Include="Data\Querying\All.cs" />
     <Compile Include="Data\Querying\And.cs" />
     <Compile Include="Data\Querying\Equals.cs" />
     <Compile Include="Data\Querying\IWhere.cs" />
     <Compile Include="Data\Querying\Or.cs" />
+    <Compile Include="Data\Sqlite\NoRowsAffectedException.cs" />
     <Compile Include="Data\Sqlite\QueryOptions.cs" />
-    <Compile Include="Data\Storage\Database.cs" />
-    <Compile Include="Data\Storage\DatabaseFactory.cs" />
-    <Compile Include="Data\Storage\IDatabase.cs" />
-    <Compile Include="Data\Storage\IDatabaseFactory.cs" />
-    <Compile Include="Data\Storage\TableConfig.cs" />
-    <Compile Include="Data\Storage\TableAccess.cs" />
     <Compile Include="Data\Web\Form\FileReceiver.cs" />
     <Compile Include="Data\Web\Form\HttpPostedFileWrapper.cs" />
     <Compile Include="Data\Web\Form\IFileReceiver.cs" />
@@ -95,7 +106,7 @@
     <Compile Include="Requests\IRequest.cs" />
     <Compile Include="Requests\IRequestProcessor.cs" />
     <Compile Include="Requests\Processors\LoggingRequestProcessor.cs" />
-    <Compile Include="SqliteUtility.cs" />
+    <Compile Include="Data\Sqlite\SqliteUtility.cs" />
     <Compile Include="Structure\IReadOnlyRegisterLibrary.cs" />
     <Compile Include="Structure\IRegisterLibrary.cs" />
     <Compile Include="Structure\RegisterLibrary.cs" />
@@ -108,6 +119,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Processing\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" />

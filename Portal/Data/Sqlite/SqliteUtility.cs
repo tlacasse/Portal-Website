@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Portal {
+namespace Portal.Data.Sqlite {
 
     public static class SqliteUtility {
 
