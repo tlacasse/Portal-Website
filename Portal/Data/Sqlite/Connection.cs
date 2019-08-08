@@ -1,17 +1,16 @@
 ﻿using Portal.Data.ActiveRecord;
+using Portal.Data.Sqlite.Internal;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SQLite;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 
 namespace Portal.Data.Sqlite {
 
     public class Connection : IConnection {
 
-        private SQLiteConnection SQLite { get; }
+        internal SQLiteConnection SQLite { get; }
 
         public bool IsClosed { get; private set; } = false;
 
@@ -25,36 +24,20 @@ namespace Portal.Data.Sqlite {
             IsClosed = true;
         }
 
-        public IReadOnlyList<Model> Execute<Model>(string query, QueryOptions options = QueryOptions.None) {
+        public IEnumerable<Model> Execute<Model>(string query, QueryOptions options = QueryOptions.None)
+                where Model : IActiveRecord {
+            return Execute(typeof(Model), query, options).Select(x => (Model)x);
+        }
+
+        internal IEnumerable<object> Execute(Type type, string query, QueryOptions options = QueryOptions.None) {
             AssertOpen();
             if (options.Includes(QueryOptions.Log)) {
                 Log("Query", query);
             }
-            PropertyInfo[] properties = typeof(Model).GetProperties();
-            List<Model> results = new List<Model>();
-            using (SQLiteCommand command = new SQLiteCommand(query, SQLite)) {
-                using (SQLiteDataReader reader = command.ExecuteReader()) {
-                    while (reader.Read()) {
-                        Model model = PortalUtility.ConstructEmpty<Model>();
-                        for (int i = 0; i < reader.FieldCount; i++) {
-                            IEnumerable<ColumnItem>
-                            PropertyInfo property = properties.Where(p => p.Name == reader.GetName(i)).FirstOrDefault();
-                            if (property != null) {
-                                if (property.PropertyType.Equals(typeof(int)))
-                                    property.SetValue(model, reader.GetInt32(i));
-                                if (property.PropertyType.Equals(typeof(string)))
-                                    property.SetValue(model, reader.GetString(i));
-                                if (property.PropertyType.Equals(typeof(bool)))
-                                    property.SetValue(model, reader.GetBoolean(i));
-                                if (property.PropertyType.Equals(typeof(DateTime)))
-                                    property.SetValue(model, reader.GetDateTime(i));
-                            }
-                        }
-                        results.Add(model);
-                    }
-                }
-            }
-            return results;
+            QueryService q = new QueryService(this, type, query, options);
+            q.SetupSimpleProperties();
+            q.SetupReferenceProperties();
+            return q.GetResults();
         }
 
         public int ExecuteNonQuery(string query, QueryOptions options = QueryOptions.None) {

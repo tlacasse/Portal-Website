@@ -7,9 +7,13 @@ namespace Portal {
     public static class PortalUtility {
 
         public static T ConstructEmpty<T>() {
-            ConstructorInfo constructor = typeof(T).GetConstructors()
+            return (T)ConstructEmpty(typeof(T));
+        }
+
+        public static object ConstructEmpty(Type ofType) {
+            ConstructorInfo constructor = ofType.GetConstructors()
                 .Where(c => c.GetParameters().Length == 0).Single();
-            return (T)(constructor.Invoke(null));
+            return constructor.Invoke(null);
         }
 
         public static string UrlFormat(string name) {

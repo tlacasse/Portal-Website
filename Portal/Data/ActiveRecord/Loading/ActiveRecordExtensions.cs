@@ -15,6 +15,18 @@ namespace Portal.Data.ActiveRecord.Loading {
             return record.GetType().GetTableAttribute();
         }
 
+        public static ColumnItem GetIdentityColumn(this IActiveRecord record) {
+            return record.GetType().GetIdentityColumn();
+        }
+
+        public static IEnumerable<ColumnItem> GetColumns(this IActiveRecord record, bool includingIdentity = false) {
+            return record.GetType().GetColumns(includingIdentity);
+        }
+
+        public static string GetTableName(this Type type) {
+            return type.GetTableAttribute().Name;
+        }
+
         public static TableAttribute GetTableAttribute(this Type type) {
             TableAttribute attribute = type.GetCustomAttributes<TableAttribute>().SingleOrDefault();
             if (attribute == null) {
@@ -23,8 +35,7 @@ namespace Portal.Data.ActiveRecord.Loading {
             return attribute;
         }
 
-        public static ColumnItem GetIdentityColumn(this IActiveRecord record) {
-            Type type = record.GetType();
+        public static ColumnItem GetIdentityColumn(this Type type) {
             foreach (PropertyInfo property in type.GetProperties()) {
                 IdentityAttribute identityAttribute = property
                     .GetCustomAttributes<IdentityAttribute>().SingleOrDefault();
@@ -35,9 +46,8 @@ namespace Portal.Data.ActiveRecord.Loading {
             throw new ActiveRecordLoadingException("Identity column not found on " + type.Name);
         }
 
-        public static IEnumerable<ColumnItem> GetColumns(this IActiveRecord record, bool includingIdentity = false) {
+        public static IEnumerable<ColumnItem> GetColumns(this Type type, bool includingIdentity = false) {
             List<ColumnItem> columns = new List<ColumnItem>();
-            Type type = record.GetType();
             foreach (PropertyInfo property in type.GetProperties()) {
                 ColumnAttribute attribute = property
                     .GetCustomAttributes<ColumnAttribute>(true).SingleOrDefault();

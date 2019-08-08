@@ -1,68 +1,28 @@
-﻿using Portal.Data.Models;
-using Portal.Data.Models.Attributes;
+﻿using Portal.Data.ActiveRecord;
 using System;
-using System.Collections.Generic;
 
 namespace Portal.App.Portal.Models {
 
-    public class IconHistory : IModel {
+    [Table("PortalIconHistory")]
+    public class IconHistory : ActiveRecordBase {
 
-        [Identity]
-        public int Id { get; set; } = -1;
+        [References(typeof(Icon))]
+        public Icon Icon { get; set; }
 
-        public int IconId { get; set; }
-
+        [Column("Name")]
         public string Name { get; set; }
 
+        [Column("Image")]
         public string Image { get; set; }
 
+        [Column("Link")]
         public string Link { get; set; }
 
+        [Column("IsNew")]
         public bool IsNew { get; set; }
 
+        [Column("DateUpdated")]
         public DateTime DateUpdated { get; set; }
-
-        public void ValidateData() {
-        }
-
-        public bool IsRecordEqual(IModel obj) {
-            IconHistory other = obj as IconHistory;
-            return other != null && this.Id == other.Id;
-        }
-
-        // generated
-
-        public override bool Equals(object obj) {
-            var history = obj as IconHistory;
-            return history != null &&
-                   Id == history.Id &&
-                   IconId == history.IconId &&
-                   Name == history.Name &&
-                   Image == history.Image &&
-                   Link == history.Link &&
-                   IsNew == history.IsNew &&
-                   DateUpdated == history.DateUpdated;
-        }
-
-        public override int GetHashCode() {
-            var hashCode = -30192229;
-            hashCode = hashCode * -1521134295 + Id.GetHashCode();
-            hashCode = hashCode * -1521134295 + IconId.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Image);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Link);
-            hashCode = hashCode * -1521134295 + IsNew.GetHashCode();
-            hashCode = hashCode * -1521134295 + DateUpdated.GetHashCode();
-            return hashCode;
-        }
-
-        public static bool operator ==(IconHistory history1, IconHistory history2) {
-            return EqualityComparer<IconHistory>.Default.Equals(history1, history2);
-        }
-
-        public static bool operator !=(IconHistory history1, IconHistory history2) {
-            return !(history1 == history2);
-        }
 
     }
 

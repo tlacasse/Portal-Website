@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Portal.Requests {
+namespace Portal.Processing.Requests {
 
     public interface IRequestProcessor {
 

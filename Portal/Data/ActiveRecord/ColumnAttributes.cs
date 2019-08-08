@@ -6,6 +6,8 @@ namespace Portal.Data.ActiveRecord {
 
         public virtual string Name { get; }
 
+        public virtual bool IsSimpleMapping { get; } = true;
+
         public ColumnAttribute(string Name) {
             this.Name = Name;
         }
@@ -19,11 +21,13 @@ namespace Portal.Data.ActiveRecord {
 
     }
 
-    public class ReferenceAttribute : ColumnAttribute {
+    public class ReferencesAttribute : ColumnAttribute {
 
-        public virtual string Table { get; }
+        public override bool IsSimpleMapping => false;
 
-        public ReferenceAttribute(string Table) : base(Table + "Id") {
+        public virtual Type ReferenceType { get; }
+
+        public ReferencesAttribute(Type ReferenceType) : base(ReferenceType.Name + "Id") {
         }
 
     }

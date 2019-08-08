@@ -1,7 +1,7 @@
 ﻿using Portal.Data.Sqlite;
 using System;
 
-namespace Portal.Requests.Processors {
+namespace Portal.Processing.Requests.Processors {
 
     public class LoggingRequestProcessor : IRequestProcessor {
 
