@@ -41,8 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dependencies\Concrete\IconTable.cs" />
-    <Compile Include="Dependencies\IIconTable.cs" />
+    <Compile Include="Tables\IconTable.cs" />
+    <Compile Include="Tables\IIconTable.cs" />
     <Compile Include="Models\IconHistory.cs" />
     <Compile Include="Models\Icon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

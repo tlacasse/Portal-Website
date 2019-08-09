@@ -1,7 +1,8 @@
-﻿
+﻿using Portal.Structure;
+
 namespace Portal.Data.Sqlite {
 
-    public class ConnectionCache : IConnectionCache {
+    public class ConnectionCache : IConnectionCache, IService<IConnectionCache> {
 
         public IConnection Instance {
             get {

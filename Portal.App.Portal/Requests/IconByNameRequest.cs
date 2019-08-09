@@ -1,11 +1,11 @@
 ﻿using Portal.App.Portal.Models;
-using Portal.Data.Storage;
 using Portal.Data.Web;
 using Portal.Requests;
+using Portal.Structure;
 
 namespace Portal.App.Portal.Requests {
 
-    public class IconByNameRequest : DependentBase, IRequest<string, Icon> {
+    public class IconByNameRequest : DependentBase, IRequest<string, Icon>, IService<IconByNameRequest> {
 
         public IconByNameRequest(IWebsiteState WebsiteState, IDatabaseFactory DatabaseFactory)
             : base(WebsiteState, DatabaseFactory) {

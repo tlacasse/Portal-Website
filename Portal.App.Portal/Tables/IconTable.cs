@@ -2,11 +2,12 @@
 using Portal.Data.ActiveRecord.Storage;
 using Portal.Data.Querying;
 using Portal.Data.Sqlite;
+using Portal.Structure;
 using System.Linq;
 
-namespace Portal.App.Portal.Dependencies.Concrete {
+namespace Portal.App.Portal.Tables {
 
-    public class IconTable : TableBase<Icon>, IIconTable {
+    public class IconTable : TableBase<Icon>, IIconTable, IService<IIconTable> {
 
         public IconTable(IConnectionCache ConnectionCache) : base(ConnectionCache) {
         }

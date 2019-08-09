@@ -1,5 +1,7 @@
 ﻿
-namespace Portal.Processing.Requests {
+namespace Portal.Requests {
+
+    public interface IRequest { }
 
     public interface IRequest<TIn, TOut> : IRequest {
 
@@ -18,7 +20,5 @@ namespace Portal.Processing.Requests {
         TOut Process();
 
     }
-
-    public interface IRequest { }
 
 }

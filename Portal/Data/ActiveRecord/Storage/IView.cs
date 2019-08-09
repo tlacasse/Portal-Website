@@ -14,7 +14,7 @@ namespace Portal.Data.ActiveRecord.Storage {
 
         X GetById(int id);
 
-        IReadOnlyList<X> Query(IWhere where, QueryOptions queryOptions = QueryOptions.None);
+        IEnumerable<X> Query(IWhere where, QueryOptions queryOptions = QueryOptions.None);
 
     }
 

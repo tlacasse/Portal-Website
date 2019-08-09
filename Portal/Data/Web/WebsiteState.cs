@@ -1,9 +1,10 @@
-﻿using System.IO;
+﻿using Portal.Structure;
+using System.IO;
 using System.Web;
 
 namespace Portal.Data.Web {
 
-    public class WebsiteState : IWebsiteState {
+    public class WebsiteState : IWebsiteState, IService<IWebsiteState> {
 
         public string WebsitePath => HttpContext.Current.Server.MapPath("~");
 

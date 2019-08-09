@@ -19,7 +19,7 @@ namespace Portal.Data.ActiveRecord.Storage {
             return Query(new Equals<int>("Id", id)).SingleOrDefault();
         }
 
-        public virtual IReadOnlyList<X> Query(IWhere where, QueryOptions queryOptions = QueryOptions.None) {
+        public virtual IEnumerable<X> Query(IWhere where, QueryOptions queryOptions = QueryOptions.None) {
             string whereClause = where.ToString();
             if (!string.IsNullOrWhiteSpace(whereClause)) {
                 whereClause = "WHERE " + whereClause;

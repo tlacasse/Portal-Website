@@ -1,8 +1,9 @@
 ﻿using Portal.Data.Sqlite;
+using Portal.Structure;
 
 namespace Portal.Data.ActiveRecord.Storage {
 
-    public class ActiveContext : IActiveContext {
+    public class ActiveContext : IActiveContext, IService<IActiveContext> {
 
         private IConnectionCache ConnectionCache { get; }
 

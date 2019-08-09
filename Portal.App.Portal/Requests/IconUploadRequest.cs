@@ -3,12 +3,13 @@ using Portal.Data.Storage;
 using Portal.Data.Web;
 using Portal.Data.Web.Form;
 using Portal.Requests;
+using Portal.Structure;
 using System;
 using System.Linq;
 
 namespace Portal.App.Portal.Requests {
 
-    public class IconUploadRequest : DependentBase, IRequestIn<Icon> {
+    public class IconUploadRequest : DependentBase, IRequestIn<Icon>, IService<IconUploadRequest> {
 
         public static readonly int MAX_ICON_MB = 10;
         public static readonly string SAVE_PATH_TEMPLATE = "Data/Icons/{0}.{1}";

@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Portal.Structure;
+using System.Collections.Generic;
 using System.Web;
 
 namespace Portal.Data.Web.Form {
 
-    public class FileReceiver : IFileReceiver {
+    public class FileReceiver : IFileReceiver, IService<IFileReceiver> {
 
         public IEnumerable<IPostedFile> GetPostedFiles() {
             HttpFileCollection files = HttpContext.Current.Request.Files;
