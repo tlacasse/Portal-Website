@@ -1,5 +1,7 @@
-﻿using Portal.App.Portal.Models;
-using Portal.Data.Storage;
+﻿using Portal.App.Portal.Messages;
+using Portal.App.Portal.Models;
+using Portal.App.Portal.Tables;
+using Portal.Data.ActiveRecord.Storage;
 using Portal.Data.Web;
 using Portal.Data.Web.Form;
 using Portal.Requests;
@@ -9,19 +11,21 @@ using System.Linq;
 
 namespace Portal.App.Portal.Requests {
 
-    public class IconUploadRequest : DependentBase, IRequestIn<Icon>, IService<IconUploadRequest> {
+    public class IconUploadRequest : DependentBase, IRequestIn<IconPost>, IService<IconUploadRequest> {
 
         public static readonly int MAX_ICON_MB = 10;
         public static readonly string SAVE_PATH_TEMPLATE = "Data/Icons/{0}.{1}";
 
-        private IFileReceiver FileReceiver { get; }
+        private IIconTable IconTable { get; }
+        private IconSaveRequest IconSaveRequest { get; }
 
-        public IconUploadRequest(IWebsiteState WebsiteState, IDatabaseFactory DatabaseFactory,
-                IFileReceiver FileReceiver) : base(WebsiteState, DatabaseFactory) {
-            this.FileReceiver = FileReceiver;
+        public IconUploadRequest(IActiveContext ActiveContext, IIconTable IconTable,
+                IconSaveRequest IconSaveRequest) : base(ActiveContext) {
+            this.IconTable = IconTable;
+            this.IconSaveRequest = IconSaveRequest;
         }
 
-        public void Process(Icon model) {
+        public void Process(IconPost model) {
             this.NeedNotNull(model, "uploaded icon");
             IPostedFile file = GetFile(model);
 
@@ -32,10 +36,9 @@ namespace Portal.App.Portal.Requests {
 
             CheckFile(file, model);
 
-            using (IDatabase database = DatabaseFactory.Create()) {
+            using (ActiveContext.Start()) {
                 CheckAgainstExistingIcons(database, model);
-                Icon newIcon = UpdateDatabase(database, model);
-                SaveFile(file, newIcon);
+                IconSaveRequest.Process(new Icon());
             }
         }
 
@@ -68,35 +71,6 @@ namespace Portal.App.Portal.Requests {
                     throw new PortalException(string.Format("Icon with Id {0} does not exist", model.Id));
                 }
                 model.Image = model.Image ?? existing.Image; // make sure history has image
-            }
-        }
-
-        private Icon UpdateDatabase(IDatabase database, Icon model) {
-            model.DateChanged = DateTime.Now;
-            if (model.IsNew) {
-                model.DateCreated = DateTime.Now;
-                database.Insert(model);
-            } else {
-                database.Update(model);
-            }
-            database.Commit();
-
-            Icon newIcon = database.GetIconByName(model.Name);
-            if (newIcon == null) {
-                throw new PortalException(string.Format("Icon '{0}' not found after added", model.Name));
-            }
-
-            IconHistory history = newIcon.ToHistory();
-            database.Insert(history);
-
-            return newIcon;
-        }
-
-        private void SaveFile(IPostedFile file, Icon newIcon) {
-            if (file != null) {
-                file.SaveAs(WebsiteState.GetPath(
-                    string.Format(SAVE_PATH_TEMPLATE, newIcon.Id, newIcon.Image)
-                ));
             }
         }
 

@@ -13,7 +13,7 @@ namespace Portal.Website.Portal.Controllers {
 
         [HttpGet]
         [Route("list")]
-        public IReadOnlyList<Icon> GetIconList() {
+        public IEnumerable<Icon> GetIconList() {
             return Process(() => {
                 return Get<IconListRequest>().Process();
             });

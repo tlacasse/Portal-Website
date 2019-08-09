@@ -1,17 +1,13 @@
-﻿using Portal.Data.Storage;
-using Portal.Data.Web;
+﻿using Portal.Data.ActiveRecord.Storage;
 
 namespace Portal.Requests {
 
     public abstract class DependentBase {
 
-        protected IWebsiteState WebsiteState { get; }
+        protected IActiveContext ActiveContext { get; }
 
-        protected IDatabaseFactory DatabaseFactory { get; }
-
-        public DependentBase(IWebsiteState WebsiteState, IDatabaseFactory DatabaseFactory) {
-            this.WebsiteState = WebsiteState;
-            this.DatabaseFactory = DatabaseFactory;
+        public DependentBase(IActiveContext ActiveContext) {
+            this.ActiveContext = ActiveContext;
         }
 
     }

@@ -1,6 +1,5 @@
 ﻿using Portal.Data.ActiveRecord;
 using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Portal.App.Portal.Models {

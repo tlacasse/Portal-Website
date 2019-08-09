@@ -1,21 +1,24 @@
 ﻿using Portal.App.Portal.Models;
+using Portal.App.Portal.Tables;
+using Portal.Data.ActiveRecord.Storage;
 using Portal.Data.Querying;
-using Portal.Data.Web;
 using Portal.Requests;
 using Portal.Structure;
 using System.Collections.Generic;
 
 namespace Portal.App.Portal.Requests {
 
-    public class IconListRequest : DependentBase, IRequestOut<IReadOnlyList<Icon>>, IService<IconListRequest> {
+    public class IconListRequest : DependentBase, IRequestOut<IEnumerable<Icon>>, IService<IconListRequest> {
 
-        public IconListRequest(IWebsiteState WebsiteState, IDatabaseFactory DatabaseFactory)
-            : base(WebsiteState, DatabaseFactory) {
+        private IIconTable IconTable { get; }
+
+        public IconListRequest(IActiveContext ActiveContext, IIconTable IconTable) : base(ActiveContext) {
+            this.IconTable = IconTable;
         }
 
-        public IReadOnlyList<Icon> Process() {
-            using (IDatabase database = DatabaseFactory.Create()) {
-                return database.Query<Icon>(new All());
+        public IEnumerable<Icon> Process() {
+            using (ActiveContext.Start()) {
+                return IconTable.Query(new All());
             }
         }
 

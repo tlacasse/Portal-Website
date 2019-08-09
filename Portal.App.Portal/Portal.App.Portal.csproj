@@ -41,7 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Messages\IconPost.cs" />
+    <Compile Include="Requests\IconSaveRequest.cs" />
+    <Compile Include="Tables\IconHistoryTable.cs" />
     <Compile Include="Tables\IconTable.cs" />
+    <Compile Include="Tables\IIconHistoryTable.cs" />
     <Compile Include="Tables\IIconTable.cs" />
     <Compile Include="Models\IconHistory.cs" />
     <Compile Include="Models\Icon.cs" />
@@ -49,6 +53,7 @@
     <Compile Include="Requests\IconByNameRequest.cs" />
     <Compile Include="Requests\IconListRequest.cs" />
     <Compile Include="Requests\IconUploadRequest.cs" />
+    <Compile Include="Validators\IIconValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Portal\Portal.csproj">
