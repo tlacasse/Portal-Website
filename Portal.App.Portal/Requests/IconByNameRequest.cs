@@ -15,6 +15,7 @@ namespace Portal.App.Portal.Requests {
         }
 
         public Icon Process(string model) {
+            this.NeedNotNull(model, "icon name");
             string name = PortalUtility.UnUrlFormat(model);
             Icon icon;
             using (ActiveContext.Start()) {

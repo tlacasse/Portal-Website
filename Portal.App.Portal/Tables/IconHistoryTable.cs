@@ -11,7 +11,6 @@ namespace Portal.App.Portal.Tables {
         }
 
         public void InsertHistory(Icon icon) {
-            // need to commit on activationcontext close.
             this.Insert(icon.ToHistory());
         }
 

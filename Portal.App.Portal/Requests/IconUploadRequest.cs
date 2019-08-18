@@ -1,76 +1,105 @@
 ﻿using Portal.App.Portal.Messages;
 using Portal.App.Portal.Models;
+using Portal.App.Portal.Services;
 using Portal.App.Portal.Tables;
 using Portal.Data.ActiveRecord.Storage;
 using Portal.Data.Web;
 using Portal.Data.Web.Form;
 using Portal.Requests;
-using Portal.Structure;
 using System;
 using System.Linq;
 
 namespace Portal.App.Portal.Requests {
 
-    public class IconUploadRequest : DependentBase, IRequestIn<IconPost>, IService<IconUploadRequest> {
+    public class IconUploadRequest : DependentBase, IRequestIn<IconPost> {
 
-        public static readonly int MAX_ICON_MB = 10;
         public static readonly string SAVE_PATH_TEMPLATE = "Data/Icons/{0}.{1}";
 
+        private IWebsiteState WebsiteState { get; }
         private IIconTable IconTable { get; }
-        private IconSaveRequest IconSaveRequest { get; }
+        private IIconHistoryTable IconHistoryTable { get; }
+        private IFileReceiver FileReceiver { get; }
+        private IIconService IconService { get; }
 
-        public IconUploadRequest(IActiveContext ActiveContext, IIconTable IconTable,
-                IconSaveRequest IconSaveRequest) : base(ActiveContext) {
+        public IconUploadRequest(IActiveContext ActiveContext, IWebsiteState WebsiteState,
+                IIconTable IconTable, IIconHistoryTable IconHistoryTable,
+                IFileReceiver FileReceiver, IIconService IconService) : base(ActiveContext) {
+            this.WebsiteState = WebsiteState;
             this.IconTable = IconTable;
-            this.IconSaveRequest = IconSaveRequest;
+            this.IconHistoryTable = IconHistoryTable;
+            this.FileReceiver = FileReceiver;
+            this.IconService = IconService;
         }
 
         public void Process(IconPost model) {
             this.NeedNotNull(model, "uploaded icon");
-            IPostedFile file = GetFile(model);
-
-            model.ValidateData();
-
-            // Force DB name to be correctly formatted
-            model.Name = PortalUtility.UnUrlFormat(PortalUtility.UrlFormat(model.Name));
-
-            CheckFile(file, model);
+            IPostedFile file = FileReceiver.GetPostedFiles().FirstOrDefault();
+            Icon icon = BuildIconFromMessage(model, file);
+            IconService.ValidateIconPost(icon, file);
 
             using (ActiveContext.Start()) {
-                CheckAgainstExistingIcons(database, model);
-                IconSaveRequest.Process(new Icon());
+                CheckAgainstExistingIcons(icon);
+                Icon newIcon = UpdateDatabase(icon);
+                SaveFile(file, newIcon);
             }
         }
 
-        private IPostedFile GetFile(Icon modelToUpdate) {
-            IPostedFile file = FileReceiver.GetPostedFiles().FirstOrDefault();
+        private Icon BuildIconFromMessage(IconPost iconPost, IPostedFile file) {
+            Icon icon = new Icon() {
+                Id = iconPost.Id,
+                Name = iconPost.Name,
+                Link = iconPost.Link
+            };
+
+            // Force DB name to be correctly formatted
+            icon.Name = PortalUtility.UnUrlFormat(PortalUtility.UrlFormat(icon.Name));
+
             if (file != null) {
-                modelToUpdate.Image = PortalUtility.GetImageExtension(file.ContentType);
+                icon.Image = PortalUtility.GetImageExtension(file.ContentType);
             }
-            return file;
+            return icon;
         }
 
-        private void CheckFile(IPostedFile file, Icon model) {
-            if (model.IsNew && file == null) {
-                throw new ArgumentNullException("Icon Image File");
+        private void CheckAgainstExistingIcons(Icon icon) {
+            Icon existing = IconTable.GetByName(icon.Name);
+            if (existing != null && existing.Id != icon.Id) {
+                throw new PortalException(string.Format("Icon Name '{0}' already exists", icon.Name));
             }
-            if (file != null && file.ContentLength > MAX_ICON_MB * 1024 * 1024) {
-                throw new ArgumentOutOfRangeException("Image Upload",
-                    string.Format("Is too large (limit {0}MB)", MAX_ICON_MB));
-            }
-        }
-
-        private void CheckAgainstExistingIcons(IDatabase database, Icon model) {
-            Icon existing = database.GetIconByName(model.Name);
-            if (existing != null && existing.Id != model.Id) {
-                throw new PortalException(string.Format("Icon Name '{0}' already exists", model.Name));
-            }
-            if (model.IsNew == false) {
-                existing = database.GetIconById(model.Id);
+            if (icon.IsNew == false) {
+                existing = IconTable.GetById(icon.Id);
                 if (existing == null) {
-                    throw new PortalException(string.Format("Icon with Id {0} does not exist", model.Id));
+                    throw new PortalException(string.Format("Icon with Id {0} does not exist", icon.Id));
                 }
-                model.Image = model.Image ?? existing.Image; // make sure history has image
+                icon.Image = icon.Image ?? existing.Image; // make sure history has image
+            }
+        }
+
+        private Icon UpdateDatabase(Icon icon) {
+            icon.DateChanged = DateTime.Now;
+            if (icon.IsNew) {
+                icon.DateCreated = DateTime.Now;
+                IconTable.Insert(icon);
+            } else {
+                IconTable.Update(icon);
+            }
+            IconTable.Commit();
+
+            Icon newIcon = IconTable.GetByName(icon.Name);
+            if (newIcon == null) {
+                throw new PortalException(string.Format("Icon '{0}' not found after added", icon.Name));
+            }
+
+            IconHistory history = newIcon.ToHistory();
+            IconHistoryTable.Insert(history);
+
+            return newIcon;
+        }
+
+        private void SaveFile(IPostedFile file, Icon newIcon) {
+            if (file != null) {
+                string path = WebsiteState.GetPath(string.Format(
+                    SAVE_PATH_TEMPLATE, newIcon.Id, newIcon.Image));
+                file.SaveAs(path);
             }
         }
 

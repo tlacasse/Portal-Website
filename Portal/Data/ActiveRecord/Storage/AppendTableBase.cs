@@ -26,10 +26,6 @@ namespace Portal.Data.ActiveRecord.Storage {
             Queries.Add(new Query(item.BuildInsertSql(), QueryOptions.Log));
         }
 
-        public void Update(X item) {
-            Queries.Add(new Query(item.BuildUpdateSql(), QueryOptions.Log));
-        }
-
     }
 
 }

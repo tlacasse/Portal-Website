@@ -13,8 +13,6 @@ namespace Portal.Data.ActiveRecord.Storage {
 
         void Insert(X item);
 
-        void Update(X item);
-
     }
 
 }

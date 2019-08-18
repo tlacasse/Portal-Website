@@ -109,9 +109,7 @@
     <Compile Include="Requests\Processors\LoggingRequestProcessor.cs" />
     <Compile Include="Data\Sqlite\SqliteUtility.cs" />
     <Compile Include="Structure\DependencyInjection\DependencyContainer.cs" />
-    <Compile Include="Structure\IServiceLibrary.cs" />
     <Compile Include="Structure\IService.cs" />
-    <Compile Include="Structure\DependencyInjection\ServiceLibrary.cs" />
     <Compile Include="Structure\IReadOnlyRegisterLibrary.cs" />
     <Compile Include="Structure\IRegisterLibrary.cs" />
     <Compile Include="Structure\RegisterLibrary.cs" />

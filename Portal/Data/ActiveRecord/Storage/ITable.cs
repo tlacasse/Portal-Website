@@ -12,6 +12,8 @@ namespace Portal.Data.ActiveRecord.Storage {
 
         void Delete(X item);
 
+        void Update(X item);
+
     }
 
 }
