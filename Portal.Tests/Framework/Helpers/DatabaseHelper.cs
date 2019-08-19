@@ -7,7 +7,7 @@ namespace Portal.Tests.Framework.Helpers {
 
     public static class DatabaseHelper {
 
-        public static Database GetRealDatabaseWithFakeConnection(RecordingFakeConnection connection) {
+        public static Database GetRealDatabaseWithFakeConnection(FakeConnection connection) {
             Dictionary<Type, TableConfig> d = new Dictionary<Type, TableConfig>() {
                 [typeof(TestObject)] = new TableConfig("TestTable", TableAccess.FullReadWrite)
             };

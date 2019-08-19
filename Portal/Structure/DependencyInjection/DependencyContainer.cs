@@ -13,6 +13,10 @@ namespace Portal.Structure.DependencyInjection {
             Implementations = new Dictionary<Type, object>();
         }
 
+        public object GetService<Interface>() {
+            return Implementations[typeof(Interface)];
+        }
+
         public void Include<Interface>(Interface item) {
             Implementations.Add(typeof(Interface), item);
         }

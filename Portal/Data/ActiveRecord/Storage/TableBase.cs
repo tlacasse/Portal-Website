@@ -8,16 +8,19 @@ namespace Portal.Data.ActiveRecord.Storage {
         public TableBase(IConnectionCache ConnectionCache) : base(ConnectionCache) {
         }
 
-        public void Delete(X item) {
+        public virtual void Delete(X item) {
             Queries.Add(new Query(item.BuildDeleteSql(), QueryOptions.Log));
+            this.Connection.AddTableToCommit(this);
         }
 
-        public void Update(X item) {
+        public virtual void Update(X item) {
             Queries.Add(new Query(item.BuildUpdateSql(), QueryOptions.Log));
+            this.Connection.AddTableToCommit(this);
         }
 
-        public void ExecuteNonQuery(string query, QueryOptions options = QueryOptions.None) {
+        public virtual void ExecuteNonQuery(string query, QueryOptions options = QueryOptions.None) {
             Queries.Add(new Query(query, options));
+            this.Connection.AddTableToCommit(this);
         }
 
     }

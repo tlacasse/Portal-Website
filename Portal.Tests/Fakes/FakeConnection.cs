@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Portal.Tests.Fakes {
 
-    public class RecordingFakeConnection : IConnection {
+    public class FakeConnection : IConnection {
 
         public List<string> Queries { get; set; } = new List<string>();
 

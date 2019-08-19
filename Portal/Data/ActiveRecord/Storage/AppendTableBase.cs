@@ -6,14 +6,14 @@ namespace Portal.Data.ActiveRecord.Storage {
 
     public abstract class AppendTableBase<X> : ViewBase<X>, IAppendTable<X> where X : IActiveRecord {
 
-        public int UncommittedChanges => Queries.Count;
+        public virtual int UncommittedChanges => Queries.Count;
 
-        protected List<Query> Queries { get; } = new List<Query>();
+        protected virtual List<Query> Queries { get; } = new List<Query>();
 
         public AppendTableBase(IConnectionCache ConnectionCache) : base(ConnectionCache) {
         }
 
-        public int Commit() {
+        public virtual int Commit() {
             int sumChanged = 0;
             foreach (Query query in Queries) {
                 sumChanged += Connection.ExecuteNonQuery(query.SQL, query.QueryOptions);
@@ -22,8 +22,9 @@ namespace Portal.Data.ActiveRecord.Storage {
             return sumChanged;
         }
 
-        public void Insert(X item) {
+        public virtual void Insert(X item) {
             Queries.Add(new Query(item.BuildInsertSql(), QueryOptions.Log));
+            this.Connection.AddTableToCommit(this);
         }
 
     }

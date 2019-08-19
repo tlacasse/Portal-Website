@@ -1,4 +1,5 @@
-﻿using Portal.Structure;
+﻿using System;
+using Portal.Structure;
 
 namespace Portal.Data.Sqlite {
 
@@ -15,7 +16,7 @@ namespace Portal.Data.Sqlite {
 
         public string ConnectionString { get; }
 
-        private IConnection instance;
+        private Connection instance;
 
         public ConnectionCache(string ConnectionString) {
             this.ConnectionString = ConnectionString;
@@ -26,6 +27,12 @@ namespace Portal.Data.Sqlite {
                 return true;
             } else {
                 return instance.IsClosed;
+            }
+        }
+
+        public void AddDisposeHook(Action action) {
+            if (!ShouldInstaniate()) {
+                instance.AddDisposeHook(action);
             }
         }
 

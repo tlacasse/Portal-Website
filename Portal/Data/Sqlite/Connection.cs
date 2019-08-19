@@ -1,4 +1,5 @@
 ﻿using Portal.Data.ActiveRecord;
+using Portal.Data.ActiveRecord.Storage;
 using Portal.Data.Sqlite.Internal;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,16 @@ namespace Portal.Data.Sqlite {
 
         public bool IsClosed { get; private set; } = false;
 
+        private HashSet<IAppendTable> TablesToCommit { get; } = new HashSet<IAppendTable>();
+
         public Connection(string connectionString) {
             SQLite = new SQLiteConnection(connectionString);
             SQLite.Open();
         }
 
         public void Dispose() {
+            TablesToCommit.ForEach(t => t.Commit());
+            TablesToCommit.Clear();
             if (SQLite != null) SQLite.Dispose();
             IsClosed = true;
         }
@@ -87,6 +92,10 @@ namespace Portal.Data.Sqlite {
 
         private void AssertOpen() {
             if (IsClosed) throw new InvalidOperationException("Connection is closed.");
+        }
+
+        public void AddTableToCommit(IAppendTable table) {
+            TablesToCommit.Add(table);
         }
 
     }

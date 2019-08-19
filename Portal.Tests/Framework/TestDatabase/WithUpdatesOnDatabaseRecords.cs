@@ -9,12 +9,12 @@ namespace Portal.Tests.Framework.TestDatabase {
     [TestClass]
     public class WithUpdatesOnDatabaseRecords {
 
-        private RecordingFakeConnection connection;
+        private FakeConnection connection;
         private Database database;
 
         [TestInitialize]
         public void Setup() {
-            connection = new RecordingFakeConnection();
+            connection = new FakeConnection();
             database = DatabaseHelper.GetRealDatabaseWithFakeConnection(connection);
         }
 

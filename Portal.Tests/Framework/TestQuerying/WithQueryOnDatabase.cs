@@ -13,13 +13,13 @@ namespace Portal.Tests.Framework.TestQuerying {
 
         private Dictionary<string, IWhere> queries;
 
-        private RecordingFakeConnection connection;
+        private FakeConnection connection;
         private Database database;
 
         [TestInitialize]
         public void Setup() {
             queries = QueryingHelper.GetTestQueries();
-            connection = new RecordingFakeConnection();
+            connection = new FakeConnection();
             database = DatabaseHelper.GetRealDatabaseWithFakeConnection(connection);
         }
 

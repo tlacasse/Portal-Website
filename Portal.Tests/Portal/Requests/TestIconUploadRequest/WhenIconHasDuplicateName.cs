@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Portal.App.Portal.Models;
 using Portal.App.Portal.Requests;
-using Portal.Data.Models;
 using Portal.Tests.Fakes;
 using System.Collections.Generic;
 

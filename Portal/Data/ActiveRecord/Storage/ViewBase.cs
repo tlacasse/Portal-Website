@@ -11,11 +11,11 @@ namespace Portal.Data.ActiveRecord.Storage {
         public ViewBase(IConnectionCache ConnectionCache) : base(ConnectionCache) {
         }
 
-        public string Name {
+        public virtual string Name {
             get { return typeof(X).GetTableAttribute().Name; }
         }
 
-        public X GetById(int id) {
+        public virtual X GetById(int id) {
             return Query(new Equals<int>("Id", id)).SingleOrDefault();
         }
 
@@ -26,6 +26,17 @@ namespace Portal.Data.ActiveRecord.Storage {
             }
             string query = string.Format("SELECT * FROM {0} {1}", Name, whereClause);
             return Connection.Execute<X>(query, queryOptions);
+        }
+
+        // generated
+
+        public override bool Equals(object obj) {
+            var other = obj as IView;
+            return other != null && Name == other.Name;
+        }
+
+        public override int GetHashCode() {
+            return 539060726 + EqualityComparer<string>.Default.GetHashCode(Name);
         }
 
     }

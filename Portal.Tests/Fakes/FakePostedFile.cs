@@ -1,6 +1,5 @@
 ﻿using Portal.Data.Web.Form;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Portal.Tests.Fakes {
