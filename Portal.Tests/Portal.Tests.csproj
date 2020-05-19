@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FakeServices.cs" />
     <Compile Include="Fakes\FakeEmptyFileReceiver.cs" />
     <Compile Include="Fakes\Internal\FakeTableBackend.cs" />
     <Compile Include="Fakes\FakeWebsiteState.cs" />
