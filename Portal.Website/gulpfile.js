@@ -82,7 +82,7 @@ function createTaskGroup(name) {
     });
 
     gulp.task(name + '_sass', function () {
-        return gulp.src('Content/sass/' + name + '/**/*.scss')
+        return gulp.src('clientapp/' + name + '/**/*.scss')
             .pipe(sass())
             .pipe(isRelease() ? concat(name.toLowerCase() + '.css') : noop())
             .pipe(isRelease() ? cleanCSS() : noop())
@@ -106,7 +106,7 @@ function createTaskGroup(name) {
             csssrc.push(build + '/styles/Shared/**/*.css')
         }
 
-        return gulp.src(build + '/views/app/' + name + '.cshtml')
+        return gulp.src(build + '/Views/App/' + name + '.cshtml')
             .pipe(inject(
                 gulp.src(build + '/framework/*.js', { read: false }),
                 { relative: true, name: 'framework' }
@@ -119,7 +119,7 @@ function createTaskGroup(name) {
                 gulp.src(csssrc, { read: false }),
                 { relative: true })
             )
-            .pipe(gulp.dest(build + '/views/app'))
+            .pipe(gulp.dest(build + '/Views/App'))
     });
 
     if (isShared) {
@@ -139,7 +139,7 @@ function createTaskGroup(name) {
 }
 
 gulp.task('mithril', function () {
-    return gulp.src(isRelease() ? 'content/js/mithril.min.js' : 'content/js/mithril.js')
+    return gulp.src(isRelease() ? 'clientapp/framework/mithril.min.js' : 'clientapp/framework/mithril.js')
         .pipe(gulp.dest(build + '/framework'));
 });
 

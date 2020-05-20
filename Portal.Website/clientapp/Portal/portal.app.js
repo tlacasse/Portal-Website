@@ -1,13 +1,9 @@
-﻿var root = document.getElementById('page');
+﻿"use strict";
+
+var root = document.getElementById('page');
 
 m.route(root, '/', {
     '/': Home,
-    '/edit/:name': Edit,
-    '/new': Edit,
-    '/grid': Grid,
-    '/build': Build,
-    '/view/api': Api,
 });
 
-// error message
-m.mount(document.getElementById('message-box'), ErrorMessage);
+m.mount(document.getElementById('message-box'), MessageBox);

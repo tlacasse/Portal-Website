@@ -1,34 +1,37 @@
-﻿using Portal.Data.Sqlite;
-using Portal.Data.Web;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Web;
+﻿using Portal.Data;
+using Portal.Data.Models.Portal;
+using Portal.Structure;
+using Portal.Structure.Requests;
+using System;
 using System.Web.Http;
 using System.Web.Routing;
 
 namespace Portal.Website {
 
-    public class WebApiApplication : HttpApplication {
+    public class WebApiApplication : System.Web.HttpApplication {
+
+        internal static IDependencyLibrary Services;
+        internal static IRequestProcessor RequestProcessor;
 
         protected void Application_Start() {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
-            string connectionString = ConfigurationManager.ConnectionStrings["Portal"].ConnectionString;
-            IConnectionFactory connectionFactory = new ConnectionFactory(connectionString);
-            IWebsiteState websiteState = new WebsiteState(GetDefaultSettings());
-
-            DatabaseConfig.RegisterDatabaseFactories(connectionFactory);
-            RequestConfig.RegisterRequests(DatabaseConfig.Factories, connectionFactory, websiteState);
+            Services = DependencyConfig.RegisterServiceDependencies();
+            RequestProcessor = RequestProcessorConfig.BuildNestedRequestProcessor(Services);
+            //CreatePortalIcon();
         }
 
-        private Dictionary<Setting, string> GetDefaultSettings() {
-            return new Dictionary<Setting, string>() {
-                [Setting.PortalGridCurrentWidth] = ConfigurationManager.AppSettings["PortalGridDefaultWidth"],
-                [Setting.PortalGridCurrentHeight] = ConfigurationManager.AppSettings["PortalGridDefaultHeight"],
-                [Setting.PortalGridMaxSize] = ConfigurationManager.AppSettings["PortalGridMaxSize"],
-                [Setting.PortalGridMinSize] = ConfigurationManager.AppSettings["PortalGridMinSize"]
-            };
+        private void CreatePortalIcon() {
+            using (var setup = new Connection()) {
+                setup.Icons.Add(new Icon() {
+                    Name = "Portal",
+                    Image = "png",
+                    Link = "http://localhost:5527/app/portal#!/",
+                    DateCreated = DateTime.Now,
+                    DateChanged = DateTime.Now
+                });
+                setup.SaveChanges();
+            }
         }
 
     }

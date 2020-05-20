@@ -5,14 +5,6 @@ namespace Portal.Data.Web {
 
         string WebsitePath { get; }
 
-        string GetPath(string relativePath);
-
-        void SetSetting(Setting name, object value);
-
-        string GetSetting(Setting name);
-
-        int GetSettingInt(Setting name);
-
     }
 
 }

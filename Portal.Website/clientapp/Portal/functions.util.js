@@ -1,4 +1,5 @@
-﻿
+﻿"use strict";
+
 function formatURL(value) {
     if (nonexistent(value)) {
         return "";

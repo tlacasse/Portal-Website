@@ -48,10 +48,6 @@ $appDataPath = Join-Path $buildPath 'App_Data'
 if (Path-NotExists $appDataPath) {
     New-Item -Path $appDataPath -ItemType directory -Verbose
 }
-$dataPath = Join-Path $buildPath 'Data'
-if (Path-NotExists $dataPath) {
-    New-Item -Path $dataPath -ItemType directory -Verbose
-}
 
 if ($all -or $config) {
     robocopy $PSScriptRoot $buildPath 'favicon.ico' 'Web.config' 'Global.asax' /COPY:DATS

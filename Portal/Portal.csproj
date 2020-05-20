@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D6D00894-BE74-4A56-9968-FAAB1C151DC2}</ProjectGuid>
+    <ProjectGuid>{03F15FA2-3CF4-4C03-AF6D-8DCDA4722E67}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Portal</RootNamespace>
@@ -34,25 +36,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Core.1.0.111.0\lib\net46\System.Data.SQLite.dll</HintPath>
+    <Reference Include="System.Data.SQLite, Version=1.0.112.1, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.112.2\lib\net40\System.Data.SQLite.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite.EF6, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.111.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.112.1, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.112.2\lib\net40\System.Data.SQLite.EF6.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.111.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.112.1, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.112.2\lib\net40\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -63,63 +65,51 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Models\Attributes\IdentityAttribute.cs" />
-    <Compile Include="Data\Models\Attributes\UpdateIgnoreAttribute.cs" />
-    <Compile Include="Data\Models\IModel.cs" />
-    <Compile Include="Data\Sqlite\ILogger.cs" />
-    <Compile Include="Data\Sqlite\Connection.cs" />
-    <Compile Include="Data\Sqlite\ConnectionFactory.cs" />
-    <Compile Include="Data\Sqlite\IConnection.cs" />
-    <Compile Include="Data\Sqlite\IConnectionFactory.cs" />
-    <Compile Include="Data\Sqlite\LoggingFailedException.cs" />
-    <Compile Include="Data\Querying\All.cs" />
-    <Compile Include="Data\Querying\And.cs" />
-    <Compile Include="Data\Querying\Equals.cs" />
-    <Compile Include="Data\Querying\IWhere.cs" />
-    <Compile Include="Data\Querying\Or.cs" />
-    <Compile Include="Data\Sqlite\QueryOptions.cs" />
-    <Compile Include="Data\Storage\Database.cs" />
-    <Compile Include="Data\Storage\DatabaseFactory.cs" />
-    <Compile Include="Data\Storage\IDatabase.cs" />
-    <Compile Include="Data\Storage\IDatabaseFactory.cs" />
-    <Compile Include="Data\Storage\TableConfig.cs" />
-    <Compile Include="Data\Storage\TableAccess.cs" />
+    <Compile Include="Data\ConnectionFactory.cs" />
+    <Compile Include="Data\Connection.cs" />
+    <Compile Include="Data\IConnectionFactory.cs" />
+    <Compile Include="Data\IConnection.cs" />
+    <Compile Include="Data\LoggingFailedConnection.cs" />
+    <Compile Include="Data\Models\Portal\Icon.cs" />
+    <Compile Include="Data\Models\Shared\LogRecord.cs" />
     <Compile Include="Data\Web\Form\FileReceiver.cs" />
     <Compile Include="Data\Web\Form\HttpPostedFileWrapper.cs" />
     <Compile Include="Data\Web\Form\IFileReceiver.cs" />
     <Compile Include="Data\Web\Form\IPostedFile.cs" />
     <Compile Include="Data\Web\IWebsiteState.cs" />
-    <Compile Include="Data\Web\Settings.cs" />
     <Compile Include="Data\Web\WebsiteState.cs" />
     <Compile Include="GlobalExtensions.cs" />
     <Compile Include="PortalException.cs" />
     <Compile Include="PortalUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Requests\DependentBase.cs" />
-    <Compile Include="Requests\IRequest.cs" />
-    <Compile Include="Requests\IRequestProcessor.cs" />
-    <Compile Include="Requests\Processors\LoggingRequestProcessor.cs" />
-    <Compile Include="SqliteUtility.cs" />
-    <Compile Include="Structure\IReadOnlyRegisterLibrary.cs" />
-    <Compile Include="Structure\IRegisterLibrary.cs" />
-    <Compile Include="Structure\RegisterLibrary.cs" />
-    <Compile Include="Void.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="sqlite\Log.sql" />
-    <Content Include="sqlite\PortalIcon.sql" />
-    <Content Include="sqlite\PortalIconHistory.sql" />
+    <Compile Include="Structure\CommonDependent.cs" />
+    <Compile Include="Structure\Requests\IRequest.cs" />
+    <Compile Include="Structure\Requests\IRequestProcessor.cs" />
+    <Compile Include="Structure\Requests\Processors\BaseRequestProcessor.cs" />
+    <Compile Include="Structure\Requests\Processors\ErrorLoggingRequestProcessor.cs" />
+    <Compile Include="Structure\DependencyLibrary.cs" />
+    <Compile Include="Structure\IDependencyLibarySetup.cs" />
+    <Compile Include="Structure\IDependencyLibrary.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="sql\LogRecord.table.sql" />
+    <Content Include="sql\PortalIcon.table.sql" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" />
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>

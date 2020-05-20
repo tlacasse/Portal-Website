@@ -1,4 +1,4 @@
-param (
+﻿param (
       [string]$buildName = '_Build'
     , [string]$buildPath = (Join-Path $PSScriptRoot $buildName)
 )
@@ -27,7 +27,7 @@ New-Item -ItemType Directory -Path $buildPath
 New-Item -ItemType Directory -Path (Join-Path $buildPath 'App_Data')
 New-Item -ItemType Directory -Path (Join-Path $buildPath 'Data')
 New-Item -ItemType Directory -Path (Join-Path $buildPath 'Data/Icons')
-Copy-Item (Join-Path $PSScriptRoot '-1.png') -Destination (Join-Path $buildPath 'App_Data/Icons')
+Copy-Item (Join-Path $PSScriptRoot '-1.png') -Destination (Join-Path $buildPath 'Data/Icons')
 
 # Notes
 Write-Host

@@ -1,4 +1,4 @@
-﻿using Portal.Requests;
+﻿using Portal.Structure.Requests;
 using System;
 using System.Collections.Specialized;
 using System.Linq;
@@ -10,15 +10,19 @@ namespace Portal.Website.Structure {
 
     public abstract class ApiControllerBase : ApiController, IRequestProcessor {
 
-        protected TRequest Get<TRequest>() where TRequest : IRequest {
-            return RequestConfig.RequestLibrary.Get<TRequest>();
+        protected TService Get<TService>() {
+            return WebApiApplication.Services.Get<TService>();
         }
 
         public T Process<T>(Func<T> requestCall) {
-            return RequestConfig.RequestProcessor.Process(requestCall);
+            return WebApiApplication.RequestProcessor.Process(requestCall);
         }
 
-        public T ParseFormData<T>() {
+        public void Process(Action requestCall) {
+            WebApiApplication.RequestProcessor.Process(requestCall);
+        }
+
+        protected T ParseFormData<T>() {
             NameValueCollection form = HttpContext.Current.Request.Params;
             string[] keys = form.AllKeys;
             PropertyInfo[] properties = typeof(T).GetProperties();

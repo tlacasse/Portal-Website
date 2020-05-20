@@ -1,21 +1,20 @@
-﻿using Portal.App.Portal.Models;
-using Portal.Data.Querying;
-using Portal.Data.Storage;
-using Portal.Data.Web;
-using Portal.Requests;
+﻿using Portal.Data;
+using Portal.Data.Models.Portal;
+using Portal.Structure;
+using Portal.Structure.Requests;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Portal.App.Portal.Requests {
 
-    public class IconListRequest : DependentBase, IRequestOut<IReadOnlyList<Icon>> {
+    public class IconListRequest : CommonDependent, IRequestOut<IEnumerable<Icon>> {
 
-        public IconListRequest(IWebsiteState WebsiteState, IDatabaseFactory DatabaseFactory)
-            : base(WebsiteState, DatabaseFactory) {
+        public IconListRequest(IConnectionFactory ConnectionFactory) : base(ConnectionFactory) {
         }
 
-        public IReadOnlyList<Icon> Process() {
-            using (IDatabase database = DatabaseFactory.Create()) {
-                return database.Query<Icon>(new All());
+        public IEnumerable<Icon> Process() {
+            using (IConnection connection = ConnectionFactory.Create()) {
+                return connection.Icons.ToList();
             }
         }
 
