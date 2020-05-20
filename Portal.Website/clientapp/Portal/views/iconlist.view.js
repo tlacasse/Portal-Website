@@ -1,109 +1,83 @@
-﻿/**
- * Navigation Icon List populating the left content of most pages.
- */
-var IconList = (function () {
-    "use strict";
-    var vm = {};
+﻿"use strict";
+var IconList = {};
 
-    // source list of icon models
-    vm.sourceList = [];
+// list of icon models
+IconList.sourceList = [];
 
-    // if this is on the Grid Configuration page
-    vm.isGridList = false;
+// if this is on the Grid Configuration page
+IconList.isGridList = false;
 
-    function iconNameCompare(a, b) {
-        return a.Name.localeCompare(b.Name);
-    }
+IconList.oninit = function () {
+    IconList.getIconList();
+}
 
-    function getIconList() {
-        m.request({
-            method: 'GET',
-            url: '/api/portal/icon/list',
-        }).then(function (data) {
-            vm.sourceList = data;
-        }).catch(function (e) {
-            ErrorMessage.show(e);
-        });
-    }
+IconList.getIconList = function () {
+    API.get('portal/icon/list', function (data) {
+        IconList.sourceList = data;
+    });
+}
 
-    function iconOnClick(icon) {
-        gotoIcon(icon);
-    }
+IconList.iconNameCompare = function (a, b) {
+    return a.Name.localeCompare(b.Name);
+}
 
-    function gotoIcon(icon) {
-        m.route.set('/edit/' + formatURL(icon.Name));
-    }
+IconList.gotoIcon = function (icon) {
+    m.route.set('/edit/' + formatURL(icon.Name));
+}
 
-    // mithril oninit
-    function oninit() {
-        getIconList();
-    }
+IconList.emptyRow = function () {
+    return (
+        m('tr', [
+            m('td.icon-list-col1', ' '),
+            m('td.icon-list-col2', ' '),
+        ])
+    );
+}
 
-    ////////////////////// View
-
-    function emptyRow() {
-        return (
-            m('tr', [
-                m('td', { class: 'icon-list-col1' }, ' '),
-                m('td', { class: 'icon-list-col2' }, ' '),
-            ])
-        );
-    }
-
-    function prepIconData() {
-        return {
-            onclick: null,
-            imagePath: null,
-            name: null,
-            classes: 'icon-list-element',
-        };
-    }
-
-    function prepIcon(icon) {
-        var iconRow = prepIconData();
-        iconRow.onclick = function () { iconOnClick(icon); };
-        iconRow.imagePath = iconImagePath(icon);
-        iconRow.name = icon.Name;
-        return iconRow;
-    }
-
-    function iconToRow(icon) {
-        var iconRow = prepIcon(icon);
-        return (
-            m('tr', {
-                class: iconRow.classes,
-                onclick: iconRow.onclick,
-            }, [
-                    m('td', m('div', { class: 'icon-list-image' },
-                        m('img', { src: iconRow.imagePath })
-                    )),
-                    m('td', iconRow.name),
-                ])
-        );
-    }
-
-    function view() {
-        return (
-            Templates.threePane(
-                m('div', { class: 'section-title' }, 'Icons'),
-                m('table', { class: 'icon-list-table' }, [
-                    emptyRow(),
-                    vm.sourceList
-                        .sort(iconNameCompare)
-                        .map(x => iconToRow(x)),
-                    emptyRow(),
-                ]),
-                ''
-            )
-        );
-    }
-
+IconList.prepIconData = function () {
     return {
-        oninit: oninit,
-        view: view,
-        gotoIcon: gotoIcon,
-        private: function () {
-            return vm;
-        },
+        onclick: null,
+        imagePath: null,
+        name: null,
+        classes: 'icon-list-element',
     };
-})();
+}
+
+IconList.prepIcon = function (icon) {
+    var iconRow = IconList.prepIconData();
+    iconRow.onclick = function () { IconList.gotoIcon(icon); };
+    iconRow.imagePath = iconImagePath(icon);
+    iconRow.name = icon.Name;
+    return iconRow;
+}
+
+IconList.iconToRow = function (icon) {
+    var iconRow = IconList.prepIcon(icon);
+    return (
+        m('tr', {
+            class: iconRow.classes,
+            onclick: iconRow.onclick,
+        }, [
+                m('td', m('div.icon-list-image',
+                    m('img', { src: iconRow.imagePath })
+                )),
+                m('td', iconRow.name),
+            ])
+    );
+}
+
+IconList.view = function () {
+    return (
+        Templates.threePane(
+            m('div.header-title', 'Icons'),
+            m('table.icon-list-table', [
+                IconList.emptyRow(),
+                IconList.sourceList
+                    .sort(IconList.iconNameCompare)
+                    .map(x => IconList.iconToRow(x)),
+                IconList.emptyRow(),
+            ]),
+            ''
+        )
+    );
+}

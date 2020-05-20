@@ -1,24 +1,24 @@
-﻿using Portal.App.Portal.Models;
-using Portal.Data.Storage;
-using Portal.Data.Web;
-using Portal.Requests;
+﻿using Portal.Data;
+using Portal.Data.Models.Portal;
+using Portal.Structure;
+using Portal.Structure.Requests;
+using System.Linq;
 
 namespace Portal.App.Portal.Requests {
 
-    public class IconByNameRequest : DependentBase, IRequest<string, Icon> {
+    public class IconByNameRequest : CommonDependent, IRequest<string, Icon> {
 
-        public IconByNameRequest(IWebsiteState WebsiteState, IDatabaseFactory DatabaseFactory)
-            : base(WebsiteState, DatabaseFactory) {
+        public IconByNameRequest(IConnectionFactory ConnectionFactory) : base(ConnectionFactory) {
         }
 
         public Icon Process(string model) {
-            string name = PortalUtility.UnUrlFormat(model);
+            this.NeedNotNull(model, "icon name");
             Icon icon;
-            using (IDatabase database = DatabaseFactory.Create()) {
-                icon = database.GetIconByName(name);
+            using (IConnection connection = ConnectionFactory.Create()) {
+                icon = connection.Icons.Where(x => x.Name == model).SingleOrDefault();
             }
             if (icon == null) {
-                throw new PortalException(string.Format("Icon '{0}' not found", name));
+                throw new PortalException(string.Format("Icon '{0}' not found", model));
             }
             return icon;
         }

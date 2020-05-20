@@ -1,55 +1,42 @@
-﻿/**
- * Portal Configuration entry screen.
- */
-var Home = (function () {
-    "use strict";
+﻿"use strict";
+var Home = {};
 
-    function goHome() {
-        m.route.set('/');
-    }
+Home.go = function () {
+    m.route.set('/');
+}
 
-    function oninit() {
-        IconList.oninit();
-    }
+Home.oninit = function () {
+    IconList.oninit();
+}
 
-    ////////////////////// View
+Home.middleContent = function () {
+    return [
+        m('span.section-title', 'Configuration'),
+        m('div.hrule'),
+        m('ul', [
+            m('li', m(m.route.Link, { href: '/new' }, 'New Icon')),
+        ]),
+        m('br'),
+        m('span.section-title', 'System'),
+        m('div.hrule'),
+        m('ul', [
+            m('li', m("a[href=https://github.com/tlacasse/Portal-Website]", 'Website Source')),
+        ]),
+    ];
+}
 
-    function middleContent() {
-        return [
-            m('span', { class: 'section-title' }, 'Configuration'),
-            m('div', { class: 'hrule' }),
-            m('ul', [
-                m('li', m("a[href=#!/new]", { oncreate: m.route.link }, 'New Icon')),
-            ]),
-            m('br'),
-            m('span', { class: 'section-title' }, 'System'),
-            m('div', { class: 'hrule' }),
-            m('ul', [
-                m('li', m("a[href=https://github.com/tlacasse/Portal-Website]", 'Website Source')),
-            ]),
-        ];
-    }
-
-    function view() {
-        return Templates.splitContent(
-            IconList.view(),
-            Templates.threePane(
-                m('div', { class: 'section-title' }, 'Portal'),
-                middleContent(),
-                m('button', {
-                    class: 'icon-form-input icon-form-button', onclick: function () {
-                        window.location = '/';
-                    }
-                }, 'Exit'),
-            ),
-        );
-    }
-
-    var vm = {};
-
-    vm.view = view;
-    vm.oninit = oninit;
-    vm.goto = goHome;
-
-    return vm;
-})();
+Home.view = function () {
+    return Templates.splitContent(
+        IconList.view(),
+        Templates.threePane(
+            m('div.header-title', 'Portal'),
+            Home.middleContent(),
+            m('button', {
+                class: 'icon-form-input icon-form-button',
+                onclick: function () {
+                    window.location = '/';
+                }
+            }, 'Exit'),
+        ),
+    );
+}
