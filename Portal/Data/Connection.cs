@@ -1,6 +1,7 @@
 ﻿using Portal.Data.Models.Portal;
 using Portal.Data.Models.Shared;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
@@ -11,8 +12,21 @@ namespace Portal.Data {
         public Connection() : base("Portal") {
         }
 
-        public DbSet<Icon> Icons { get; set; }
         public DbSet<LogRecord> LogRecords { get; set; }
+        public DbSet<Icon> Icons { get; set; }
+        public DbSet<IconHistory> IconHistories { get; set; }
+
+        public IEnumerable<LogRecord> LogRecordQuery {
+            get { return LogRecords; }
+        }
+
+        public IEnumerable<Icon> IconQuery {
+            get { return Icons; }
+        }
+
+        public IEnumerable<IconHistory> IconHistoryQuery {
+            get { return IconHistories; }
+        }
 
         void IConnection.SaveChanges() {
             this.SaveChanges();

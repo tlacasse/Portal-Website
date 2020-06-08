@@ -1,7 +1,10 @@
-﻿using Portal.App.Portal.Requests;
+﻿using Portal.App.Portal.Messages;
+using Portal.App.Portal.Requests;
 using Portal.Data.Models.Portal;
 using Portal.Website.Structure;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 
 namespace Portal.Website.Portal.Controllers {
@@ -25,16 +28,16 @@ namespace Portal.Website.Portal.Controllers {
             });
         }
 
-        /*
-         [HttpPost]
-         [Route("post")]
-         public HttpResponseMessage UpdateIcon() {
-             Icon icon = ParseFormData<Icon>();
-             return Process(() => {
-                 Get<IconUploadRequest>().Process(icon);
-                 return Request.CreateResponse(HttpStatusCode.Created);
-             });
-         }*/
+
+        [HttpPost]
+        [Route("post")]
+        public HttpResponseMessage UpdateIcon() {
+            IconPost icon = ParseFormData<IconPost>();
+            return Process(() => {
+                Get<IconUploadRequest>().Process(icon);
+                return Request.CreateResponse(HttpStatusCode.Created);
+            });
+        }
 
     }
 

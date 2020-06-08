@@ -23,6 +23,18 @@ namespace Portal.Data.Models.Portal {
             get { return Id < 0; }
         }
 
+        public IconHistory ToHistory() {
+            return new IconHistory {
+                IconId = Id,
+                Icon = this,
+                Name = Name,
+                Image = Image,
+                Link = Link,
+                IsNew = IsNew,
+                DateUpdated = DateTime.Now
+            };
+        }
+
     }
 
 }

@@ -5,6 +5,8 @@ namespace Portal.Data.Web {
 
         string WebsitePath { get; }
 
+        string GetPath(string relativePath);
+
     }
 
 }

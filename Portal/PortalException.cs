@@ -13,6 +13,9 @@ namespace Portal {
             this.Details = Details;
         }
 
+        public PortalException(object message, string Details) : this(message.ToString(), Details) {
+        }
+
     }
 
 }
