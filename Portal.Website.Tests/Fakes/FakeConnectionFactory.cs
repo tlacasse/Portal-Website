@@ -15,6 +15,7 @@ namespace Portal.Website.Tests.Fakes {
 
         public FakeDbSet<LogRecord> LogRecordsList { get; set; }
         public FakeDbSet<Icon> IconsList { get; set; }
+        public FakeDbSet<IconPosition> IconPositionsList { get; set; }
         public FakeDbSet<IconHistory> IconHistoriesList { get; set; }
 
         public DbSet<LogRecord> LogRecords {
@@ -27,6 +28,13 @@ namespace Portal.Website.Tests.Fakes {
         public DbSet<Icon> Icons {
             get {
                 return IconsList;
+            }
+            set { }
+        }
+
+        public DbSet<IconPosition> IconPositions {
+            get {
+                return IconPositionsList;
             }
             set { }
         }

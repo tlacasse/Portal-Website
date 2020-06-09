@@ -41,6 +41,22 @@ function clamp(x, min, max) {
     return x;
 }
 
+function getArray2d(w, h, value) {
+    var a = [];
+    for (var i = 0; i < w; i++) {
+        var b = [];
+        for (var j = 0; j < h; j++) {
+            if (typeof value === "function") {
+                b.push(value(i, j));
+            } else {
+                b.push(value);
+            }
+        }
+        a.push(b);
+    }
+    return a;
+}
+
 function genUnique() {
     return String(new Date()) + String(Math.random());
 }
@@ -85,7 +101,7 @@ API.pget = function (url, params, success) {
     API._get(url, success, true, params);
 }
 
-API._post = function (url, success, block, body) {
+API._post = function (url, success, block, body, dataobj) {
     url = '/api/' + url;
     if (block) {
         App.wait();
@@ -97,6 +113,9 @@ API._post = function (url, success, block, body) {
     if (!nonexistent(body)) {
         data.body = body;
     }
+    if (!nonexistent(dataobj)) {
+        data.dataobj = dataobj;
+    }
     m.request(data).then(function (data) {
         App.reenable();
         success(data);
@@ -107,7 +126,11 @@ API._post = function (url, success, block, body) {
 }
 
 API.bpost = function (url, body, success) {
-    API._post(url, success, true, body);
+    API._post(url, success, true, body, null);
+}
+
+API.dpost = function (url, data, success) {
+    API._post(url, success, true, null, data);
 }
 
 var App = {};

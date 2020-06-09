@@ -1,0 +1,42 @@
+﻿@import "../aaa/vars";
+
+.icongrid-table {
+    width: 100%;
+    height: 100%;
+    border-spacing: 0px;
+
+    tr {
+        td {
+            border: 1px solid $c-bg-header;
+        }
+    }
+}
+
+.icongrid-element {
+    border: .13em solid $c-border;
+
+    div {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.icongrid-element:hover {
+    background-color: $c-bg-lite;
+    cursor: pointer;
+}
+
+.iconlist-grid-selected {
+    background-color: $c-border-header-merge;
+}
+
+.icongridfooter-x {
+    float: left;
+    text-align: center;
+    padding-top: 0.25em;
+}
+
+.icongridfooter-input {
+    width: 5%;
+    float: left;
+}

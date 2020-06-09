@@ -44,8 +44,12 @@
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.112.1, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.112.2\lib\net40\System.Data.SQLite.dll</HintPath>
@@ -72,6 +76,7 @@
     <Compile Include="Data\LoggingFailedConnection.cs" />
     <Compile Include="Data\Models\Portal\Icon.cs" />
     <Compile Include="Data\Models\Portal\IconHistory.cs" />
+    <Compile Include="Data\Models\Portal\IconPosition.cs" />
     <Compile Include="Data\Models\Shared\LogRecord.cs" />
     <Compile Include="Data\Web\Form\FileReceiver.cs" />
     <Compile Include="Data\Web\Form\HttpPostedFileWrapper.cs" />
@@ -80,6 +85,7 @@
     <Compile Include="Data\Web\IWebsiteState.cs" />
     <Compile Include="Data\Web\WebsiteState.cs" />
     <Compile Include="GlobalExtensions.cs" />
+    <Compile Include="Messages\GridSize.cs" />
     <Compile Include="PortalException.cs" />
     <Compile Include="PortalUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,13 +100,16 @@
     <Compile Include="Structure\IDependencyLibrary.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="sql\LogRecord.table.sql" />
     <Content Include="sql\PortalIcon.table.sql" />
     <Content Include="sql\PortalIconHistory.table.sql" />
+    <Content Include="sql\PortalIconPosition.table.sql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

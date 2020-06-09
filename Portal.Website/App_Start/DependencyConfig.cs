@@ -17,6 +17,8 @@ namespace Portal.Website {
             library.Include<IFileReceiver>(new FileReceiver());
             library.Include<IIconService>(new IconService());
 
+            library.MarkForBuild<GridItemsRequest>(typeof(GridItemsRequest));
+            library.MarkForBuild<GridSizeRequest>(typeof(GridSizeRequest));
             library.MarkForBuild<IconByNameRequest>(typeof(IconByNameRequest));
             library.MarkForBuild<IconListRequest>(typeof(IconListRequest));
             library.MarkForBuild<IconUploadRequest>(typeof(IconUploadRequest));

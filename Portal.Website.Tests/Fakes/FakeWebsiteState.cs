@@ -1,4 +1,5 @@
 ﻿using Portal.Data.Web;
+using Portal.Messages;
 
 namespace Portal.Website.Tests.Fakes {
 
@@ -9,6 +10,10 @@ namespace Portal.Website.Tests.Fakes {
         public string GetPath(string relativePath) {
             return WebsitePath + "/" + relativePath;
         }
+
+        public string IconGridSizePath => throw new System.NotImplementedException();
+
+        public GridSize ActiveIconGridSize { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
     }
 

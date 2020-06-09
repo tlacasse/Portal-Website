@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Portal.Data.Models.Portal {
 
-    [Table("PortalIconHistory")]
-    public class IconHistory {
+    [Table("PortalIconPosition")]
+    public class IconPosition {
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("Id")]
@@ -15,20 +15,17 @@ namespace Portal.Data.Models.Portal {
         [ForeignKey("IconId")]
         public virtual Icon Icon { get; set; }
 
-        [Column("Name")]
-        public virtual string Name { get; set; }
+        [Column("XCoord")]
+        public virtual int XCoord { get; set; }
 
-        [Column("Image")]
-        public virtual string Image { get; set; }
-
-        [Column("Link")]
-        public virtual string Link { get; set; }
-
-        [Column("IsNew")]
-        public virtual bool IsNew { get; set; }
+        [Column("YCoord")]
+        public virtual int YCoord { get; set; }
 
         [Column("DateUpdated")]
         public virtual DateTime DateUpdated { get; set; }
+
+        [Column("IsActive")]
+        public virtual bool IsActive { get; set; }
 
     }
 

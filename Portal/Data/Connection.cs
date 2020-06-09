@@ -14,6 +14,7 @@ namespace Portal.Data {
 
         public DbSet<LogRecord> LogRecords { get; set; }
         public DbSet<Icon> Icons { get; set; }
+        public DbSet<IconPosition> IconPositions { get; set; }
         public DbSet<IconHistory> IconHistories { get; set; }
 
         public IEnumerable<LogRecord> LogRecordQuery {
@@ -22,6 +23,10 @@ namespace Portal.Data {
 
         public IEnumerable<Icon> IconQuery {
             get { return Icons; }
+        }
+
+        public IEnumerable<IconPosition> IconPositionQuery {
+            get { return IconPositions; }
         }
 
         public IEnumerable<IconHistory> IconHistoryQuery {

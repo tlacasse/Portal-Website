@@ -29,6 +29,13 @@ namespace Portal.Website.Tests.Fakes {
             set { }
         }
 
+        public DbSet<IconPosition> IconPositions {
+            get {
+                return FakeConnectionFactory.IconPositions;
+            }
+            set { }
+        }
+
         public DbSet<IconHistory> IconHistories {
             get {
                 return FakeConnectionFactory.IconHistories;
@@ -45,6 +52,12 @@ namespace Portal.Website.Tests.Fakes {
         public IEnumerable<Icon> IconQuery {
             get {
                 return FakeConnectionFactory.IconsList.Records;
+            }
+        }
+
+        public IEnumerable<IconPosition> IconPositionQuery {
+            get {
+                return FakeConnectionFactory.IconPositionsList.Records;
             }
         }
 

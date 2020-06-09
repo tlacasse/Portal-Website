@@ -10,10 +10,12 @@ namespace Portal.Data {
 
         DbSet<LogRecord> LogRecords { get; set; }
         DbSet<Icon> Icons { get; set; }
+        DbSet<IconPosition> IconPositions { get; set; }
         DbSet<IconHistory> IconHistories { get; set; }
 
         IEnumerable<LogRecord> LogRecordQuery { get; }
         IEnumerable<Icon> IconQuery { get; }
+        IEnumerable<IconPosition> IconPositionQuery { get; }
         IEnumerable<IconHistory> IconHistoryQuery { get; }
 
         void SaveChanges();

@@ -15,6 +15,7 @@ Home.middleContent = function () {
         m('div.hrule'),
         m('ul', [
             m('li', m(m.route.Link, { href: '/new' }, 'New Icon')),
+            m('li', m(m.route.Link, { href: '/grid' }, 'Grid Configuration')),
         ]),
         m('br'),
         m('span.section-title', 'System'),
