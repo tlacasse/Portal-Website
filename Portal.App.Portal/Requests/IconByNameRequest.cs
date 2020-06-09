@@ -12,12 +12,13 @@ namespace Portal.App.Portal.Requests {
 
         public Icon Process(string model) {
             this.NeedNotNull(model, "icon name");
+            string name = PortalUtility.UnUrlFormat(model);
             Icon icon;
             using (IConnection connection = ConnectionFactory.Create()) {
-                icon = connection.IconByName(model);
+                icon = connection.IconByName(name);
             }
             if (icon == null) {
-                throw new PortalException(string.Format("Icon '{0}' not found", model));
+                throw new PortalException(string.Format("Icon '{0}' not found", name));
             }
             return icon;
         }

@@ -41,6 +41,10 @@ function clamp(x, min, max) {
     return x;
 }
 
+function genUnique() {
+    return String(new Date()) + String(Math.random());
+}
+
 String.prototype.replaceAll = function (search, replacement) {
     return this.split(search).join(replacement);
 };
@@ -52,12 +56,15 @@ API._get = function (url, success, block, params) {
     if (block) {
         App.wait();
     }
-    m.request({
+    var data = {
         method: 'GET',
         dataType: 'jsonp',
         url: url,
-        params: params,
-    }).then(function (data) {
+    };
+    if (!nonexistent(params)) {
+        data.params = params;
+    }
+    m.request(data).then(function (data) {
         App.reenable();
         success(data);
     }).catch(function (e) {
@@ -67,34 +74,63 @@ API._get = function (url, success, block, params) {
 }
 
 API.get = function (url, success) {
-    API._get(url, success, true, {});
+    API._get(url, success, true, null);
 }
 
 API.aget = function (url, success) {
-    API._get(url, success, false, {});
+    API._get(url, success, false, null);
 }
 
 API.pget = function (url, params, success) {
     API._get(url, success, true, params);
 }
 
+API._post = function (url, success, block, body) {
+    url = '/api/' + url;
+    if (block) {
+        App.wait();
+    }
+    var data = {
+        method: 'POST',
+        url: url,
+    };
+    if (!nonexistent(body)) {
+        data.body = body;
+    }
+    m.request(data).then(function (data) {
+        App.reenable();
+        success(data);
+    }).catch(function (e) {
+        App.reenable();
+        App.showMessage(e);
+    });
+}
+
+API.bpost = function (url, body, success) {
+    API._post(url, success, true, body);
+}
+
 var App = {};
 
 App.showMessage = function (exceptionObject) {
+    var obj = exceptionObject;
+    if (obj.hasOwnProperty('response')) {
+        obj = obj.response;
+    }
     App.get('message-box').style.display = 'block';
-    MessageBox.exception = objectToArray(exceptionObject.response);
+    MessageBox.exception = objectToArray(obj);
 }
 
 App.hideMessage = function () {
-    get('message-box').style.display = 'none';
+    App.get('message-box').style.display = 'none';
 }
 
 App.wait = function () {
-    document.getElementById('wall').style.display = 'block';
+    App.get('wall').style.display = 'block';
 }
 
 App.reenable = function () {
-    document.getElementById('wall').style.display = 'none';
+    App.get('wall').style.display = 'none';
 }
 
 App.get = function (id) {

@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Portal.App.Portal.Requests {
 
-    public class IconUploadRequest : CommonDependent, IRequestIn<IconPost> {
+    public class IconUploadRequest : CommonDependent, IRequest<IconPost, Icon> {
 
         public static readonly string SAVE_PATH_TEMPLATE = "Data/Icons/{0}.{1}";
 
@@ -27,18 +27,20 @@ namespace Portal.App.Portal.Requests {
         }
 
 
-        public void Process(IconPost model) {
+        public Icon Process(IconPost model) {
             this.NeedNotNull(model, "uploaded icon");
             IconService.ValidateIconPost(model);
             IPostedFile file = FileReceiver.GetPostedFiles().FirstOrDefault();
             Icon icon = BuildIconFromMessage(model, file);
             IconService.ValidateIconPostFile(icon, file);
 
+            Icon newIcon;
             using (IConnection connection = ConnectionFactory.Create()) {
                 CheckAgainstExistingIcons(icon, connection);
-                Icon newIcon = UpdateDatabase(icon, connection);
+                newIcon = UpdateDatabase(icon, connection);
                 SaveFile(file, newIcon);
             }
+            return newIcon;
         }
 
         private Icon BuildIconFromMessage(IconPost iconPost, IPostedFile file) {

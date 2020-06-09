@@ -164,6 +164,7 @@
     <Content Include="clientapp\Portal\functions.util.js" />
     <Content Include="clientapp\Portal\portal.app.js" />
     <Content Include="clientapp\Portal\templates.util.js" />
+    <Content Include="clientapp\Portal\views\edit.view.js" />
     <Content Include="clientapp\Portal\views\home.view.js" />
     <Content Include="clientapp\Portal\views\iconlist.view.js" />
     <Content Include="clientapp\Shared\functions.util.js" />
@@ -192,6 +193,7 @@
     <Content Include="clientapp\Portal\aaa\vars.scss" />
     <Content Include="clientapp\Portal\views\iconlist.scss" />
     <Content Include="clientapp\Shared\aaa\shared.scss" />
+    <Content Include="clientapp\Portal\views\edit.scss" />
     <None Include="packages.config" />
     <Content Include="setup.ps1" />
     <Content Include="Views\App\Login.cshtml" />

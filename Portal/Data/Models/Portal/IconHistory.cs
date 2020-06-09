@@ -3,25 +3,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Portal.Data.Models.Portal {
 
-    [Table("PortalIcon")]
+    [Table("PortalIconHistory")]
     public class IconHistory {
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public virtual int Id { get; set; }
 
-        [ForeignKey("PortalIconHistoryPortalIcon")]
-        public int IconId { get; set; }
-        public Icon Icon { get; set; }
+        public virtual int IconId { get; set; }
+        [ForeignKey("IconId")]
+        public virtual Icon Icon { get; set; }
 
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
-        public string Image { get; set; }
+        public virtual string Image { get; set; }
 
-        public string Link { get; set; }
+        public virtual string Link { get; set; }
 
-        public bool IsNew { get; set; }
+        public virtual bool IsNew { get; set; }
 
-        public DateTime DateUpdated { get; set; }
+        public virtual DateTime DateUpdated { get; set; }
 
     }
 

@@ -1,0 +1,50 @@
+﻿
+$form-ratio: 15%;
+
+.iconform-col1 {
+    width: $form-ratio;
+}
+
+.iconform-col2 {
+    width: 100% - $form-ratio;
+}
+
+.iconform-prompt {
+    padding: 2em 0em 2em 1em;
+}
+
+.iconform-input {
+    width: 85%;
+}
+
+.iconform-img {
+    width: 5em;
+    height: 5em;
+
+    img {
+        width: 100%;
+        height: 100%;
+        border: 0.1em solid #000000;
+    }
+}
+
+.iconform-file {
+    text-align: center;
+
+    label {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+
+        input[type=file] {
+            width: 0.01px;
+            height: 0.01px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+    }
+}

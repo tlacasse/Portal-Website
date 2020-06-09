@@ -1,7 +1,7 @@
 ﻿"use strict";
 var Home = {};
 
-Home.go = function () {
+Home.goto = function () {
     m.route.set('/');
 }
 
@@ -32,7 +32,6 @@ Home.view = function () {
             m('div.header-title', 'Portal'),
             Home.middleContent(),
             m('button', {
-                class: 'icon-form-input icon-form-button',
                 onclick: function () {
                     window.location = '/';
                 }

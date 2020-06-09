@@ -1,7 +1,7 @@
 ﻿CREATE TABLE PortalIconHistory (
     Id          INTEGER       PRIMARY KEY ON CONFLICT FAIL AUTOINCREMENT
                               NOT NULL ON CONFLICT FAIL,
-    IconId      INTEGER       CONSTRAINT PortalIconHistoryPortalIcon REFERENCES PortalIcon (Id) 
+    IconId      INTEGER       REFERENCES PortalIcon (Id) 
                               NOT NULL ON CONFLICT FAIL,
     Name        VARCHAR (30)  NOT NULL ON CONFLICT FAIL,
     Image       VARCHAR (10)  NOT NULL ON CONFLICT FAIL,

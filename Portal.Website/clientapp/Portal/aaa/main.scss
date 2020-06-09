@@ -91,6 +91,20 @@ a:hover, a:active {
     color: $c-link-active;
 }
 
+// inputs
+
+input, button, .actas-input {
+    padding: 0.3em;
+    border: 0.2em ridge $c-border;
+    background-color: $c-input;
+    color: #000000;
+    outline: none;
+}
+
+input:focus, button:hover, .actas-input:hover {
+    background-color: $c-input-lite;
+}
+
 // general Style
 
 div.hrule {
@@ -117,4 +131,16 @@ div.hrule {
 
 ul, ol {
     padding: $fs;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.margin-right {
+    margin-right: 5em;
 }

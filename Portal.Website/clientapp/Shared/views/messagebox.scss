@@ -23,6 +23,7 @@ $c-box-border: #8f8f8f;
     height: 10%;
     border-bottom: 3px ridge $c-box-border;
     background-color: $c-box-bg-light;
+    color: #000000;
 }
 
 .message-box-detail {
@@ -31,19 +32,23 @@ $c-box-border: #8f8f8f;
     height: 90%;
     overflow: auto;
     box-sizing: border-box;
+    color: #000000;
 }
 
 .message-box-pair, .message-box-key, .message-box-value {
     width: 100%;
+    color: #000000;
 }
 
 .message-box-key {
     box-sizing: border-box;
     border: 3px ridge $c-box-border;
     background-color: $c-box-bg-light;
+    color: #000000;
 }
 
 .message-box-button {
     background-color: #ffffff;
     cursor: pointer;
+    color: #000000;
 }
