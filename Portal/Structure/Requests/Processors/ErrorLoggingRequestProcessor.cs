@@ -18,7 +18,7 @@ namespace Portal.Structure.Requests.Processors {
                 return InnerProcessor.Process(requestCall);
             } catch (Exception e) {
                 LogError(e);
-                throw e;
+                throw;
             }
         }
 
@@ -27,7 +27,7 @@ namespace Portal.Structure.Requests.Processors {
                 InnerProcessor.Process(requestCall);
             } catch (Exception e) {
                 LogError(e);
-                throw e;
+                throw;
             }
         }
 

@@ -39,7 +39,7 @@ namespace Portal.Website.Tests {
                 action.Invoke();
                 Assert.Fail();
             } catch (PortalException pe) {
-                Assert.AreEqual(message.ToString(), pe.Message);
+                Assert.IsTrue(pe.Message.StartsWith(message.ToString()));
             }
         }
 

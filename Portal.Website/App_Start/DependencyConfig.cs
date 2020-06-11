@@ -17,12 +17,14 @@ namespace Portal.Website {
             library.Include<IFileReceiver>(new FileReceiver());
             library.Include<IIconValidatorService>(new IconValidatorService());
 
+            library.MarkForBuild<GridBuildRequest>(typeof(GridBuildRequest));
             library.MarkForBuild<GridCellsRequest>(typeof(GridCellsRequest));
             library.MarkForBuild<GridSizeRequest>(typeof(GridSizeRequest));
             library.MarkForBuild<GridUpdateRequest>(typeof(GridUpdateRequest));
             library.MarkForBuild<IconByNameRequest>(typeof(IconByNameRequest));
             library.MarkForBuild<IconListRequest>(typeof(IconListRequest));
             library.MarkForBuild<IconUploadRequest>(typeof(IconUploadRequest));
+            library.MarkForBuild<LastGridBuildTimeRequest>(typeof(LastGridBuildTimeRequest));
 
             library.Build();
             return library;

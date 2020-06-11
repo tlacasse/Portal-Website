@@ -19,6 +19,12 @@ namespace Portal.Structure.Requests {
 
     }
 
+    public interface IRequestEvent : IRequest {
+
+        void Process();
+
+    }
+
     public interface IRequest { }
 
 }

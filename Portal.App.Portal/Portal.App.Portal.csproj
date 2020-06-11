@@ -70,12 +70,14 @@
     <Compile Include="Messages\IconResult.cs" />
     <Compile Include="PortalConnectionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\GridBuildRequest.cs" />
     <Compile Include="Requests\GridCellsRequest.cs" />
     <Compile Include="Requests\GridSizeRequest.cs" />
     <Compile Include="Requests\GridUpdateRequest.cs" />
     <Compile Include="Requests\IconByNameRequest.cs" />
     <Compile Include="Requests\IconListRequest.cs" />
     <Compile Include="Requests\IconUploadRequest.cs" />
+    <Compile Include="Requests\LastGridBuildTimeRequest.cs" />
     <Compile Include="Services\IconValidatorService.cs" />
     <Compile Include="Services\IIconValidatorService.cs" />
   </ItemGroup>

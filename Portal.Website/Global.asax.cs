@@ -25,6 +25,7 @@ namespace Portal.Website {
 
             //CreatePortalIcon();
             EnsureGridSizeFileExists();
+            EnsureLastGridBuildTimeFileExists();
         }
 
         private void CreatePortalIcon() {
@@ -48,6 +49,17 @@ namespace Portal.Website {
             } else {
                 // set automatically saves to file
                 ws.ActiveIconGridSize = GridSize.BuildDefault();
+            }
+        }
+
+        private void EnsureLastGridBuildTimeFileExists() {
+            IWebsiteState ws = Services.Get<IWebsiteState>();
+            if (File.Exists(ws.LastGridBuildTimePath)) {
+                string datetimeStr = File.ReadAllText(ws.LastGridBuildTimePath);
+                ws.LastGridBuildTime = DateTime.Parse(datetimeStr);
+            } else {
+                // set automatically saves to file
+                ws.LastGridBuildTime = DateTime.MinValue;
             }
         }
 

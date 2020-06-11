@@ -197,6 +197,7 @@
     <Content Include="clientapp\Shared\aaa\shared.scss" />
     <Content Include="clientapp\Portal\views\edit.scss" />
     <Content Include="clientapp\Portal\views\grid.scss" />
+    <Content Include="IndexEmpty.cshtml" />
     <None Include="packages.config" />
     <Content Include="setup.ps1" />
     <Content Include="Views\App\Login.cshtml" />

@@ -26,7 +26,7 @@ namespace Portal.App.Portal.Requests {
             IconValidatorService.ValidateIconGridState(newGrid);
 
             using (IConnection connection = ConnectionFactory.Create()) {
-                GridState oldGrid = BuildCurrentGridState(connection);
+                GridState oldGrid = connection.BuildCurrentGridState(WebsiteState);
 
                 int changes = 0;
                 foreach (IconPosition icon in BuildIconsToBeInactive(newGrid, oldGrid)) {
@@ -43,24 +43,13 @@ namespace Portal.App.Portal.Requests {
                 }
 
                 connection.Log("Grid Build",
-                    string.Format("{0}x{1} ({2}) (d{3})",
-                        newGrid.Size.Width,
-                        newGrid.Size.Height,
-                        newGrid.Cells.Count(),
-                        changes));
+                    string.Format("{0} (d{1})",
+                        newGrid.ToString(), changes));
 
                 connection.SaveChanges();
             }
 
             WebsiteState.ActiveIconGridSize = model.Size;
-        }
-
-        private GridState BuildCurrentGridState(IConnection connection) {
-            GridState oldGrid = new GridState() {
-                Size = WebsiteState.ActiveIconGridSize
-            };
-            oldGrid.Cells = connection.ActiveGridIcons();
-            return oldGrid;
         }
 
         private IEnumerable<IconPosition> BuildIconsToBeInactive(GridState newGrid, GridState oldGrid) {

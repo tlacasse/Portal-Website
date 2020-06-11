@@ -125,6 +125,10 @@ API._post = function (url, success, block, body, dataobj) {
     });
 }
 
+API.post = function (url, success) {
+    API._post(url, success, true, null, null);
+}
+
 API.bpost = function (url, body, success) {
     API._post(url, success, true, body, null);
 }

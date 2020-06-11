@@ -1,5 +1,7 @@
-﻿using Portal.Data;
+﻿using Portal.App.Portal.Messages;
+using Portal.Data;
 using Portal.Data.Models.Portal;
+using Portal.Data.Web;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,6 +19,14 @@ namespace Portal.App.Portal {
 
         public static IEnumerable<IconPosition> ActiveGridIcons(this IConnection connection) {
             return connection.IconPositionQuery.Where(x => x.IsActive).ToList();
+        }
+
+        public static GridState BuildCurrentGridState(this IConnection connection, IWebsiteState websiteState) {
+            GridState oldGrid = new GridState() {
+                Size = websiteState.ActiveIconGridSize
+            };
+            oldGrid.Cells = connection.ActiveGridIcons();
+            return oldGrid;
         }
 
     }

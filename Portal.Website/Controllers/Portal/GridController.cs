@@ -38,6 +38,25 @@ namespace Portal.Website.Controllers.Portal {
             };
         }
 
+        [HttpGet]
+        [Route("lasttime")]
+        public string GetLastBuildDate() {
+            return Process(() => {
+                return Get<LastGridBuildTimeRequest>().Process();
+            });
+        }
+
+        [HttpPost]
+        [Route("build")]
+        public SuccessMessage BuildGrid() {
+            Process(() => {
+                Get<GridBuildRequest>().Process();
+            });
+            return new SuccessMessage() {
+                Message = "Grid built on Index page."
+            };
+        }
+
     }
 
 }

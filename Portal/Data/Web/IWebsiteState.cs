@@ -1,4 +1,5 @@
 ﻿using Portal.Messages;
+using System;
 
 namespace Portal.Data.Web {
 
@@ -11,6 +12,14 @@ namespace Portal.Data.Web {
         string IconGridSizePath { get; }
 
         GridSize ActiveIconGridSize { get; set; }
+
+        string LastGridBuildTimePath { get; }
+
+        DateTime LastGridBuildTime { get; set; }
+
+        string IndexEmptyPath { get; }
+
+        string IndexBuiltPath { get; }
 
     }
 

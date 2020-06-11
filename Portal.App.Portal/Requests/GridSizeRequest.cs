@@ -6,7 +6,7 @@ namespace Portal.App.Portal.Requests {
 
     public class GridSizeRequest : IRequestOut<GridSize> {
 
-        private IWebsiteState WebsiteState { get; set; }
+        private IWebsiteState WebsiteState { get; }
 
         public GridSizeRequest(IWebsiteState WebsiteState) {
             this.WebsiteState = WebsiteState;
