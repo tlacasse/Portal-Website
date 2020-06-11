@@ -1,4 +1,5 @@
-﻿using Portal.App.Portal.Requests;
+﻿using Portal.App.Portal.Messages;
+using Portal.App.Portal.Requests;
 using Portal.Data.Models.Portal;
 using Portal.Messages;
 using Portal.Website.Structure;
@@ -20,10 +21,21 @@ namespace Portal.Website.Controllers.Portal {
 
         [HttpGet]
         [Route("get")]
-        public IEnumerable<IconPosition> GetGridItems() {
+        public IEnumerable<IconPosition> GetGridCells() {
             return Process(() => {
-                return Get<GridItemsRequest>().Process();
+                return Get<GridCellsRequest>().Process();
             });
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public SuccessMessage UpdateGrid(GridState grid) {
+            Process(() => {
+                Get<GridUpdateRequest>().Process(grid);
+            });
+            return new SuccessMessage() {
+                Message = "Grid updated."
+            };
         }
 
     }

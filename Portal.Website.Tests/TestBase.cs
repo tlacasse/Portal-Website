@@ -9,7 +9,7 @@ namespace Portal.Website.Tests {
     public class TestBase {
 
         protected FakeWebsiteState WebsiteState { get; } = new FakeWebsiteState();
-        protected IconService IconService { get; } = new IconService();
+        protected IconValidatorService IconValidatorService { get; } = new IconValidatorService();
 
         protected virtual void Before() {
         }

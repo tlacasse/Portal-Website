@@ -22,9 +22,9 @@ namespace Portal.Website.Tests.Portal.Requests.TestIconUploadRequest {
         protected override void Before() {
             FakeConnectionFactory cf = new FakeConnectionFactory();
             IconUploadRequest request = new IconUploadRequest(cf,
-                IconService, WebsiteState, new FakeEmptyFileReceiver());
+                WebsiteState, IconValidatorService, new FakeEmptyFileReceiver());
 
-            cf.IconsList.Init(new Icon() {
+            cf.IconInternal.Init(new Icon() {
                 Id = EXISTING_ID,
                 Name = EXISTING_NAME,
                 Image = EXISTING_IMAGE,
@@ -39,8 +39,8 @@ namespace Portal.Website.Tests.Portal.Requests.TestIconUploadRequest {
 
             request.Process(post);
 
-            newIcon = cf.IconsList.Records.Single();
-            history = cf.IconHistoriesList.Records.Single();
+            newIcon = cf.IconInternal.Records.Single();
+            history = cf.IconHistoryInternal.Records.Single();
         }
 
         [TestMethod]

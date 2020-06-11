@@ -14,7 +14,7 @@ namespace Portal.Website.Tests.Portal.Requests.TestIconUploadRequest {
         protected override void Before() {
             FakeConnectionFactory cf = new FakeConnectionFactory();
             request = new IconUploadRequest(cf,
-                IconService, WebsiteState,
+                WebsiteState, IconValidatorService,
                 new FakeEmptyFileReceiver());
 
             post = new IconPost() {

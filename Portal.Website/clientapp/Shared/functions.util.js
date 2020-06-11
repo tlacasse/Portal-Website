@@ -114,7 +114,7 @@ API._post = function (url, success, block, body, dataobj) {
         data.body = body;
     }
     if (!nonexistent(dataobj)) {
-        data.dataobj = dataobj;
+        data.data = dataobj;
     }
     m.request(data).then(function (data) {
         App.reenable();

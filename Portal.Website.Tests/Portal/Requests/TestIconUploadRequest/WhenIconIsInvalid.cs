@@ -12,7 +12,7 @@ namespace Portal.Website.Tests.Portal.Requests.TestIconUploadRequest {
 
         protected override void Before() {
             request = new IconUploadRequest(new FakeConnectionFactory(),
-                IconService, WebsiteState, new FakeEmptyFileReceiver());
+                WebsiteState, IconValidatorService, new FakeEmptyFileReceiver());
         }
 
         [TestMethod]

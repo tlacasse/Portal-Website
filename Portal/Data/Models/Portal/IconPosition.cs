@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Portal.Data.Models.Portal {
 
     [Table("PortalIconPosition")]
-    public class IconPosition {
+    public class IconPosition : ICanBeForceLoaded<IconPosition> {
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("Id")]
@@ -26,6 +26,23 @@ namespace Portal.Data.Models.Portal {
 
         [Column("IsActive")]
         public virtual bool IsActive { get; set; }
+
+        public bool PositionEquals(IconPosition other) {
+            return this.XCoord == other.XCoord
+                && this.YCoord == other.YCoord;
+        }
+
+        public IconPosition ForceLoad() {
+            Icon = new Icon() {
+                Id = Icon.Id,
+                Name = Icon.Name,
+                Image = Icon.Image,
+                Link = Icon.Link,
+                DateChanged = Icon.DateChanged,
+                DateCreated = Icon.DateCreated
+            };
+            return this;
+        }
 
     }
 

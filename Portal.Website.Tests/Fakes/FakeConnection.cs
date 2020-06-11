@@ -15,55 +15,55 @@ namespace Portal.Website.Tests.Fakes {
             this.FakeConnectionFactory = FakeConnectionFactory;
         }
 
-        public DbSet<LogRecord> LogRecords {
+        public DbSet<LogRecord> LogRecordTable {
             get {
-                return FakeConnectionFactory.LogRecords;
+                return FakeConnectionFactory.LogRecordTable;
             }
             set { }
         }
 
-        public DbSet<Icon> Icons {
+        public DbSet<Icon> IconTable {
             get {
-                return FakeConnectionFactory.Icons;
+                return FakeConnectionFactory.IconTable;
             }
             set { }
         }
 
-        public DbSet<IconPosition> IconPositions {
+        public DbSet<IconPosition> IconPositionTable {
             get {
-                return FakeConnectionFactory.IconPositions;
+                return FakeConnectionFactory.IconPositionTable;
             }
             set { }
         }
 
-        public DbSet<IconHistory> IconHistories {
+        public DbSet<IconHistory> IconHistoryTable {
             get {
-                return FakeConnectionFactory.IconHistories;
+                return FakeConnectionFactory.IconHistoryTable;
             }
             set { }
         }
 
         public IEnumerable<LogRecord> LogRecordQuery {
             get {
-                return FakeConnectionFactory.LogRecordsList.Records;
+                return FakeConnectionFactory.LogRecordInternal.Records;
             }
         }
 
         public IEnumerable<Icon> IconQuery {
             get {
-                return FakeConnectionFactory.IconsList.Records;
+                return FakeConnectionFactory.IconInternal.Records;
             }
         }
 
         public IEnumerable<IconPosition> IconPositionQuery {
             get {
-                return FakeConnectionFactory.IconPositionsList.Records;
+                return FakeConnectionFactory.IconPositionInternal.Records;
             }
         }
 
         public IEnumerable<IconHistory> IconHistoryQuery {
             get {
-                return FakeConnectionFactory.IconHistoriesList.Records;
+                return FakeConnectionFactory.IconHistoryInternal.Records;
             }
         }
 
@@ -71,22 +71,23 @@ namespace Portal.Website.Tests.Fakes {
         }
 
         public void Log(Exception e) {
-            FakeConnectionFactory.LogRecordsList.Add(new LogRecord() {
+            FakeConnectionFactory.LogRecordInternal.Add(new LogRecord() {
                 Exception = e.ToString()
             });
         }
 
         public void Log(string context, string message) {
-            FakeConnectionFactory.LogRecordsList.Add(new LogRecord() {
+            FakeConnectionFactory.LogRecordInternal.Add(new LogRecord() {
                 Context = context,
                 Message = message
             });
         }
 
         public void SaveChanges() {
-            FakeConnectionFactory.LogRecordsList.SaveChanges();
-            FakeConnectionFactory.IconsList.SaveChanges();
-            FakeConnectionFactory.IconHistoriesList.SaveChanges();
+            FakeConnectionFactory.LogRecordInternal.SaveChanges();
+            FakeConnectionFactory.IconInternal.SaveChanges();
+            FakeConnectionFactory.IconPositionInternal.SaveChanges();
+            FakeConnectionFactory.IconHistoryInternal.SaveChanges();
         }
 
     }

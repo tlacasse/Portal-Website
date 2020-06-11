@@ -19,7 +19,7 @@ Grid.loadGrid = function () {
         API.get('portal/grid/get', function (data) {
             for (var i = 0; i < data.length; i++) {
                 var iconpos = data[i];
-                Grid.grid[iconpos.XCoord][iconpos.YCoord] = icon.Icon;
+                Grid.grid[iconpos.XCoord][iconpos.YCoord] = iconpos.Icon;
             }
         });
     });
@@ -69,15 +69,13 @@ Grid.submitGrid = function () {
                 cells.push({
                     XCoord: i,
                     YCoord: j,
-                    Id: cell.Id,
-                    Name: cell.Name,
-                    Link: cell.Link,
+                    Icon: cell,
                 });
             }
         }
     }
     gridState.Cells = cells;
-    API.dpost('portal/grid/update', gridState, function (data) {
+    API.bpost('portal/grid/update', gridState, function (data) {
         App.showMessage(data);
         Home.goto();
     });

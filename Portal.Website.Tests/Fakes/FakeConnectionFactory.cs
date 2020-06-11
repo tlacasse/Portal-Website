@@ -8,40 +8,41 @@ namespace Portal.Website.Tests.Fakes {
     public class FakeConnectionFactory : IConnectionFactory {
 
         public FakeConnectionFactory() {
-            LogRecordsList = new FakeDbSet<LogRecord>(this);
-            IconsList = new FakeDbSet<Icon>(this);
-            IconHistoriesList = new FakeDbSet<IconHistory>(this);
+            LogRecordInternal = new FakeDbSet<LogRecord>(this);
+            IconInternal = new FakeDbSet<Icon>(this);
+            IconPositionInternal = new FakeDbSet<IconPosition>(this);
+            IconHistoryInternal = new FakeDbSet<IconHistory>(this);
         }
 
-        public FakeDbSet<LogRecord> LogRecordsList { get; set; }
-        public FakeDbSet<Icon> IconsList { get; set; }
-        public FakeDbSet<IconPosition> IconPositionsList { get; set; }
-        public FakeDbSet<IconHistory> IconHistoriesList { get; set; }
+        public FakeDbSet<LogRecord> LogRecordInternal { get; set; }
+        public FakeDbSet<Icon> IconInternal { get; set; }
+        public FakeDbSet<IconPosition> IconPositionInternal { get; set; }
+        public FakeDbSet<IconHistory> IconHistoryInternal { get; set; }
 
-        public DbSet<LogRecord> LogRecords {
+        public DbSet<LogRecord> LogRecordTable {
             get {
-                return LogRecordsList;
+                return LogRecordInternal;
             }
             set { }
         }
 
-        public DbSet<Icon> Icons {
+        public DbSet<Icon> IconTable {
             get {
-                return IconsList;
+                return IconInternal;
             }
             set { }
         }
 
-        public DbSet<IconPosition> IconPositions {
+        public DbSet<IconPosition> IconPositionTable {
             get {
-                return IconPositionsList;
+                return IconPositionInternal;
             }
             set { }
         }
 
-        public DbSet<IconHistory> IconHistories {
+        public DbSet<IconHistory> IconHistoryTable {
             get {
-                return IconHistoriesList;
+                return IconHistoryInternal;
             }
             set { }
         }

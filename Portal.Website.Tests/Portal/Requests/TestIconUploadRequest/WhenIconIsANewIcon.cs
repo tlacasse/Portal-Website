@@ -21,7 +21,7 @@ namespace Portal.Website.Tests.Portal.Requests.TestIconUploadRequest {
             FakeConnectionFactory cf = new FakeConnectionFactory();
             fileReceiver = new FakeFileReceiver(1, "Test File");
             IconUploadRequest request = new IconUploadRequest(cf,
-                IconService, WebsiteState, fileReceiver);
+                WebsiteState, IconValidatorService, fileReceiver);
 
             IconPost post = new IconPost() {
                 Id = -1,
@@ -31,8 +31,8 @@ namespace Portal.Website.Tests.Portal.Requests.TestIconUploadRequest {
 
             request.Process(post);
 
-            newIcon = cf.IconsList.Records.Single();
-            history = cf.IconHistoriesList.Records.Single();
+            newIcon = cf.IconInternal.Records.Single();
+            history = cf.IconHistoryInternal.Records.Single();
         }
 
         [TestMethod]

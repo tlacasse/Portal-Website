@@ -6,14 +6,14 @@ using System.Collections.Generic;
 
 namespace Portal.App.Portal.Requests {
 
-    public class GridItemsRequest : CommonDependent, IRequestOut<IEnumerable<IconPosition>> {
+    public class GridCellsRequest : CommonDependent, IRequestOut<IEnumerable<IconPosition>> {
 
-        public GridItemsRequest(IConnectionFactory ConnectionFactory) : base(ConnectionFactory) {
+        public GridCellsRequest(IConnectionFactory ConnectionFactory) : base(ConnectionFactory) {
         }
 
         public IEnumerable<IconPosition> Process() {
             using (IConnection connection = ConnectionFactory.Create()) {
-                return connection.ActiveGridIcons();
+                return connection.ActiveGridIcons().ForceLoad();
             }
         }
 

@@ -10,27 +10,28 @@ namespace Portal.Data {
     public class Connection : DbContext, IConnection {
 
         public Connection() : base("Portal") {
+            //this.Configuration.LazyLoadingEnabled = true;
         }
 
-        public DbSet<LogRecord> LogRecords { get; set; }
-        public DbSet<Icon> Icons { get; set; }
-        public DbSet<IconPosition> IconPositions { get; set; }
-        public DbSet<IconHistory> IconHistories { get; set; }
+        public DbSet<LogRecord> LogRecordTable { get; set; }
+        public DbSet<Icon> IconTable { get; set; }
+        public DbSet<IconPosition> IconPositionTable { get; set; }
+        public DbSet<IconHistory> IconHistoryTable { get; set; }
 
         public IEnumerable<LogRecord> LogRecordQuery {
-            get { return LogRecords; }
+            get { return LogRecordTable; }
         }
 
         public IEnumerable<Icon> IconQuery {
-            get { return Icons; }
+            get { return IconTable; }
         }
 
         public IEnumerable<IconPosition> IconPositionQuery {
-            get { return IconPositions; }
+            get { return IconPositionTable; }
         }
 
         public IEnumerable<IconHistory> IconHistoryQuery {
-            get { return IconHistories; }
+            get { return IconHistoryTable; }
         }
 
         void IConnection.SaveChanges() {
@@ -47,7 +48,7 @@ namespace Portal.Data {
 
         private void Log(string context, string message, string exception) {
             try {
-                this.LogRecords.Add(new LogRecord() {
+                this.LogRecordTable.Add(new LogRecord() {
                     Date = DateTime.Now,
                     Context = context,
                     Message = message,

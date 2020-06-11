@@ -15,10 +15,11 @@ namespace Portal.Website {
             library.Include<IConnectionFactory>(new ConnectionFactory());
             library.Include<IWebsiteState>(new WebsiteState());
             library.Include<IFileReceiver>(new FileReceiver());
-            library.Include<IIconService>(new IconService());
+            library.Include<IIconValidatorService>(new IconValidatorService());
 
-            library.MarkForBuild<GridItemsRequest>(typeof(GridItemsRequest));
+            library.MarkForBuild<GridCellsRequest>(typeof(GridCellsRequest));
             library.MarkForBuild<GridSizeRequest>(typeof(GridSizeRequest));
+            library.MarkForBuild<GridUpdateRequest>(typeof(GridUpdateRequest));
             library.MarkForBuild<IconByNameRequest>(typeof(IconByNameRequest));
             library.MarkForBuild<IconListRequest>(typeof(IconListRequest));
             library.MarkForBuild<IconUploadRequest>(typeof(IconUploadRequest));

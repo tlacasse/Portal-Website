@@ -64,17 +64,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Messages\GridResult.cs" />
+    <Compile Include="Messages\GridState.cs" />
     <Compile Include="Messages\IconPost.cs" />
     <Compile Include="Messages\IconResult.cs" />
     <Compile Include="PortalConnectionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Requests\GridItemsRequest.cs" />
+    <Compile Include="Requests\GridCellsRequest.cs" />
     <Compile Include="Requests\GridSizeRequest.cs" />
+    <Compile Include="Requests\GridUpdateRequest.cs" />
     <Compile Include="Requests\IconByNameRequest.cs" />
     <Compile Include="Requests\IconListRequest.cs" />
     <Compile Include="Requests\IconUploadRequest.cs" />
-    <Compile Include="Services\IconService.cs" />
-    <Compile Include="Services\IIconService.cs" />
+    <Compile Include="Services\IconValidatorService.cs" />
+    <Compile Include="Services\IIconValidatorService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Portal\Portal.csproj">

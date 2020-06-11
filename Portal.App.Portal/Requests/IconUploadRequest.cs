@@ -11,28 +11,26 @@ using System.Linq;
 
 namespace Portal.App.Portal.Requests {
 
-    public class IconUploadRequest : CommonDependent, IRequest<IconPost, Icon> {
+    public class IconUploadRequest : CommonDependent2, IRequest<IconPost, Icon> {
 
         public static readonly string SAVE_PATH_TEMPLATE = "Data/Icons/{0}.{1}";
 
-        private IIconService IconService { get; }
-        private IWebsiteState WebsiteState { get; }
+        private IIconValidatorService IconValidatorService { get; }
         private IFileReceiver FileReceiver { get; }
 
-        public IconUploadRequest(IConnectionFactory ConnectionFactory, IIconService IconService,
-            IWebsiteState WebsiteState, IFileReceiver FileReceiver) : base(ConnectionFactory) {
-            this.IconService = IconService;
-            this.WebsiteState = WebsiteState;
+        public IconUploadRequest(IConnectionFactory ConnectionFactory, IWebsiteState WebsiteState,
+                IIconValidatorService IconValidatorService, IFileReceiver FileReceiver)
+                : base(ConnectionFactory, WebsiteState) {
+            this.IconValidatorService = IconValidatorService;
             this.FileReceiver = FileReceiver;
         }
 
-
         public Icon Process(IconPost model) {
             this.NeedNotNull(model, "uploaded icon");
-            IconService.ValidateIconPost(model);
+            IconValidatorService.ValidateIconPost(model);
             IPostedFile file = FileReceiver.GetPostedFiles().FirstOrDefault();
             Icon icon = BuildIconFromMessage(model, file);
-            IconService.ValidateIconPostFile(icon, file);
+            IconValidatorService.ValidateIconPostFile(icon, file);
 
             Icon newIcon;
             using (IConnection connection = ConnectionFactory.Create()) {
@@ -79,7 +77,7 @@ namespace Portal.App.Portal.Requests {
             if (icon.IsNew) {
                 icon.DateChanged = DateTime.Now;
                 icon.DateCreated = DateTime.Now;
-                connection.Icons.Add(icon);
+                connection.IconTable.Add(icon);
                 connection.Log("Portal", string.Format("Icon Added: {0}", icon.Name));
                 connection.SaveChanges();
             }
@@ -98,7 +96,7 @@ namespace Portal.App.Portal.Requests {
             }
 
             IconHistory history = recordedIcon.ToHistory();
-            connection.IconHistories.Add(history);
+            connection.IconHistoryTable.Add(history);
             connection.SaveChanges();
 
             return recordedIcon;

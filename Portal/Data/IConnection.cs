@@ -8,10 +8,10 @@ namespace Portal.Data {
 
     public interface IConnection : IDisposable {
 
-        DbSet<LogRecord> LogRecords { get; set; }
-        DbSet<Icon> Icons { get; set; }
-        DbSet<IconPosition> IconPositions { get; set; }
-        DbSet<IconHistory> IconHistories { get; set; }
+        DbSet<LogRecord> LogRecordTable { get; set; }
+        DbSet<Icon> IconTable { get; set; }
+        DbSet<IconPosition> IconPositionTable { get; set; }
+        DbSet<IconHistory> IconHistoryTable { get; set; }
 
         IEnumerable<LogRecord> LogRecordQuery { get; }
         IEnumerable<Icon> IconQuery { get; }

@@ -29,7 +29,7 @@ namespace Portal.Website {
 
         private void CreatePortalIcon() {
             using (var setup = new Connection()) {
-                setup.Icons.Add(new Icon() {
+                setup.IconTable.Add(new Icon() {
                     Name = "Portal",
                     Image = "png",
                     Link = "http://localhost:5527/app/portal#!/",

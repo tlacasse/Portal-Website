@@ -15,7 +15,7 @@ namespace Portal.Website.Tests.Portal.Requests.TestIconUploadRequest {
         protected override void Before() {
             FakeConnectionFactory cf = new FakeConnectionFactory();
             request = new IconUploadRequest(cf,
-                IconService, WebsiteState,
+                WebsiteState, IconValidatorService,
                 new FakeFileReceiver(1, "Test File"));
 
             Icon existingIcon = new Icon() {
@@ -24,7 +24,7 @@ namespace Portal.Website.Tests.Portal.Requests.TestIconUploadRequest {
                 Image = "png",
                 Link = "a.com/b"
             };
-            cf.IconsList.Init(existingIcon);
+            cf.IconInternal.Init(existingIcon);
 
             Icon icon = new Icon() {
                 Name = "Test Icon",
