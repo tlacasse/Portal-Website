@@ -3,6 +3,7 @@ param (
     , [string]$buildPath = (Join-Path $PSScriptRoot '_Build')
     , [switch]$all
     , [switch]$portal
+    , [switch]$banking
     , [switch]$server
     , [switch]$framework
     , [switch]$config
@@ -31,7 +32,7 @@ function Inject-WebConfig() {
     [System.IO.File]::WriteAllText($configPath, $webConfig)
 }
 
-$client = $portal -or $framework
+$client = $portal -or $framework -or $banking
 
 Write-Host '-----------------------------' -ForegroundColor Green
 Write-Host 'Checking File Existence.' -ForegroundColor Green
@@ -103,6 +104,9 @@ if ($all -or $client) {
     }
     if ($all -or $portal) {
         $tasks += 'Portal'
+    }
+    if ($all -or $banking) {
+        $tasks += 'Banking'
     }
     & $gulp 'build' --env $env --what ($tasks -join ',')
 }

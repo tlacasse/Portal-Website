@@ -1,0 +1,22 @@
+﻿@if (Request.UserHostAddress != "::1") {
+    Response.Redirect("app/login");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Portal - Banking</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- inject:css -->
+    <!-- endinject -->
+</head>
+<body>
+    <div id="page"></div>
+    <div id="message-box" style="display:none;"></div>
+    <div id="wall" style="display:none;"></div>
+    <!-- framework:js -->
+    <!-- endinject -->
+    <!-- app:js -->
+    <!-- endinject -->
+</body>
+</html>
