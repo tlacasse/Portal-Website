@@ -59,6 +59,7 @@ Edit.submitForm = function () {
 }
 
 Edit.oninit = function () {
+    Edit.unique = genUnique();
     IconList.oninit();
     Edit.setupPage();
 }
