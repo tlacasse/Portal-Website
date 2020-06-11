@@ -1,8 +1,12 @@
-﻿using Portal.Data;
+﻿using Newtonsoft.Json;
+using Portal.Data;
 using Portal.Data.Models.Portal;
+using Portal.Data.Web;
+using Portal.Messages;
 using Portal.Structure;
 using Portal.Structure.Requests;
 using System;
+using System.IO;
 using System.Web.Http;
 using System.Web.Routing;
 
@@ -18,12 +22,15 @@ namespace Portal.Website {
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             Services = DependencyConfig.RegisterServiceDependencies();
             RequestProcessor = RequestProcessorConfig.BuildNestedRequestProcessor(Services);
+
             //CreatePortalIcon();
+            EnsureGridSizeFileExists();
+            EnsureLastGridBuildTimeFileExists();
         }
 
         private void CreatePortalIcon() {
             using (var setup = new Connection()) {
-                setup.Icons.Add(new Icon() {
+                setup.IconTable.Add(new Icon() {
                     Name = "Portal",
                     Image = "png",
                     Link = "http://localhost:5527/app/portal#!/",
@@ -31,6 +38,28 @@ namespace Portal.Website {
                     DateChanged = DateTime.Now
                 });
                 setup.SaveChanges();
+            }
+        }
+
+        private void EnsureGridSizeFileExists() {
+            IWebsiteState ws = Services.Get<IWebsiteState>();
+            if (File.Exists(ws.IconGridSizePath)) {
+                string json = File.ReadAllText(ws.IconGridSizePath);
+                ws.ActiveIconGridSize = JsonConvert.DeserializeObject<GridSize>(json);
+            } else {
+                // set automatically saves to file
+                ws.ActiveIconGridSize = GridSize.BuildDefault();
+            }
+        }
+
+        private void EnsureLastGridBuildTimeFileExists() {
+            IWebsiteState ws = Services.Get<IWebsiteState>();
+            if (File.Exists(ws.LastGridBuildTimePath)) {
+                string datetimeStr = File.ReadAllText(ws.LastGridBuildTimePath);
+                ws.LastGridBuildTime = DateTime.Parse(datetimeStr);
+            } else {
+                // set automatically saves to file
+                ws.LastGridBuildTime = DateTime.MinValue;
             }
         }
 

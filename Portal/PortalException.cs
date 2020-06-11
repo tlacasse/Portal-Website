@@ -9,8 +9,11 @@ namespace Portal {
         public PortalException(string message) : base(message) {
         }
 
-        public PortalException(string message, string Details) : base(message) {
+        public PortalException(string message, string Details) : base(message + " | " + Details) {
             this.Details = Details;
+        }
+
+        public PortalException(object message, string Details) : this(message.ToString(), Details) {
         }
 
     }

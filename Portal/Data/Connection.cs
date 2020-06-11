@@ -1,6 +1,7 @@
 ﻿using Portal.Data.Models.Portal;
 using Portal.Data.Models.Shared;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
@@ -9,10 +10,29 @@ namespace Portal.Data {
     public class Connection : DbContext, IConnection {
 
         public Connection() : base("Portal") {
+            //this.Configuration.LazyLoadingEnabled = true;
         }
 
-        public DbSet<Icon> Icons { get; set; }
-        public DbSet<LogRecord> LogRecords { get; set; }
+        public DbSet<LogRecord> LogRecordTable { get; set; }
+        public DbSet<Icon> IconTable { get; set; }
+        public DbSet<IconPosition> IconPositionTable { get; set; }
+        public DbSet<IconHistory> IconHistoryTable { get; set; }
+
+        public IEnumerable<LogRecord> LogRecordQuery {
+            get { return LogRecordTable; }
+        }
+
+        public IEnumerable<Icon> IconQuery {
+            get { return IconTable; }
+        }
+
+        public IEnumerable<IconPosition> IconPositionQuery {
+            get { return IconPositionTable; }
+        }
+
+        public IEnumerable<IconHistory> IconHistoryQuery {
+            get { return IconHistoryTable; }
+        }
 
         void IConnection.SaveChanges() {
             this.SaveChanges();
@@ -28,7 +48,7 @@ namespace Portal.Data {
 
         private void Log(string context, string message, string exception) {
             try {
-                this.LogRecords.Add(new LogRecord() {
+                this.LogRecordTable.Add(new LogRecord() {
                     Date = DateTime.Now,
                     Context = context,
                     Message = message,

@@ -2,7 +2,6 @@
 using Portal.Data.Models.Portal;
 using Portal.Structure;
 using Portal.Structure.Requests;
-using System.Linq;
 
 namespace Portal.App.Portal.Requests {
 
@@ -13,12 +12,13 @@ namespace Portal.App.Portal.Requests {
 
         public Icon Process(string model) {
             this.NeedNotNull(model, "icon name");
+            string name = PortalUtility.UnUrlFormat(model);
             Icon icon;
             using (IConnection connection = ConnectionFactory.Create()) {
-                icon = connection.Icons.Where(x => x.Name == model).SingleOrDefault();
+                icon = connection.IconByName(name);
             }
             if (icon == null) {
-                throw new PortalException(string.Format("Icon '{0}' not found", model));
+                throw new PortalException(string.Format("Icon '{0}' not found", name));
             }
             return icon;
         }

@@ -14,7 +14,7 @@ namespace Portal.App.Portal.Requests {
 
         public IEnumerable<Icon> Process() {
             using (IConnection connection = ConnectionFactory.Create()) {
-                return connection.Icons.ToList();
+                return connection.IconTable.ToList();
             }
         }
 

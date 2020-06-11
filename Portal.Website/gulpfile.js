@@ -95,15 +95,15 @@ function createTaskGroup(name) {
         var jssrc = [];
         var csssrc = [];
         if (isRelease()) {
-            jssrc.push(build + '/clientapp/' + name.toLowerCase() + '-min' + dateAppend + '.js');
             jssrc.push(build + '/clientapp/shared-min' + dateAppend + '.js');
-            csssrc.push(build + '/styles/' + name.toLowerCase() + '-min' + dateAppend + '.css')
+            jssrc.push(build + '/clientapp/' + name.toLowerCase() + '-min' + dateAppend + '.js');
             csssrc.push(build + '/styles/shared-min' + dateAppend + '.css')
+            csssrc.push(build + '/styles/' + name.toLowerCase() + '-min' + dateAppend + '.css')
         } else {
-            jssrc.push(build + '/clientapp/' + name + '/**/*.js');
             jssrc.push(build + '/clientapp/Shared/**/*.js');
-            csssrc.push(build + '/styles/' + name + '/**/*.css')
+            jssrc.push(build + '/clientapp/' + name + '/**/*.js');
             csssrc.push(build + '/styles/Shared/**/*.css')
+            csssrc.push(build + '/styles/' + name + '/**/*.css')
         }
 
         return gulp.src(build + '/Views/App/' + name + '.cshtml')

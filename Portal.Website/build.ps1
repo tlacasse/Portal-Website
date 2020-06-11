@@ -54,8 +54,9 @@ if ($all -or $config) {
     Inject-WebConfig -Key 'ConnectionString' -Value $connectionString
 }
 
-if ($all -or $views -or $client) {
+if ($all -or $views) {
     robocopy (Join-Path $PSScriptRoot 'Views') (Join-Path $buildPath 'Views') /COPY:DATS /S
+    robocopy $PSScriptRoot (Join-Path $buildPath 'App_Data') 'IndexEmpty.cshtml' /COPY:DATS
 }
 
 if ($all -or $server) {
