@@ -202,6 +202,7 @@
     <Content Include="setup.ps1" />
     <Content Include="Views\App\Login.cshtml" />
     <Content Include="Views\App\Portal.cshtml" />
+    <Content Include="Views\App\Banking.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Portal.App.Portal\Portal.App.Portal.csproj">

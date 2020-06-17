@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using Portal.Data;
+using Portal.Data.Models.Banking;
 using Portal.Data.Models.Portal;
 using Portal.Data.Models.Shared;
 
@@ -43,6 +44,34 @@ namespace Portal.Website.Tests.Fakes {
             set { }
         }
 
+        public DbSet<Account> AccountTable {
+            get {
+                return FakeConnectionFactory.AccountTable;
+            }
+            set { }
+        }
+
+        public DbSet<AccountType> AccountTypeTable {
+            get {
+                return FakeConnectionFactory.AccountTypeTable;
+            }
+            set { }
+        }
+
+        public DbSet<Category> CategoryTable {
+            get {
+                return FakeConnectionFactory.CategoryTable;
+            }
+            set { }
+        }
+
+        public DbSet<Subcategory> SubcategoryTable {
+            get {
+                return FakeConnectionFactory.SubcategoryTable;
+            }
+            set { }
+        }
+
         public IEnumerable<LogRecord> LogRecordQuery {
             get {
                 return FakeConnectionFactory.LogRecordInternal.Records;
@@ -67,6 +96,30 @@ namespace Portal.Website.Tests.Fakes {
             }
         }
 
+        public IEnumerable<Account> AccountQuery {
+            get {
+                return FakeConnectionFactory.AccountInternal.Records;
+            }
+        }
+
+        public IEnumerable<AccountType> AccountTypeQuery {
+            get {
+                return FakeConnectionFactory.AccountTypeInternal.Records;
+            }
+        }
+
+        public IEnumerable<Category> CategoryQuery {
+            get {
+                return FakeConnectionFactory.CategoryInternal.Records;
+            }
+        }
+
+        public IEnumerable<Subcategory> SubcategoryQuery {
+            get {
+                return FakeConnectionFactory.SubcategoryInternal.Records;
+            }
+        }
+
         public void Dispose() {
         }
 
@@ -88,6 +141,10 @@ namespace Portal.Website.Tests.Fakes {
             FakeConnectionFactory.IconInternal.SaveChanges();
             FakeConnectionFactory.IconPositionInternal.SaveChanges();
             FakeConnectionFactory.IconHistoryInternal.SaveChanges();
+            FakeConnectionFactory.AccountInternal.SaveChanges();
+            FakeConnectionFactory.AccountTypeInternal.SaveChanges();
+            FakeConnectionFactory.CategoryInternal.SaveChanges();
+            FakeConnectionFactory.SubcategoryInternal.SaveChanges();
         }
 
     }

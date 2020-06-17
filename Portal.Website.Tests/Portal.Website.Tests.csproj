@@ -112,6 +112,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Banking\Requests\TestListUpdateRequest\WhenUpdatingListRecords.cs" />
+    <Compile Include="Banking\Requests\TestListUpdateRequest\WhenNewListRecordsButMissingSubRecord.cs" />
+    <Compile Include="Banking\Requests\TestListUpdateRequest\WhenNewListRecords.cs" />
     <Compile Include="Fakes\FakeConnection.cs" />
     <Compile Include="Fakes\FakeConnectionFactory.cs" />
     <Compile Include="Fakes\FakeDbSet.cs" />
@@ -136,6 +139,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Portal.App.Banking\Portal.App.Banking.csproj">
+      <Project>{9044e4c5-1c43-4686-8223-90d354c79661}</Project>
+      <Name>Portal.App.Banking</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Portal.App.Portal\Portal.App.Portal.csproj">
       <Project>{49b7146c-dba4-4242-bdd8-d0407d709974}</Project>
       <Name>Portal.App.Portal</Name>
@@ -149,6 +156,7 @@
       <Name>Portal</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

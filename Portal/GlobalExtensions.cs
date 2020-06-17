@@ -37,6 +37,42 @@ namespace Portal {
             return enumerable.Select(x => x.ForceLoad()).ToList();
         }
 
+        public static IEnumerable<EI<T>> Enumerate<T>(this IEnumerable<T> enumerable) {
+            int i = 0;
+            foreach (T item in enumerable) {
+                yield return new EI<T>(i, item);
+                i++;
+            }
+        }
+
+        public static IEnumerable<ZPair<A, B>> Zip<A, B>(this IEnumerable<A> first, IEnumerable<B> second) {
+            return first.Zip(second, (x, y) => new ZPair<A, B>(x, y));
+        }
+
+    }
+
+    public class ZPair<A, B> {
+
+        public A First { get; }
+        public B Second { get; }
+
+        public ZPair(A First, B Second) {
+            this.First = First;
+            this.Second = Second;
+        }
+
+    }
+
+    public class EI<T> {
+
+        public int Index { get; }
+        public T Item { get; }
+
+        public EI(int Index, T Item) {
+            this.Index = Index;
+            this.Item = Item;
+        }
+
     }
 
 }

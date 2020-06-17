@@ -150,5 +150,6 @@ gulp.task('Framework', gulp.series('mithril'));
 
 createTaskGroup('Shared');
 createTaskGroup('Portal');
+createTaskGroup('Banking');
 
 gulp.task('build', gulp.series(options.what.split(',')));

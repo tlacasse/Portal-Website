@@ -1,4 +1,6 @@
-﻿using Portal.App.Portal.Requests;
+﻿using Portal.App.Banking.Requests;
+using Portal.App.Banking.Services;
+using Portal.App.Portal.Requests;
 using Portal.App.Portal.Services;
 using Portal.Data;
 using Portal.Data.Web;
@@ -16,6 +18,7 @@ namespace Portal.Website {
             library.Include<IWebsiteState>(new WebsiteState());
             library.Include<IFileReceiver>(new FileReceiver());
             library.Include<IIconValidatorService>(new IconValidatorService());
+            library.Include<IListService>(new ListService());
 
             library.MarkForBuild<GridBuildRequest>(typeof(GridBuildRequest));
             library.MarkForBuild<GridCellsRequest>(typeof(GridCellsRequest));
@@ -25,6 +28,10 @@ namespace Portal.Website {
             library.MarkForBuild<IconListRequest>(typeof(IconListRequest));
             library.MarkForBuild<IconUploadRequest>(typeof(IconUploadRequest));
             library.MarkForBuild<LastGridBuildTimeRequest>(typeof(LastGridBuildTimeRequest));
+
+            library.MarkForBuild<ListColumnsRequest>(typeof(ListColumnsRequest));
+            library.MarkForBuild<ListDataRequest>(typeof(ListDataRequest));
+            library.MarkForBuild<ListUpdateRequest>(typeof(ListUpdateRequest));
 
             library.Build();
             return library;

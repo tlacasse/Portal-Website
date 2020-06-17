@@ -8,11 +8,15 @@ namespace Portal.Website.Controllers {
             return View();
         }
 
+        public ViewResult Login() {
+            return View();
+        }
+
         public ViewResult Portal() {
             return View();
         }
 
-        public ViewResult Login() {
+        public ViewResult Banking() {
             return View();
         }
 

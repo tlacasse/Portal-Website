@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Portal.App.Banking.Services;
 using Portal.App.Portal.Services;
 using Portal.Website.Tests.Fakes;
 using System;
@@ -10,6 +11,7 @@ namespace Portal.Website.Tests {
 
         protected FakeWebsiteState WebsiteState { get; } = new FakeWebsiteState();
         protected IconValidatorService IconValidatorService { get; } = new IconValidatorService();
+        protected ListService ListService { get; } = new ListService();
 
         protected virtual void Before() {
         }
