@@ -1,4 +1,5 @@
-﻿using Portal.Data.Models.Portal;
+﻿using Portal.Data.Models.Banking;
+using Portal.Data.Models.Portal;
 using Portal.Data.Models.Shared;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,16 @@ namespace Portal.Data {
         IEnumerable<Icon> IconQuery { get; }
         IEnumerable<IconPosition> IconPositionQuery { get; }
         IEnumerable<IconHistory> IconHistoryQuery { get; }
+
+        DbSet<Account> AccountTable { get; set; }
+        DbSet<AccountType> AccountTypeTable { get; set; }
+        DbSet<Category> CategoryTable { get; set; }
+        DbSet<Subcategory> SubcategoryTable { get; set; }
+
+        IEnumerable<Account> AccountQuery { get; }
+        IEnumerable<AccountType> AccountTypeQuery { get; }
+        IEnumerable<Category> CategoryQuery { get; }
+        IEnumerable<Subcategory> SubcategoryQuery { get; }
 
         void SaveChanges();
 

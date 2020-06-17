@@ -74,6 +74,11 @@
     <Compile Include="Data\IConnectionFactory.cs" />
     <Compile Include="Data\IConnection.cs" />
     <Compile Include="Data\LoggingFailedConnection.cs" />
+    <Compile Include="Data\Models\Banking\Account.cs" />
+    <Compile Include="Data\Models\Banking\AccountType.cs" />
+    <Compile Include="Data\Models\Banking\Subcategory.cs" />
+    <Compile Include="Data\Models\Banking\Category.cs" />
+    <Compile Include="Data\Models\IHaveDateUpdated.cs" />
     <Compile Include="Data\Models\Portal\Icon.cs" />
     <Compile Include="Data\Models\Portal\IconHistory.cs" />
     <Compile Include="Data\Models\Portal\IconPosition.cs" />
@@ -109,6 +114,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="sql\BankingAccount.table.sql" />
+    <Content Include="sql\BankingAccountType.table.sql" />
+    <Content Include="sql\BankingCategory.table.sql" />
+    <Content Include="sql\BankingSubcategory.table.sql" />
     <Content Include="sql\LogRecord.table.sql" />
     <Content Include="sql\PortalIcon.table.sql" />
     <Content Include="sql\PortalIconHistory.table.sql" />
