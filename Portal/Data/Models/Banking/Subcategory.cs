@@ -3,22 +3,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Portal.Data.Models.Banking {
 
-    [Table("BankingSubcategory")]
+    //[Table("BankingSubcategory")]
     public class Subcategory : IHaveDateUpdated {
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("Id")]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Column("Id")]
         public virtual int Id { get; set; }
 
-        [Column("Name")]
+        //[Column("Name")]
         public virtual string Name { get; set; }
 
-        [Column("CategoryId")]
+        //[Column("CategoryId")]
         public virtual int CategoryId { get; set; }
-        [ForeignKey("CategoryId")]
+        //[ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
 
-        [Column("DateUpdated")]
+        //[Column("DateUpdated")]
         public virtual DateTime DateUpdated { get; set; }
 
     }

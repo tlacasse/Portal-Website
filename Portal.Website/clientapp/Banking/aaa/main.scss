@@ -1,0 +1,54 @@
+﻿@import "vars";
+
+* {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    color: $c-font;
+    font-size: $fs;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: $c-bg;
+}
+
+// links
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a, a:link, a:visited {
+    color: $c-link;
+}
+
+a:hover, a:active {
+    color: $c-link-active;
+}
+
+// general Style
+
+div.hrule {
+    width: 100%;
+    height: 0.2 * $fs;
+    border-bottom: $border-width ridge $c-border;
+    padding-bottom: $fs;
+}
+
+.section-title {
+    font-size: $fs * 1.2;
+    vertical-align: middle;
+    color: $c-bg;
+    font-weight: bold;
+    padding-top: 0.5em;
+}
+
+ul, ol {
+    padding: $fs;
+}
+
+.center {
+    text-align: center;
+}

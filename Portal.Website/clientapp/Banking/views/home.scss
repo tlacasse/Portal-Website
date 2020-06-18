@@ -1,0 +1,15 @@
+﻿@import "../aaa/vars";
+
+$left: 15vw;
+$top: 4vh;
+
+.homeblock {
+    position: absolute;
+    left: $left;
+    top: $top;
+    width: 100vw - ($left * 2);
+    height: 100vh - ($top * 2);
+    background-color: $c-content;
+    border-bottom: $border-width ridge $c-border;
+    padding: 1em;
+}

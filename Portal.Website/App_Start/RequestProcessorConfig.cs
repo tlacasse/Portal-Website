@@ -9,7 +9,7 @@ namespace Portal.Website {
 
         public static IRequestProcessor BuildNestedRequestProcessor(IDependencyLibrary dependencyLibrary) {
             IRequestProcessor p = new BaseRequestProcessor();
-            p = new ErrorLoggingRequestProcessor(p, dependencyLibrary.Get<IConnectionFactory>());
+            //p = new ErrorLoggingRequestProcessor(p, dependencyLibrary.Get<IConnectionFactory>());
             return p;
         }
 

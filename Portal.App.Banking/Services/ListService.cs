@@ -21,9 +21,9 @@ namespace Portal.App.Banking.Services {
                         new ListColumn("Name"),
                         new ListColumn("AccountType", typeof(AccountType))
                     },
-                    ListQuery = connection?.AccountQuery,
+                    ListQuery = null,//connection?.AccountQuery,
                     Type = typeof(Account),
-                    AddToTable = (obj) => connection.AccountTable.Add((Account)obj),
+                    AddToTable = null,//(obj) => connection.AccountTable.Add((Account)obj),
                     SelectById = (id) => connection.AccountById(id),
                     SelectByName = (name) => connection.AccountByName(name)
                 };
@@ -34,9 +34,9 @@ namespace Portal.App.Banking.Services {
                         new ListColumn("Id"),
                         new ListColumn("Name"),
                     },
-                    ListQuery = connection?.AccountTypeQuery,
+                    ListQuery = null,//connection?.AccountTypeQuery,
                     Type = typeof(AccountType),
-                    AddToTable = (obj) => connection.AccountTypeTable.Add((AccountType)obj),
+                    AddToTable = null,//(obj) => connection.AccountTypeTable.Add((AccountType)obj),
                     SelectById = (id) => connection.AccountTypeById(id),
                     SelectByName = (name) => connection.AccountTypeByName(name)
                 };
@@ -47,9 +47,9 @@ namespace Portal.App.Banking.Services {
                         new ListColumn("Id"),
                         new ListColumn("Name"),
                     },
-                    ListQuery = connection?.CategoryQuery,
+                    ListQuery = null,//connection?.CategoryQuery,
                     Type = typeof(Category),
-                    AddToTable = (obj) => connection.CategoryTable.Add((Category)obj),
+                    AddToTable = null,//(obj) => connection.CategoryTable.Add((Category)obj),
                     SelectById = (id) => connection.CategoryById(id),
                     SelectByName = (name) => connection.CategoryByName(name)
                 };
@@ -61,9 +61,9 @@ namespace Portal.App.Banking.Services {
                         new ListColumn("Name"),
                         new ListColumn("Category", typeof(Category))
                     },
-                    ListQuery = connection?.SubcategoryQuery,
+                    ListQuery = null,// connection?.SubcategoryQuery,
                     Type = typeof(Subcategory),
-                    AddToTable = (obj) => connection.SubcategoryTable.Add((Subcategory)obj),
+                    AddToTable = null,//(obj) => connection.SubcategoryTable.Add((Subcategory)obj),
                     SelectById = (id) => connection.SubcategoryById(id),
                     SelectByName = (name) => connection.SubcategoryByName(name)
                 };

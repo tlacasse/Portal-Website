@@ -35,7 +35,7 @@ namespace Portal.Data {
             get { return IconHistoryTable; }
         }
 
-        public DbSet<Account> AccountTable { get; set; }
+        /*public DbSet<Account> AccountTable { get; set; }
         public DbSet<AccountType> AccountTypeTable { get; set; }
         public DbSet<Category> CategoryTable { get; set; }
         public DbSet<Subcategory> SubcategoryTable { get; set; }
@@ -54,7 +54,7 @@ namespace Portal.Data {
 
         public IEnumerable<Subcategory> SubcategoryQuery {
             get { return SubcategoryTable; }
-        }
+        }*/
 
         void IConnection.SaveChanges() {
             this.SaveChanges();

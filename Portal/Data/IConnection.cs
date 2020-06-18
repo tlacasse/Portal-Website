@@ -18,7 +18,7 @@ namespace Portal.Data {
         IEnumerable<Icon> IconQuery { get; }
         IEnumerable<IconPosition> IconPositionQuery { get; }
         IEnumerable<IconHistory> IconHistoryQuery { get; }
-
+        /*
         DbSet<Account> AccountTable { get; set; }
         DbSet<AccountType> AccountTypeTable { get; set; }
         DbSet<Category> CategoryTable { get; set; }
@@ -28,7 +28,7 @@ namespace Portal.Data {
         IEnumerable<AccountType> AccountTypeQuery { get; }
         IEnumerable<Category> CategoryQuery { get; }
         IEnumerable<Subcategory> SubcategoryQuery { get; }
-
+        */
         void SaveChanges();
 
         void Log(Exception e);
